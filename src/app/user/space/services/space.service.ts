@@ -1,16 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Assignee } from '../store/space-store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpaceService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  add({email,password,fname,lname,phone,place,post,skill}:any):Observable<any>{
-    const data = {email,password,fname,lname,phone,place,post,skill}
-    return this.http.post('http://localhost:3000/api/addAssignee',data,{withCredentials:true})
+  getAssignee():Observable<any> {
+    return this.http.get('http://localhost:3000/api/getAssignee', { withCredentials: true })
+  }
+
+  addAssignee(payload:Assignee): Observable<any> {    
+    return this.http.post<Assignee>('http://localhost:3000/api/addAssignee', payload, { withCredentials: true })
+  }
+
+  editAssignee(payload:Assignee): Observable<any> {
+    return this.http.put<Assignee>(`http://localhost:3000/api/editAssignee/${payload._id}`,payload, { withCredentials: true})
   }
 }

@@ -31,7 +31,6 @@ export class UserService {
   }
 
   logout() {
-    console.log('service logout');
     if (localStorage.getItem('jwtToken')) {
       return this.http.post('http://localhost:3000/api/logout', { withCredentials: true })
     }

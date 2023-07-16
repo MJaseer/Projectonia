@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-// import jwtDecode, * as JWT from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'

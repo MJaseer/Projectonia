@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    console.log('login');
 
     if (this.loginForm.invalid) {
 
@@ -42,7 +41,6 @@ export class LoginComponent implements OnInit {
 
       this.service.login(this.loginForm.value).subscribe(
         (result) => {
-          console.log(result, 'result',typeof(result));
           this.auth.setToken(result)
           const data = this.auth.getToken()         
           this.router.navigate(['/space'])

@@ -10,7 +10,12 @@ import { SpaceInterceptor } from './helper/space.interceptor';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { AssigneeComponent } from './assignee/assignee.component';
 import { AddAssigneeComponent } from './add-assignee/add-assignee.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthEditAssigneComponent } from './auth-edit-assigne/auth-edit-assigne.component';
+import { assigneeReducer } from './store/space.reducer';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { SpaceEffects } from './store/space.effect';
 
 @NgModule({
   declarations: [
@@ -20,12 +25,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     SideBarComponent,
     AssigneeComponent,
     AddAssigneeComponent,
+    AuthEditAssigneComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     SpaceRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
+    StoreModule.forFeature('assignee',assigneeReducer),
+    EffectsModule.forFeature([SpaceEffects])
   ],
   providers:[
     {

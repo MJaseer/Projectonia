@@ -14,9 +14,7 @@ export class SpaceInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // debugger
     const data = this.authService.getToken()
-    console.log(data);
 
     const localToken = data.token
 

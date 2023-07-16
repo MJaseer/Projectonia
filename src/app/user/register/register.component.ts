@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -20,24 +21,21 @@ export class RegisterComponent {
 
   constructor(private service: UserService,
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private auth:AuthService) { }
 
   ngOnInit(): void {
-    // if (this.service.isLoggedIn()) {
-    //   this.router.navigate(['/user'])
-    // }
+    if (this.auth.isLoggedIn()) {
+      this.router.navigate(['/space'])
+    }
   }
 
   register(): void {
     if (this.registerForm.invalid) {
-      console.log('invalid');
-      
       this.router.navigate([''])
     } else {
       this.service.register(this.registerForm.value).subscribe(
-        (result) => {
-          console.log(result,'result signup');
-          
+        (result) => {          
           this.router.navigate(['login'])
         },(err:any)=>{
           console.log(err,'signup error');
