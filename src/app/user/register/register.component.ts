@@ -26,20 +26,19 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/space'])
     }
   }
 
   register(): void {
     if (this.registerForm.invalid) {
-      this.router.navigate([''])
+      this.router.navigate(['/register'])
     } else {
       this.service.register(this.registerForm.value).subscribe(
         (result) => {          
-          this.router.navigate(['login'])
+          this.router.navigate(['/login'])
         },(err:any)=>{
           console.log(err,'signup error');
-          
         }
       )
     }
