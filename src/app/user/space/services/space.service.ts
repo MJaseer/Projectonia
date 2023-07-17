@@ -6,6 +6,7 @@ import { Assignee } from '../store/space-store';
 @Injectable({
   providedIn: 'root'
 })
+
 export class SpaceService {
 
   constructor(private http: HttpClient) { }
@@ -19,6 +20,11 @@ export class SpaceService {
   }
 
   editAssignee(payload:Assignee): Observable<any> {
-    return this.http.put<Assignee>(`http://localhost:3000/api/editAssignee/${payload._id}`,payload, { withCredentials: true})
+    return this.http.patch<Assignee>(`http://localhost:3000/api/editAssignee/${payload._id}`,payload, { withCredentials: true})
   }
+
+  deleteAssignee(_id:string):Observable<any> {
+    return this.http.delete(`http://localhost:3000/api/deleteAssignee/${_id}`, { withCredentials: true})
+  }
+
 }

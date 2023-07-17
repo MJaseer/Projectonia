@@ -9,10 +9,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './shared/store/app.reducer';
+import { DeleteModalComponent } from './global/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DeleteModalComponent,
   ],
   imports: [
     BrowserModule,

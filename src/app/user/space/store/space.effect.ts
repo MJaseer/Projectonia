@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { SpaceService } from "../services/space.service";
 import { Store, select } from "@ngrx/store";
-import { addNewAssigneeAPISuccess, assigneFetchAPISuccess, invokeAddAssigneAPI, invokeAssigneAPI, invokeUpdateAssigneeAPI, updateAssigneeSuccess } from "./space.action";
+import { addNewAssigneeAPISuccess, assigneFetchAPISuccess, deleteAssigneeAPISuccess, invokeAddAssigneAPI, invokeAssigneAPI, invokeDeleteAssigneeAPI, invokeUpdateAssigneeAPI, updateAssigneeSuccess } from "./space.action";
 import { EMPTY, map, mergeMap, switchMap, withLatestFrom } from "rxjs";
 import { selectAssignee } from "./space.selector";
 import { Appstate } from "src/app/shared/store/app-state";
@@ -63,6 +63,25 @@ export class SpaceEffects {
                             setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: 'success' } })
                         );
                         return updateAssigneeSuccess({ updateAssigne: data })
+                    })
+                )
+            })
+        )
+    })
+
+    deleteAssignee$ = createEffect(() => {
+        return this.action$.pipe(
+            ofType(invokeDeleteAssigneeAPI),
+            switchMap((actions) => {
+                this.appStore.dispatch(
+                    setAPIStatus({apiStatus:{apiResponseMessage:'',apiStatus:''}})
+                )
+                return this.spaceService.deleteAssignee(actions.id).pipe(
+                    map(() => {
+                        this.appStore.dispatch(
+                            setAPIStatus({apiStatus:{apiResponseMessage:'',apiStatus:'success'}})
+                        )
+                        return deleteAssigneeAPISuccess({id:actions.id})
                     })
                 )
             })

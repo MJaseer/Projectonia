@@ -1,0 +1,93 @@
+<div class="flex flex-col ">
+    <app-auth-nav style="z-index: 1;"></app-auth-nav>
+    <aside style="z-index: 0;"><app-side-bar></app-side-bar></aside>
+</div>
+<div class="p-4 sm:ml-64">
+    <div class="flex justify-between items-center">
+        <p class=" font-medium text-dark text-lg  dark:text-dark">Projects</p>
+        <a routerLink="/space/newProject"
+            class="flex justify-center items-center  text-gray-900 rounded-lg dark:text-dark  ">
+            <svg class="w-6 h-6 text-gray-800 dark:text-gray-800 hover:w-8 h-8" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M.188 5H5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707c-.358.362-.617.81-.753 1.3C.148 5.011.166 5 .188 5ZM14 8a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm2 7h-1v1a1 1 0 0 1-2 0v-1h-1a1 1 0 0 1 0-2h1v-1a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2Z" />
+                <path
+                    d="M6 14a7.969 7.969 0 0 1 10-7.737V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H.188A.909.909 0 0 1 0 6.962V18a1.969 1.969 0 0 0 1.933 2h6.793A7.976 7.976 0 0 1 6 14Z" />
+            </svg>
+            <span class="ml-3"></span>
+        </a>
+    </div>
+    <div
+        class="flex flex-wrap items-center justify-center gap-2.5 p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+
+
+        <div
+            class=" flex max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+            <div class="flex  p-2 items-center ">
+                <div class="flex flex-col">
+                    <p class=" text-xl m-0 font-medium text-gray-900 dark:text-white" style="margin: 0%;">name project
+                    </p>
+                    <div class="flex gap-4">
+                        <svg class="w-14 w-14 text-gray-800 dark:text-white" aria-hidden="true" viewBox="0 0 16 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15 2L14.0006 1.96734C14.0002 1.97822 14 1.98911 14 2H15ZM15 18H14C14 18.0109 14.0002 18.0218 14.0006 18.0327L15 18ZM14.067 19V20C14.0792 20 14.0914 19.9998 14.1036 19.9993L14.067 19ZM1.93303 19L1.89641 19.9993C1.90861 19.9998 1.92082 20 1.93303 20V19ZM1.00003 18L1.9995 18.0327C1.99985 18.0218 2.00003 18.0109 2.00003 18H1.00003ZM1.00003 5.828L2.93255e-05 5.82779V5.828H1.00003ZM1.58603 4.414L2.29303 5.12121L2.29314 5.12111L1.58603 4.414ZM4.41403 1.586L5.12114 2.29311L5.12124 2.293L4.41403 1.586ZM5.82803 1V0H5.82782L5.82803 1ZM14.067 1L14.1036 0.000670671C14.0914 0.000223577 14.0792 0 14.067 0V1ZM7.00003 1C7.00003 0.447715 6.55231 0 6.00003 0C5.44774 0 5.00003 0.447715 5.00003 1H7.00003ZM1.00003 5C0.447744 5 2.90871e-05 5.44772 2.90871e-05 6C2.90871e-05 6.55228 0.447744 7 1.00003 7V5ZM8.50003 2.5V1.5H7.50003V2.5H8.50003ZM9.50003 2.5H10.5V1.5H9.50003V2.5ZM9.50003 3.5V4.5H10.5V3.5H9.50003ZM8.50003 3.5H7.50003V4.5H8.50003V3.5ZM10.5 4.5V3.5H9.50003V4.5H10.5ZM11.5 4.5H12.5V3.5H11.5V4.5ZM11.5 5.5V6.5H12.5V5.5H11.5ZM10.5 5.5H9.50003V6.5H10.5V5.5ZM8.50003 6.5V5.5H7.50003V6.5H8.50003ZM9.50003 6.5H10.5V5.5H9.50003V6.5ZM9.50003 7.5V8.5H10.5V7.5H9.50003ZM8.50003 7.5H7.50003V8.5H8.50003V7.5ZM10.5 8.5V7.5H9.50003V8.5H10.5ZM11.5 8.5H12.5V7.5H11.5V8.5ZM11.5 9.5V10.5H12.5V9.5H11.5ZM10.5 9.5H9.50003V10.5H10.5V9.5ZM8.50003 10.5V9.5H7.50003V10.5H8.50003ZM9.50003 10.5H10.5V9.5H9.50003V10.5ZM9.50003 11.5V12.5H10.5V11.5H9.50003ZM8.50003 11.5H7.50003V12.5H8.50003V11.5ZM10.5 12.5V11.5H9.50003V12.5H10.5ZM11.5 12.5H12.5V11.5H11.5V12.5ZM11.5 13.5V14.5H12.5V13.5H11.5ZM10.5 13.5H9.50003V14.5H10.5V13.5ZM8.50003 14.5V13.5H7.50003V14.5H8.50003ZM9.50003 14.5H10.5V13.5H9.50003V14.5ZM9.50003 15.5V16.5H10.5V15.5H9.50003ZM8.50003 15.5H7.50003V16.5H8.50003V15.5ZM10.5 16.5V15.5H9.50003V16.5H10.5ZM11.5 16.5H12.5V15.5H11.5V16.5ZM11.5 17.5V18.5H12.5V17.5H11.5ZM10.5 17.5H9.50003V18.5H10.5V17.5ZM14 2V18H16V2H14ZM14.0006 18.0327C14.0003 18.0245 14.0033 18.0165 14.0089 18.0105L15.4712 19.3749C15.8266 18.994 16.0165 18.4879 15.9995 17.9673L14.0006 18.0327ZM14.0089 18.0105C14.0145 18.0045 14.0222 18.001 14.0304 18.0007L14.1036 19.9993C14.6242 19.9803 15.1159 19.7557 15.4712 19.3749L14.0089 18.0105ZM14.067 18H1.93303V20H14.067V18ZM1.96965 18.0007C1.97784 18.001 1.98558 18.0045 1.99118 18.0105L0.528825 19.3749C0.88415 19.7557 1.3759 19.9803 1.89641 19.9993L1.96965 18.0007ZM1.99118 18.0105C1.99677 18.0165 1.99976 18.0245 1.9995 18.0327L0.000562847 17.9673C-0.0164497 18.4879 0.1735 18.994 0.528825 19.3749L1.99118 18.0105ZM2.00003 18V5.828H2.93255e-05V18H2.00003ZM2.00003 5.82821C2.00009 5.56302 2.10548 5.30871 2.29303 5.12121L0.879029 3.70679C0.316381 4.26926 0.000199258 5.0322 2.93255e-05 5.82779L2.00003 5.82821ZM2.29314 5.12111L5.12114 2.29311L3.70692 0.878893L0.878922 3.70689L2.29314 5.12111ZM5.12124 2.293C5.30873 2.10545 5.56305 2.00006 5.82824 2L5.82782 0C5.03223 0.000169933 4.26929 0.316352 3.70682 0.879L5.12124 2.293ZM5.82803 2H14.067V0H5.82803V2ZM14.0304 1.99933C14.0222 1.99903 14.0145 1.99549 14.0089 1.9895L15.4712 0.625122C15.1159 0.24428 14.6242 0.0197436 14.1036 0.000670671L14.0304 1.99933ZM14.0089 1.9895C14.0033 1.9835 14.0003 1.97554 14.0006 1.96734L15.9995 2.03266C16.0165 1.51208 15.8266 1.00596 15.4712 0.625122L14.0089 1.9895ZM5.00003 1V5H7.00003V1H5.00003ZM5.00003 5V5L6.41424 6.41421C6.78931 6.03914 7.00003 5.53043 7.00003 5H5.00003ZM5.00003 5V5V7C5.53046 7 6.03917 6.78929 6.41424 6.41421L5.00003 5ZM5.00003 5H1.00003V7H5.00003V5ZM8.50003 3.5H9.50003V1.5H8.50003V3.5ZM8.50003 2.5V3.5H10.5V2.5H8.50003ZM9.50003 2.5H8.50003V4.5H9.50003V2.5ZM9.50003 3.5V2.5H7.50003V3.5H9.50003ZM10.5 5.5H11.5V3.5H10.5V5.5ZM10.5 4.5V5.5H12.5V4.5H10.5ZM11.5 4.5H10.5V6.5H11.5V4.5ZM11.5 5.5V4.5H9.50003V5.5H11.5ZM8.50003 7.5H9.50003V5.5H8.50003V7.5ZM8.50003 6.5V7.5H10.5V6.5H8.50003ZM9.50003 6.5H8.50003V8.5H9.50003V6.5ZM9.50003 7.5V6.5H7.50003V7.5H9.50003ZM10.5 9.5H11.5V7.5H10.5V9.5ZM10.5 8.5V9.5H12.5V8.5H10.5ZM11.5 8.5H10.5V10.5H11.5V8.5ZM11.5 9.5V8.5H9.50003V9.5H11.5ZM8.50003 11.5H9.50003V9.5H8.50003V11.5ZM8.50003 10.5V11.5H10.5V10.5H8.50003ZM9.50003 10.5H8.50003V12.5H9.50003V10.5ZM9.50003 11.5V10.5H7.50003V11.5H9.50003ZM10.5 13.5H11.5V11.5H10.5V13.5ZM10.5 12.5V13.5H12.5V12.5H10.5ZM11.5 12.5H10.5V14.5H11.5V12.5ZM11.5 13.5V12.5H9.50003V13.5H11.5ZM8.50003 15.5H9.50003V13.5H8.50003V15.5ZM8.50003 14.5V15.5H10.5V14.5H8.50003ZM9.50003 14.5H8.50003V16.5H9.50003V14.5ZM9.50003 15.5V14.5H7.50003V15.5H9.50003ZM10.5 17.5H11.5V15.5H10.5V17.5ZM10.5 16.5V17.5H12.5V16.5H10.5ZM11.5 16.5H10.5V18.5H11.5V16.5ZM11.5 17.5V16.5H9.50003V17.5H11.5Z"
+                                fill="currentColor" />
+                        </svg>
+                        <div class="flex flex-col  ">
+                            <p class=" text-l m-0 font-medium text-gray-900 dark:text-white" style="margin: 0%;">Project one
+                            </p>
+                            <div class="flex gap-1"><span class="text-sm text-gray-500 dark:text-gray-400">sub
+                                    task</span></div>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                <path
+                                    d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col mt-2">
+                <div class="flex">
+                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    </svg>
+                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                </div>
+                <div class="flex">
+                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    </svg>
+                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                </div>
+                <div class="flex">
+                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    </svg>
+                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                </div>
+                <div class="flex">
+                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    </svg>
+                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                </div>
+                <div class="flex ">
+                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                    </svg>
+                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

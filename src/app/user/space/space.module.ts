@@ -16,6 +16,10 @@ import { assigneeReducer } from './store/space.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SpaceEffects } from './store/space.effect';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ListComponent } from './Project/list/list.component';
+import { ItemNavComponent } from './Project/item-nav/item-nav.component';
+import { NewProjectComponent } from './Project/new-project/new-project.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,9 @@ import { SpaceEffects } from './store/space.effect';
     AssigneeComponent,
     AddAssigneeComponent,
     AuthEditAssigneComponent,
+    ListComponent,
+    ItemNavComponent,
+    NewProjectComponent,
   ],
   imports: [
     CommonModule,
@@ -33,8 +40,9 @@ import { SpaceEffects } from './store/space.effect';
     SpaceRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDialogModule,
     StoreModule.forFeature('assignee',assigneeReducer),
-    EffectsModule.forFeature([SpaceEffects])
+    EffectsModule.forFeature([SpaceEffects]),
   ],
   providers:[
     {

@@ -33,3 +33,13 @@ export const updateAssigneeSuccess = createAction(
     '[Assignee API] update assignee api success',
     props<{ updateAssigne: Assignee }>()
 )
+
+export const invokeDeleteAssigneeAPI = createAction(
+    '[Assignee API] invoke delete assignee API',
+    props<{id:string}>()
+)
+
+export const deleteAssigneeAPISuccess = createAction(
+    '[Assignee API] delete assignee API success',
+    props<{id:string}>()
+)

@@ -26,7 +26,7 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
-      this.router.navigate(['/space'])
+      this.router.navigate(['/login'])
     }
   }
 
