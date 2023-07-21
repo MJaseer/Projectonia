@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './shared/store/app.reducer';
 import { DeleteModalComponent } from './global/delete-modal/delete-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { DeleteModalComponent } from './global/delete-modal/delete-modal.compone
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    StoreModule.forRoot({ appState: appReducer })
+    StoreModule.forRoot({ appState: appReducer }),
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,12 +1,15 @@
 import { createReducer, on } from "@ngrx/store";
-import { Assignee } from "./space-store";
-import { addNewAssigneeAPISuccess, assigneFetchAPISuccess, deleteAssigneeAPISuccess, updateAssigneeSuccess } from "./space.action";
-import { state } from "@angular/animations";
+import { Assignee, Project } from "./space-store";
+import {
+    addNewAssigneeAPISuccess, assigneFetchAPISuccess,
+    createProjectSuccess,
+    deleteAssigneeAPISuccess, deleteProjectAPISuccess, projectFetchAPISuccess, updateAssigneeSuccess
+} from "./space.action";
 
-export const initialState: ReadonlyArray<Assignee> = [];
+export const initialStateAssignee: ReadonlyArray<Assignee> = [];
 
 export const assigneeReducer = createReducer(
-    initialState,
+    initialStateAssignee,
     on(assigneFetchAPISuccess, (state, { allAssignee }) => {
         return allAssignee;
     }),
@@ -21,8 +24,26 @@ export const assigneeReducer = createReducer(
         newState.unshift(updateAssigne);
         return newState
     }),
-    on(deleteAssigneeAPISuccess,(state,{id}) => {
+    on(deleteAssigneeAPISuccess, (state, { id }) => {
         let newState = state.filter((_) => _._id != id)
+        return newState
+    }),
+)
+
+export const initialStateProject: ReadonlyArray<Project> = []
+
+export const projectReducer = createReducer(
+    initialStateProject,
+    on(projectFetchAPISuccess, (state, { allProjects }) => {
+      return allProjects;
+    }),
+    on(createProjectSuccess, (state, { newProject }) => {
+        let newStates = [...state]
+        newStates.unshift(newProject)
+        return newStates
+    }),
+    on(deleteProjectAPISuccess,(state,{id}) => {
+        let newState = state.filter((_) => _._id != id);
         return newState
     })
 )

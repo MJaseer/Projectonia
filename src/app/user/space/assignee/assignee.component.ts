@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { selectAssignee } from '../store/space.selector';
-import { invokeAssigneAPI, invokeDeleteAssigneeAPI } from '../store/space.action';
+import { invokeAssigneAPI } from '../store/space.action';
 import { Assignee } from '../store/space-store';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Dialog } from '@angular/cdk/dialog';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -37,7 +36,7 @@ export class AssigneeComponent implements OnInit {
 
       this.modal.open(ModalComponent, {
         width: '440px',
-        data: this.deleteAssignee
+        data: [this.deleteAssignee,'assignee']
       })
 
     }

@@ -1,9 +1,6 @@
 import { createAction, props } from "@ngrx/store";
-import { Assignee } from './space-store'
-import { FormGroup } from "@angular/forms";
+import { Assignee, Project } from './space-store'
 
-export class SpaceAction {
-}
 
 export const invokeAssigneAPI = createAction(
     '[Assignee API] Invoke Assignee Fetch API'
@@ -36,10 +33,39 @@ export const updateAssigneeSuccess = createAction(
 
 export const invokeDeleteAssigneeAPI = createAction(
     '[Assignee API] invoke delete assignee API',
-    props<{id:string}>()
+    props<{ id: string }>()
 )
 
 export const deleteAssigneeAPISuccess = createAction(
     '[Assignee API] delete assignee API success',
-    props<{id:string}>()
+    props<{ id: string }>()
+)
+
+export const invokeProjectAPI = createAction(
+    '[Project API] invoke project API'
+)
+
+export const projectFetchAPISuccess = createAction(
+    '[Project API] invoke project API',
+    props<{ allProjects: Project[] }>()
+)
+
+export const invokeCreateProject = createAction(
+    '[Project API] invoke create project API',
+    props<{ newProject: Project }>()
+)
+
+export const createProjectSuccess = createAction(
+    '[Project API] create project API success',
+    props<{ newProject: Project }>()
+)
+
+export const invokeDeleteProjectAPI = createAction(
+    '[Project API] invoke project delete API',
+    props<{ id:string}>()
+)
+
+export const deleteProjectAPISuccess = createAction(
+    '[Project API] delete project API Success',
+    props<{ id:string}>()
 )

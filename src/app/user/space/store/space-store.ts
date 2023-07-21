@@ -12,3 +12,19 @@ export interface Assignee {
     __v:number|null| undefined
 }
 
+export interface Project {
+    _id?:string,
+    title:string,
+    createAt?:string,
+    tasks?:[],
+    __v?:number,
+}
+
+export interface Task{
+    _id?:string,
+    title:string,
+    assignee?:string,
+    dueDate?:string,
+    priority?:string,
+    subtask?:[]
+}
