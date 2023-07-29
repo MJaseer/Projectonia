@@ -37,13 +37,14 @@
                                 fill="currentColor" />
                         </svg>
                         <div class="flex flex-col  ">
-                            <p class=" text-l m-0 font-medium text-gray-900 dark:text-white" style="margin: 0%;">{{project.title}}
+                            <p class=" text-l m-0 font-medium text-gray-900 dark:text-white" style="margin: 0%;">
+                                {{project.title}}
                             </p>
                             <div class="flex gap-1"><span class="text-sm text-gray-500 dark:text-gray-400">sub
                                     task</span></div>
-                            <a role="button" (click)="openDelete(project._id)"><svg class="w-5 h-5 text-gray-800 dark:text-white hover:w-8 h-8"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                    viewBox="0 0 18 20">
+                            <a role="button" (click)="openDelete(project._id)"><svg
+                                    class="w-5 h-5 text-gray-800 dark:text-white hover:w-8 h-8" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                                     <path
                                         d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
                                 </svg></a>
@@ -51,45 +52,44 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col mt-2" *ngIf="project.tasks == null">
-                <div class="flex">
-                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
-                    </svg>
-                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                <div class="flex flex-col mt-2">
+                    <div class="flex" *ngIf="tasks.length > 0">
+                        <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                            <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                        </svg>
+                        <span class="text-white text-base ms-1" style="margin-top: -3px;"></span>
+                    </div>
+                    <div class="flex">
+                        <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                            <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                        </svg>
+                        <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                    </div>
+                    <div class="flex">
+                        <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                            <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                        </svg>
+                        <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                    </div>
+                    <div class="flex">
+                        <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                            <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                        </svg>
+                        <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                    </div>
+                    <div class="flex ">
+                        <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
+                            <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
+                        </svg>
+                        <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
+                    </div>
                 </div>
-                <div class="flex">
-                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
-                    </svg>
-                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
-                </div>
-                <div class="flex">
-                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
-                    </svg>
-                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
-                </div>
-                <div class="flex">
-                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
-                    </svg>
-                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
-                </div>
-                <div class="flex ">
-                    <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
-                        <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />
-                    </svg>
-                    <span class="text-white text-base ms-1" style="margin-top: -3px;">1</span>
-                </div>
-            </div>
         </div>
-
 
     </div>
 </div>

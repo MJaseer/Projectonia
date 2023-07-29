@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { Assignee, Project } from "./space-store";
+import { Assignee, Project, Task } from "./space-store";
 
 
 export const selectAssignee = createFeatureSelector<Assignee[]>('assignee')
@@ -23,3 +23,6 @@ createSelector(selectProject,(project:Project[]) =>{
     }
     return projectById[0]
 })
+
+
+export const selectTask = createFeatureSelector<Task[]>('Task')

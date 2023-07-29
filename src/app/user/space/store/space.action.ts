@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Assignee, Project } from './space-store'
+import { Assignee, Project, Task } from './space-store'
 
 
 export const invokeAssigneAPI = createAction(
@@ -62,10 +62,42 @@ export const createProjectSuccess = createAction(
 
 export const invokeDeleteProjectAPI = createAction(
     '[Project API] invoke project delete API',
-    props<{ id:string}>()
+    props<{ id: string }>()
 )
 
 export const deleteProjectAPISuccess = createAction(
     '[Project API] delete project API Success',
-    props<{ id:string}>()
+    props<{ id: string }>()
+)
+
+export const invokeUpdateProjectAPI = createAction(
+    '[Project API] invoke project update API',
+    props<{ updateProject: Project[] }>()
+)
+
+export const updateProjectAPISuccess = createAction(
+    '[Project API] invoke project update API',
+    props<{ updateProject: Project[] }>()
+)
+
+
+
+
+export const invokeFetchTaskAPI = createAction(
+    '[Task API] invoke task API'
+)
+
+export const taskFetchAPISuccess = createAction(
+    '[Task API] fetch task API Success',
+    props<{ allTask: Task[] }>()
+)
+
+export const invokeCreateTaskAPI = createAction(
+    '[Project API] invoke task create API',
+    props<{ newTask: Task }>()
+)
+
+export const createTaskAPISuccess = createAction(
+    '[Project API]  create task API Success',
+    props<{ newTask: Task }>()
 )

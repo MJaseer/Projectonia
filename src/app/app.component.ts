@@ -13,3 +13,23 @@ export class AppComponent implements OnInit {
     initFlowbite();
   }
 }
+
+
+
+// addNewAssignee$ = createEffect(() => {
+//   return this.action$.pipe(
+//       ofType(invokeAddAssigneAPI),
+//       switchMap((action) => {
+//           this.appStore.dispatch(
+//               setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
+//           )
+//           return this.spaceService.addAssignee(action.newAssignee)
+//               .pipe(map((data) => {
+//                   this.appStore.dispatch(
+//                       setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: 'success' } })
+//                   )
+//                   return addNewAssigneeAPISuccess({ newAssignee: data })
+//               }))
+//       })
+//   )
+// })

@@ -1,9 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
-import { Assignee, Project } from "./space-store";
+import { Assignee, Project, Task } from "./space-store";
 import {
     addNewAssigneeAPISuccess, assigneFetchAPISuccess,
     createProjectSuccess,
-    deleteAssigneeAPISuccess, deleteProjectAPISuccess, projectFetchAPISuccess, updateAssigneeSuccess
+    createTaskAPISuccess,
+    deleteAssigneeAPISuccess, deleteProjectAPISuccess, projectFetchAPISuccess, taskFetchAPISuccess, updateAssigneeSuccess
 } from "./space.action";
 
 export const initialStateAssignee: ReadonlyArray<Assignee> = [];
@@ -35,16 +36,30 @@ export const initialStateProject: ReadonlyArray<Project> = []
 export const projectReducer = createReducer(
     initialStateProject,
     on(projectFetchAPISuccess, (state, { allProjects }) => {
-      return allProjects;
+        return allProjects;
     }),
     on(createProjectSuccess, (state, { newProject }) => {
         let newStates = [...state]
         newStates.unshift(newProject)
         return newStates
     }),
-    on(deleteProjectAPISuccess,(state,{id}) => {
+    on(deleteProjectAPISuccess, (state, { id }) => {
         let newState = state.filter((_) => _._id != id);
         return newState
     })
 )
 
+
+export const initialStateTask: ReadonlyArray<Task> = []
+
+export const taskReducer = createReducer(
+    initialStateTask,
+    on(taskFetchAPISuccess, (state, { allTask }) => {
+        return allTask
+    }),
+    on(createTaskAPISuccess, (state, { newTask }) => {
+        let newStates = [...state]
+        newStates.unshift(newTask)
+        return newStates
+    }),
+)

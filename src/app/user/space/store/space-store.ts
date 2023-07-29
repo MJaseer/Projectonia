@@ -8,6 +8,8 @@ export interface Assignee {
     place:string|null| undefined,
     post:string|null| undefined,
     skill:string|null| undefined,
+    managerId?:string,
+    tasks?:[],
     timeStamp:string|null| undefined,
     __v:number|null| undefined
 }
@@ -15,6 +17,7 @@ export interface Assignee {
 export interface Project {
     _id?:string,
     title:string,
+    managerId?:string,
     createAt?:string,
     tasks?:[],
     __v?:number,
@@ -22,9 +25,17 @@ export interface Project {
 
 export interface Task{
     _id?:string,
-    title:string,
-    assignee?:string,
+    title?:string,
+    assigneeId?:string,
     dueDate?:string,
     priority?:string,
-    subtask?:[]
+    subtask?:[{title?:string}],
+    projectId?:string,
+    discription?:string,
+    managerId?:string,
+    status?:string,
+    attachments?:[{path?:string}],
+    createdAt?:string,
+    modifiedAt?:string,
+    __v?:number
 }

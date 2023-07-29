@@ -7,6 +7,8 @@ import { AuthEditAssigneComponent } from './auth-edit-assigne/auth-edit-assigne.
 import { ListComponent } from './Project/list/list.component';
 import { NewProjectComponent } from './Project/new-project/new-project.component';
 import { OverViewComponent } from './Project/over-view/over-view.component';
+import { NewComponent } from './Project/Tasks/new/new.component';
+import { DataPickerComponent } from './Project/Tasks/data-picker/data-picker.component';
 
 const routes: Routes = [
   { path: '', component: AuthLandingComponent },
@@ -14,7 +16,14 @@ const routes: Routes = [
   { path: 'addAssignee', component: AddAssigneeComponent },
   { path: 'editAssigne/:id', component: AuthEditAssigneComponent },
   { path: 'project', component: OverViewComponent },
-  { path: 'list', component: ListComponent },
+  {
+    path: 'task', component: ListComponent,
+    children:
+      [
+        { path: 'new', component: NewComponent },
+        { path: 'date', component: DataPickerComponent }
+      ]
+  },
   { path: 'newProject', component: NewProjectComponent },
 ];
 

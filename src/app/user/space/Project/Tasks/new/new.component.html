@@ -1,0 +1,20 @@
+<div
+    class="block flex items-center justify-center  mb-2 w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-600 border-0 border-b-2 border-gray-300 hover:bg-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+    <div class=" px-2">
+        <mat-icon class="text-gray-700">stop</mat-icon>
+    </div>
+    <form class="w-full flex">
+        <input type="text" name="title" [(ngModel)]="task.title"
+            class="block py-2.5  px-0 w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-400 border-0 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 hover:bg-gray-400 peer">
+        </form>
+        <button type="button" (click)="createTask()"
+            class="text-gray-900  hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md px-3 py-1 mx-2 text-center dark:border-gray-600 dark:text-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"><small>SAVE</small></button>
+    
+    <button type="button" (click)="close()"
+        class="text-gray-900  hover:text-white  focus:ring-4 focus:outline-none font-medium rounded-md mx-2 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white hover:w-7 h-7"><svg
+            class="w-5 h-5 text-gray-800 dark:text-dark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+        </svg></button>
+</div>

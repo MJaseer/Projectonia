@@ -21,7 +21,6 @@ export class AssigneeComponent implements OnInit {
   assignee$: Observable<Assignee[]> = this.store.pipe(select(selectAssignee))
 
   ngOnInit(): void {
-
     this.store.dispatch(invokeAssigneAPI())
   }
 
