@@ -3,14 +3,19 @@
 </div>
 <div class="flex " style="height: 92.7%;">
     <div class="w-5/12 xs:w-full  flex items-center justify-center ">
-        <form
+        <form (ngSubmit)="create()"
             class="w-full ms-16 sm:ms-0 sm:w-3/5 border-2 border-gray-700 flex flex-col items-center justify-center p-2">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">New Project
             </label>
-            <input type="text" id="project" style="width: 90%;" aria-describedby="helper-text-explanation"
+            <input ngModel #title="ngModel" name="title" type="text" id="project" style="width: 90%;" aria-describedby="helper-text-explanation"
                 class="bg-gray-50 text-gray-900 text-sm focus:ring-blue-500 block w-full p-2.5  dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white"
-                placeholder="First project" name="title" [(ngModel)]="project.title">
-            <span [hidden]="true">Project name is required</span>
+                placeholder="First project" required minlength="4" maxlength="15" [(ngModel)]="project.title">
+                <span class="text-gray-900 font-bold" *ngIf=" title.value == '' " >Fill the title to submit </span>
+                <span class="text-red-600" *ngIf="title.invalid &&(title.dirty || title.touched )">
+                    <span class="text-red-600 font-bold	" *ngIf="title.errors?.['minlength'] && ['maxlength']">Title length
+                        must be greater than 4 and less than 15 </span>
+                    <span class="text-red-600 font-bold	" *ngIf="title.errors?.['required']">Title is required </span>
+                </span>
             <div class=" mt-10 flex items-center justify-center gap-2 w-4/5">
                 <button type="button"
                     class="flex gap-2 text-gray-800 mr-1 border-2 bg-gray-700 border-gray-700 hover:bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 sm:px-5 py-1 sm:py-2.5 text-center ">
@@ -28,7 +33,7 @@
                     </svg><span class="text-white">Board</span></button>
             </div>
             <div class="mt-20">
-                <button (click)="create()"
+                <button type="submit" *ngIf="title.valid"
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                     <span
                         class="relative px-2 sm:px-5 lg:px-20 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">

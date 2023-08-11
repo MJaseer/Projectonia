@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Task } from '../../../store/space-store';
 import { Store, select } from '@ngrx/store';
 import { Appstate } from 'src/app/shared/store/app-state';
 import { Router } from '@angular/router';
-import { invokeCreateTaskAPI } from '../../../store/space.action';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
+import { Task } from 'src/app/global/store/space-store';
+import { invokeCreateTaskAPI } from 'src/app/global/store/space.action';
 // import { MatIconModule } from '@angular/material/icon';
 // import { FormsModule } from '@angular/forms';
 
@@ -14,6 +14,7 @@ import { setAPIStatus } from 'src/app/shared/store/app.action';
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css'],
 })
+
 export class NewComponent {
 
   constructor(
@@ -21,10 +22,6 @@ export class NewComponent {
     private appStore: Store<Appstate>,
     private router: Router,
   ) { }
-
-
-
-
 
   task: Task = {
     title: "",
@@ -34,8 +31,7 @@ export class NewComponent {
     const selectedOption = (document.getElementById('underline_select') as HTMLSelectElement).selectedOptions[0];
     const selectedTitle = selectedOption.textContent;
     const selectedId = selectedOption.value;
-    console.log(selectedTitle);
-
+    
     if (this.task.title !== '') {
       this.task.projectId = selectedId
       this.invokeTask()

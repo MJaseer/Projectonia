@@ -2,12 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
 import { Store, select } from '@ngrx/store';
-import { invokeDeleteAssigneeAPI, invokeDeleteProjectAPI } from '../store/space.action';
+import { invokeDeleteAssigneeAPI, invokeDeleteProjectAPI, invokeDeleteTaskAPI } from '../../../global/store/space.action';
 import { Appstate } from 'src/app/shared/store/app-state';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
-import { Project } from '../store/space-store';
-
 
 @Component({
   selector: 'app-modal',
@@ -36,43 +34,40 @@ export class ModalComponent implements OnInit {
       this.data = this.dialogData[0]
     });
   }
+  actionInvoke: any
 
   delete(id: string) {
-    if (this.dialogData[1] == 'project') {
-      console.log(id, 'pro');
 
-      this.store.dispatch(invokeDeleteProjectAPI({ id: id }))
+    switch (this.dialogData[1]) {
+      case 'project':
+        this.actionInvoke = invokeDeleteProjectAPI({ id: id })
+        break
+      case 'assignee':
+        this.actionInvoke = invokeDeleteAssigneeAPI({ id: id })
+        break
+      case 'task':
+        this.actionInvoke = invokeDeleteTaskAPI({ id: id })
+        break
+    }
+
+    if (this.actionInvoke != '') {
+      this.store.dispatch(this.actionInvoke)
       let apiStatus$ = this.appStore.pipe(select(selectAppState))
       apiStatus$.subscribe((apState) => {
-        if(apState.apiStatus == 'success') {
-          this.dialogRef.close()
-          this.appStore.dispatch(
-            setAPIStatus({apiStatus:{apiResponseMessage:'',apiStatus:''}})
-          )
-          this.closeDialog()
-        }
-      })
-
-    } else if (this.dialogData[1] == 'assignee') {
-      console.log(id, 'ass');
-
-      this.store.dispatch(invokeDeleteAssigneeAPI({ id: id }))
-      let apiStatus$ = this.appStore.pipe(select(selectAppState))
-      apiStatus$.subscribe((apState) => {
-        debugger
-
         if (apState.apiStatus == 'success') {
-          debugger
-
+          this.dialogRef.close()
           this.appStore.dispatch(
             setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
           )
           this.closeDialog()
         }
       })
+    } else {
+      console.log(this.dialogData[1]);
     }
-  }
 
+
+  }
 
   closeDialog() {
     this.dialogRef.close();

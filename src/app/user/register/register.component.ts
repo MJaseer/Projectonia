@@ -35,8 +35,11 @@ export class RegisterComponent {
       this.router.navigate(['/register'])
     } else {
       this.service.register(this.registerForm.value).subscribe(
-        (result) => {          
-          this.router.navigate(['/login'])
+        (result) => {         
+          console.log(result);
+          localStorage.removeItem('userData')
+          localStorage.setItem('userData',JSON.stringify(result))
+          this.router.navigate(['/otp'])
         },(err:any)=>{
           console.log(err,'signup error');
         }

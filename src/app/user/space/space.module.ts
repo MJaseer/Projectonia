@@ -8,27 +8,28 @@ import { AuthNavComponent } from './auth-nav/auth-nav.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SpaceInterceptor } from './helper/space.interceptor';
 import { SideBarComponent } from './side-bar/side-bar.component';
-import { AssigneeComponent } from './assignee/assignee.component';
-import { AddAssigneeComponent } from './add-assignee/add-assignee.component';
+import { AssigneeComponent } from './Assignee/assignee/assignee.component';
+import { AddAssigneeComponent } from './Assignee/add-assignee/add-assignee.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthEditAssigneComponent } from './auth-edit-assigne/auth-edit-assigne.component';
-import { assigneeReducer, projectReducer, taskReducer } from './store/space.reducer';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { ProjectEffects, SpaceEffects, TaskEffects } from './store/space.effect';
+import { AuthEditAssigneComponent } from './Assignee/auth-edit-assigne/auth-edit-assigne.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ListComponent } from './Project/list/list.component';
+import { ListComponent } from './Project/Tasks/list/list.component';
 import { ItemNavComponent } from './Project/item-nav/item-nav.component';
 import { NewProjectComponent } from './Project/new-project/new-project.component';
 import { OverViewComponent } from './Project/over-view/over-view.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BoardComponent } from './Project/board/board.component';
 import { MatIconModule } from '@angular/material/icon';
-import { NewComponent } from './Project/Tasks/new/new.component';
-import { TaskStatusComponent } from './Project/Tasks/task-status/task-status.component';
-import { AssigneesComponent } from './Project/Tasks/assignees/assignees.component';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { NewComponent } from './Project/Tasks/new/new.component';
+import { MonthAndDatePipe } from 'src/app/pipes/month.pipe';
+import { StatusPipe } from 'src/app/pipes/status.pipe';
+import { AssigneePipe } from 'src/app/pipes/assignee.pipe';
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 @NgModule({
   declarations: [
@@ -45,8 +46,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     OverViewComponent,
     BoardComponent,
     NewComponent,
-    TaskStatusComponent,
-    AssigneesComponent,
   ],
   imports: [
     CommonModule,
@@ -55,22 +54,26 @@ import { MatNativeDateModule } from '@angular/material/core';
     ReactiveFormsModule,
     FormsModule,
     MatDialogModule,
-    StoreModule.forFeature('project',projectReducer),
-    StoreModule.forFeature('assignee',assigneeReducer),
-    StoreModule.forFeature('Task',taskReducer),
-    EffectsModule.forFeature([SpaceEffects]),
-    EffectsModule.forFeature([ProjectEffects]),
-    EffectsModule.forFeature([TaskEffects]),
     FontAwesomeModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MonthAndDatePipe,
+    StatusPipe,
+    AssigneePipe,
+    OverlayModule
   ],
-  providers:[
+  providers: [
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:SpaceInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpaceInterceptor,
+      multi: true
+    },
+    {
+      provide: MatDatepicker,
+      useClass: MatDatepickerModule
     }
   ]
 })

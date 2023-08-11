@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './home/home.component';
@@ -17,6 +17,13 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { MatListModule } from '@angular/material/list';
+import { OtpComponent } from './otp/otp.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+import { ForgotpassswordComponent } from './forgotpasssword/forgotpasssword.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { LinkSuccessComponent } from './link-success/link-success.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -27,6 +34,10 @@ import { MatListModule } from '@angular/material/list';
         LandingComponent,
         NavComponent,
         NotFoundComponent,
+        OtpComponent,
+        ForgotpassswordComponent,
+        NewPasswordComponent,
+        LinkSuccessComponent,
     ],
     imports: [
         CommonModule,
@@ -38,6 +49,11 @@ import { MatListModule } from '@angular/material/list';
         MatButtonModule,
         MatSidenavModule,
         MatListModule,
+        FormsModule,
+        NgOtpInputModule,
+        OverlayModule,
+        MatDialogModule,
+        FormsModule
     ],
 })
 

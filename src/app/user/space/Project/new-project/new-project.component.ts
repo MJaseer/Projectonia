@@ -3,7 +3,7 @@ import { Project } from '../interface/project';
 import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Appstate } from 'src/app/shared/store/app-state';
-import { invokeCreateProject } from '../../store/space.action';
+import { invokeCreateProject } from '../../../../global/store/space.action';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 

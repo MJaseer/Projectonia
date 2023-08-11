@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { invokeProjectAPI } from '../../store/space.action';
-import { selectProject } from '../../store/space.selector';
+import { invokeProjectAPI } from '../../../../global/store/space.action';
+import { selectProject } from '../../../../global/store/space.selector';
 import { Project } from '../interface/project';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modal/modal.component';
-import { Task } from '../../store/space-store';
+import { Task } from '../../../../global/store/space-store';
 
 @Component({
   selector: 'app-over-view',
@@ -30,8 +30,7 @@ export class OverViewComponent implements OnInit {
       if (data) {
         this.taskFetcher(data)
       }
-    })
-    
+    })    
   }
 
   currentData!: Task[]
@@ -39,11 +38,7 @@ export class OverViewComponent implements OnInit {
 
   taskFetcher(data: Project[]) {
     data.forEach((value) => {
-      console.log(value);
       this.tasks.push(value.tasks) 
-    })
-    this.tasks.forEach(data => {
-      console.log(data.length);
     })
 
   }

@@ -10,6 +10,8 @@ export class AuthNavComponent {
 
   constructor( private authService:AuthService) {}
 
+  isOpen= true
+
   logout(){
     this.authService.deleteToken()
     

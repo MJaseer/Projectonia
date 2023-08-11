@@ -1,6 +1,6 @@
 <div class="flex flex-col ">
-    <app-item-nav style="z-index: 1;"></app-item-nav>
-    <aside style="z-index: 0;"><app-side-bar></app-side-bar></aside>
+    <app-item-nav style="z-index: 1035;;"></app-item-nav>
+    <aside style="z-index: 1032;"><app-side-bar></app-side-bar></aside>
 </div>
 <div class="p-4 sm:ml-64">
     <div class="flex justify-between items-center">
@@ -52,8 +52,8 @@
                     </div>
                 </div>
             </div>
-                <div class="flex flex-col mt-2">
-                    <div class="flex" *ngIf="tasks.length > 0">
+                <div class="flex flex-col mt-2" *ngIf="tasks.length < 0">
+                    <div class="flex" >
                         <svg class="w-4 h-4   text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 18">
                             <path d="M8 18A18.55 18.55 0 0 1 0 3l8-3 8 3a18.549 18.549 0 0 1-8 15Z" />

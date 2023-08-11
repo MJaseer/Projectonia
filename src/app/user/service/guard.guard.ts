@@ -11,6 +11,5 @@ export const guardGuard: CanActivateChildFn = (childRoute, state) => {
     router.navigate(['/login'])
     return false
   }
-  return true;
 };
 
