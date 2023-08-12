@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^16.2.0",
     "@angular/animations": "^16.1.0",
     "@angular/cdk": "^16.1.4",
     "@angular/common": "^16.1.0",
@@ -37,13 +38,13 @@
     "flowbite": "^1.7.0",
     "ng-otp-input": "^1.9.2",
     "ngx-bootstrap": "^6.2.0",
+    "ngx-spinner": "^16.0.2",
     "object-to-array": "^2.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.1.0",
     "@angular/cli": "~16.1.0",
     "@angular/compiler-cli": "^16.1.0",
     "@types/jasmine": "~4.3.0",

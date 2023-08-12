@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/service/user.service';
 import { ErrorComponent } from '../error/error.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-loadin',
@@ -17,11 +18,14 @@ export class LoadinComponent implements OnInit {
     public modal: MatDialog,
     private userService: UserService,
     private router: Router,
+    private spinner: NgxSpinnerService
   ) { }
   email!: string
+
   ngOnInit(): void {
     this.email = this.dialogData
     if (this.email) {
+      this.spinner.show()
       this.submit()
     }
   }
@@ -30,6 +34,7 @@ export class LoadinComponent implements OnInit {
     this.userService.forgotPassword(this.email)
       .subscribe((result) => {
         console.log(result);
+        this.spinner.hide()
         this.dialogueClose()
         this.router.navigate(['/forgotSuccess'])
       }, (err: any) => {

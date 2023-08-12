@@ -22,6 +22,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { LoadinComponent } from './shared/modal/loadin/loadin.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './shared/modal/error/error.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ErrorComponent } from './shared/modal/error/error.component';
     NgOtpInputModule,
     MatIconModule,
     OverlayModule,
-    FormsModule
+    FormsModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

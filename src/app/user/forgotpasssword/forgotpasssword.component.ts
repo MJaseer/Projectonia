@@ -20,8 +20,6 @@ export class ForgotpassswordComponent {
 
   submit() {
     this.modal.open(LoadinComponent, {
-      width: '20%',
-      height: '20%',
       data: this.form.email
     })
   
