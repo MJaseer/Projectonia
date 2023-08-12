@@ -53,7 +53,6 @@ import { MatDialogModule } from '@angular/material/dialog';
         NgOtpInputModule,
         OverlayModule,
         MatDialogModule,
-        FormsModule
     ],
 })
 
