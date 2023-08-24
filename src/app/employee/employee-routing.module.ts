@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './landing/landing.component';
+import { EmployeeLandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from './services/auth.guard';
 import { ListComponent } from './tasks/list/list.component';
+import { ChatComponent } from '../chat/chat/chat.component';
 
 const routes: Routes = [
-  { path: '', component: LandingComponent, canActivate: [authGuard] },
+  { path: '', component: EmployeeLandingComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'tasks', component: ListComponent ,canActivate:[authGuard]}
+  { path: 'tasks', component: ListComponent, canActivate: [authGuard] },
+  { path: 'chats', component: ChatComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({

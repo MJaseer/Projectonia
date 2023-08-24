@@ -6,6 +6,7 @@ import { invokeDeleteAssigneeAPI, invokeDeleteProjectAPI, invokeDeleteTaskAPI } 
 import { Appstate } from 'src/app/shared/store/app-state';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modal',
@@ -23,7 +24,8 @@ export class ModalComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private store: Store,
-    private appStore: Store<Appstate>
+    private appStore: Store<Appstate>,
+    private toastr:ToastrService
   ) { }
 
   data: any;
@@ -56,6 +58,7 @@ export class ModalComponent implements OnInit {
       apiStatus$.subscribe((apState) => {
         if (apState.apiStatus == 'success') {
           this.dialogRef.close()
+          this.toastr.success(`${this.dialogData[1]} succesfully deleted`,'Deleted')
           this.appStore.dispatch(
             setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
           )
@@ -65,7 +68,6 @@ export class ModalComponent implements OnInit {
     } else {
       console.log(this.dialogData[1]);
     }
-
 
   }
 

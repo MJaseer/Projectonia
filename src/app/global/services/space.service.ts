@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Assignee, Task } from '../store/space-store';
 import { Project } from '../../user/space/Project/interface/project';
 import { AuthService } from '../../user/service/auth.service';
+import { i_manager } from '../user/i_manager';
 
 const url = 'http://localhost:3000/api'
 
@@ -18,9 +19,15 @@ export class SpaceService {
 
   managerId!: string;
 
-  idFecther(){
+  idFecther() {
     let token = this.authService.getToken()
-    this.managerId = token.userId
+    this.managerId = token._id
+    return token
+  }
+
+  getManager() {
+    const manager = this.idFecther()
+    return this.http.post<i_manager[]>(`${url}/getManager/${this.managerId}`, manager, { withCredentials: true })
   }
 
   getAssignee() {
@@ -28,7 +35,7 @@ export class SpaceService {
     return this.http.get<Assignee[]>(`${url}/getAssignee/${this.managerId}`, { withCredentials: true })
   }
 
-  addAssignee(payload: Assignee){
+  addAssignee(payload: Assignee) {
     this.idFecther()
     return this.http.post<Assignee>(`${url}/addAssignee/${this.managerId}`, payload, { withCredentials: true })
   }
@@ -69,11 +76,11 @@ export class SpaceService {
     return this.http.post<Task>(`${url}/createTask/${id}`, payload, { withCredentials: true })
   }
 
-  editTask(payload:Task){
+  editTask(payload: Task) {
     return this.http.put<Task>(`${url}/updateTask/${payload._id}`, payload, { withCredentials: true })
   }
 
-  deleteTask(id:string){
+  deleteTask(id: string) {
     return this.http.delete(`${url}/deleteTask/${id}`, { withCredentials: true })
   }
 

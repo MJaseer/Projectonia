@@ -68,10 +68,10 @@
                     <span class="text-red-600 font-bold" *ngIf="assigneeForm.get('fname')?.invalid &&
                     (assigneeForm.get('fname')?.dirty || assigneeForm.get('fname')?.touched ||isSubmitted)">
                         <span class="text-red-600" *ngIf="assigneeForm.get('fname')?.errors?.['required']">
-                            Name is required.
+                            First Name is required.
                         </span>
                         <span class="text-red-600" *ngIf="assigneeForm.get('fname')?.errors?.['minlength']">
-                            Name must be at least 4 characters long.
+                            First Name must be at least 4 characters long.
                         </span>
                     </span>
                 </div>
@@ -86,10 +86,10 @@
                     (assigneeForm.get('lname')?.dirty || assigneeForm.get('lname')?.touched ||isSubmitted)">
 
                         <span class="text-red-600" *ngIf="assigneeForm.get('lname')?.errors?.['required']">
-                            Name is required.
+                            Last Name is required.
                         </span>
                         <span class="text-red-600" *ngIf="assigneeForm.get('lname')?.errors?.['minlength']">
-                            Name must be at least 4 characters long.
+                            Last Name must be at least 4 characters long.
                         </span>
 
                     </span>
@@ -131,10 +131,10 @@
                     <span class="text-red-600 font-bold" *ngIf="assigneeForm.get('place')?.invalid &&
                     (assigneeForm.get('place')?.dirty || assigneeForm.get('place')?.touched ||isSubmitted)">
                         <span class="text-red-600" *ngIf="assigneeForm.get('place')?.errors?.['required']">
-                            Name is required.
+                            Place is required.
                         </span>
                         <span class="text-red-600" *ngIf="assigneeForm.get('place')?.errors?.['minlength']">
-                            Name must be at least 4 characters long.
+                            Place must be at least 4 characters long.
                         </span>
 
                     </span>
@@ -152,10 +152,10 @@
                     (assigneeForm.get('post')?.dirty || assigneeForm.get('post')?.touched ||isSubmitted)">
 
                         <span class="text-red-600" *ngIf="assigneeForm.get('post')?.errors?.['required']">
-                            Name is required.
+                            Position is required.
                         </span>
                         <span class="text-red-600" *ngIf="assigneeForm.get('post')?.errors?.['minlength']">
-                            Name must be at least 4 characters long.
+                            Position must be at least 4 characters long.
                         </span>
 
                     </span>
@@ -172,10 +172,10 @@
 
 
                         <span class="text-red-600" *ngIf="assigneeForm.get('skill')?.errors?.['required']">
-                            Name is required.
+                            Skill is required.
                         </span>
                         <span class="text-red-600" *ngIf="assigneeForm.get('skill')?.errors?.['minlength']">
-                            Name must be at least 4 characters long.
+                            Skill must be at least 4 characters long.
                         </span>
 
                     </span>

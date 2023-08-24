@@ -1,0 +1,39 @@
+<div class="flex flex-col ">
+   <app-chat-nav style="z-index: 35;"></app-chat-nav>
+   <aside style="z-index: 32; "><app-chat-side-nav (messageData)="getMessage($event)"></app-chat-side-nav></aside>
+</div>
+<section>
+   <div *ngIf="queryData.id !== undefined" class="p-4 sm:ml-64" style="height: 90vh;">
+      <div
+         class="p-4 h-full flex flex-col grid content-between border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+         <div class="flex flex-col gap-4 mb-4 overflow-auto">
+            <div class="flex flex-col gap-2 mb-2 " *ngFor="let data of messageArray">
+               <div *ngIf="data.user == 'receiver' " class="">
+                  <div class="flex flex-col justify-start">
+                     <small
+                        class="flex items-center w-fit justify-start text-lg py-1 px-2 rounded bg-gray-50 dark:bg-gray-400">{{data.message}}</small>
+                     <small
+                        class="flex items-center w-fit justify-start py-1 px-1 rounded bg-gray-50 dark:bg-gray-400">{{data.time|
+                        date:'shortTime'}}</small>
+                  </div>   
+               </div>
+               <div *ngIf="data.user == 'sender' " class="flex justify-end ">
+                  <div class="flex flex-col items-end justify-end">
+                     <small
+                        class="flex items-center w-fit justify-start text-lg py-1 px-2 rounded bg-red-50 dark:bg-red-400">{{data.message}}</small>
+                     <small
+                        class="flex items-center w-fit justify-start py-1 px-1 rounded bg-red-50 dark:bg-red-400">{{data.time
+                        | date:'shortTime'}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="flex ">
+            <textarea ngModel placeholder="Type a message" [(ngModel)]="messageText"
+               class="w-full text-xl bg-gray-400 h-10 " name="message" id="message" cols="1" rows="10"></textarea>
+            <button type="button" class="bg-gray-500 p-2 hover:bg-gray-900" role="button"
+               (click)="sendMessage()">send</button>
+         </div>
+      </div>
+   </div>
+</section>

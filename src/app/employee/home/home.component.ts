@@ -4,7 +4,7 @@ import { HelpersService } from '../services/helpers.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-employee-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

@@ -11,6 +11,8 @@ import { AssigneeTaskComponent } from '../helper/assignee/assignee.component';
 import { PriorityComponent } from '../helper/priority/priority.component';
 import { StatusComponent } from '../helper/status/status.component';
 import { TaskViewComponent } from 'src/app/shared/modal/task-view/task-view.component';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/user/service/auth.service';
 
 @Component({
   selector: 'app-list',
@@ -23,10 +25,13 @@ export class ListComponent implements OnInit {
   constructor(
     private store: Store,
     public modal: MatDialog,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router:Router,
+    private authService:AuthService
   ) { }
 
   ngOnInit(): void {
+
     this.store.dispatch(invokeProjectAPI())
     this.project$.subscribe(data => {
       if (data?.length > 0) {
@@ -36,6 +41,7 @@ export class ListComponent implements OnInit {
 
   }
 
+  projectHead?:string = ''
   readonly = true
   assignees = this.taskService.getAssignee()
   project$ = this.store.pipe(select(selectProject))
@@ -55,7 +61,7 @@ export class ListComponent implements OnInit {
 
   dataFetcher(data: Project[]) {
     this.projects = data
-    this.projectId = data[this.projects.length - 1]._id
+    // this.projectId = data[this.projects.length - 1]._id
     this.invokeTask()
   }
 
@@ -88,11 +94,19 @@ export class ListComponent implements OnInit {
 
   task$ = this.store.pipe(select(selectTask))
 
-  changed() {
-    const selectedOption = (document.getElementById('underline_select') as HTMLSelectElement).selectedOptions[0];
-    const selectedId = selectedOption.value;
-    this.projectId = selectedId
+  changed(event: any) {
+    this.projectId = event
+    const project = this.projects.find(_ => _._id == this.projectId)
+    this.projectHead = project?.title
     this.taskFetcher(this.projectTask)
+  }
+
+  viewTask(task: Task) {
+    this.modal.open(TaskViewComponent, {
+      width: '90%',
+      height: '90%',
+      data: [task, this.assignees,'user',this.projectHead]
+    })
   }
 
   openDelete(id?: string) {
@@ -132,13 +146,16 @@ export class ListComponent implements OnInit {
     }
 
     if (id) {
+      const user=this.authService.getToken()
+
+
       this.task$.forEach(data => {
         updateTask = data.filter((_) => _._id == id)
       })
 
       this.modal.open(component, {
         width: '248x',
-        data: [updateTask, 'task']
+        data: [updateTask, 'task','admin']
       })
     }
 
@@ -146,7 +163,6 @@ export class ListComponent implements OnInit {
 
   editHead(title?: string) {
     if (this.readonly) {
-      console.log(title);
       if (title) {
         this.taskTitle = title
       }
@@ -158,20 +174,18 @@ export class ListComponent implements OnInit {
 
   saveTask(id?: string) {
     this.readonly = true
-    console.log();
     const task = this.currentData.filter((_) => _._id == id)
-    console.log(this.taskTitle);
-    this.taskService.getUpdate (task,this.taskTitle,'title','user')
+    this.taskService.getUpdate(task, this.taskTitle, 'title', 'user')
   }
 
-  viewTask(task: Task) {
-    this.modal.open(TaskViewComponent, {
-      width: '90%',
-      height: '90%',
-      data: [task, this.assignees]
-    })
-  }
+
 
   isHidden = false
+
+  newTask(){
+    this.router.navigate(['/space/task/new'],
+    { queryParams:{project:this.projectId}}
+    )
+  }
 
 }

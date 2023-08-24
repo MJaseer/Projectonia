@@ -13,6 +13,13 @@ import { AssigneeTaskComponent } from 'src/app/user/space/Project/Tasks/helper/a
 import { PriorityComponent } from 'src/app/user/space/Project/Tasks/helper/priority/priority.component';
 import { StatusComponent } from 'src/app/user/space/Project/Tasks/helper/status/status.component';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { EmployeeService } from 'src/app/employee/services/employee.service';
+import { i_history } from 'src/app/global/user/i_history';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-task-view',
@@ -25,17 +32,25 @@ import { FormsModule } from '@angular/forms';
     StatusPipe,
     MonthAndDatePipe,
     AssigneePipe,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatListModule,
+    MatDividerModule
   ],
 })
 
 export class TaskViewComponent implements OnInit {
 
+  readonly = true
+  projectHead = ''
+
   constructor(
     public dialogRef: MatDialogRef<TaskViewComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public modal: MatDialog,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private employeeService:EmployeeService
   ) { }
 
   form = {
@@ -43,11 +58,17 @@ export class TaskViewComponent implements OnInit {
     description: ''
   }
 
+
+
+  attachments = []
+  history!:i_history[]
+
   data!: Task;
 
   assignees!: Assignee[]
 
   ngOnInit(): void {
+    this.projectHead = this.dialogData[3]
     this.data = this.dialogData[0]
     this.assignees = this.dialogData[1]
     if(this.data.title){
@@ -56,6 +77,14 @@ export class TaskViewComponent implements OnInit {
     if(this.data.description){
       this.form.description = this.data.description
     }    
+    
+    if(this.data._id){
+      this.taskService.getHistory(this.data._id).subscribe(result => {
+        this.history = result
+
+        })
+    }
+
   }
 
   dialogueClose() {
@@ -72,9 +101,17 @@ export class TaskViewComponent implements OnInit {
 
   }
 
+  setAsDone(){
+
+  }
+
   openDrop(item: string, id?: string) {
+    console.log(item,id);
+    
     let updateTask = [this.data]
     let component: any
+
+    
 
     switch (item) {
       case 'date':
@@ -90,10 +127,19 @@ export class TaskViewComponent implements OnInit {
         component = StatusComponent
         break;
     }
-    this.modal.open(component, {
-      width: '248x',
-      data: [updateTask, 'task']
-    })
+    if(this.dialogData[1] == 'employee') {
+      let user = this.employeeService.getToken()
+      this.modal.open(component, {
+        width: '248x',
+        data: [updateTask, 'task',this.dialogData[1],user._id]
+      })
+    } else {
+      this.modal.open(component, {
+        width: '248x',
+        data: [updateTask, 'task',this.dialogData[1]]
+      })
+    }
+   
   }
 
   saveTitle() {

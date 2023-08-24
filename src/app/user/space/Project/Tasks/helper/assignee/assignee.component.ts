@@ -1,12 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Store, select } from '@ngrx/store';
-import { Appstate } from 'src/app/shared/store/app-state';
 import { TaskService } from '../../../../../../global/services/task.service';
-import { Observable } from 'rxjs';
-import { Assignee } from 'src/app/global/store/space-store';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-assignee',
@@ -24,16 +21,13 @@ export class AssigneeTaskComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AssigneeTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    private taskService:TaskService
+    private taskService:TaskService,
+    private toastr: ToastrService
   ) { }
 
   data: any;
-  // assignee$!: Observable<Assignee[]>; 
   assignees!:any;
 
-  // dataFetcher(data:Assignee[]){
-  //   this.assignees = data
-  // }
   
   ngOnInit(): void {
 
@@ -41,10 +35,6 @@ export class AssigneeTaskComponent implements OnInit {
       this.data = this.dialogData[0]
     });
     this.assignees = this.taskService.getAssignee()
-    
-    // this.assignee$.forEach(data => {
-    //   this.dataFetcher(data)
-    // })
 
   }
 

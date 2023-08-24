@@ -37,7 +37,8 @@ export interface Task{
     attachments?:[{path?:string}],
     createdAt?:string,
     modifiedAt?:string,
-    __v?:number
+    __v?:number,
+    modifier?:string
 }
 
 export interface Manager {

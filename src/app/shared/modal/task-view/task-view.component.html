@@ -1,74 +1,139 @@
-<form class="relative bg-white rounded-md shadow dark:bg-gray-700" style="z-index: 50; height: 100%">
-    <div class="flex items-start justify-between pt-3 px-3 border-b rounded-t dark:border-gray-600">
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            <!-- {{data.title}} -->
-        </h3>
-        <button type="button" (click)="dialogueClose()"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-hide="staticModal">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close modal</span>
-        </button>
-    </div>
-    <div class="border-b rounded-t dark:border-gray-600 p-4 ">
-        <ul class="flex flex-raw gap-2">
-            <li class="flex align-center justify-center ">
-                <button class="text-gray-200  text-b p-1 rounded-l" (click)="openDrop('status',data._id)"
-                    [ngStyle]="{background:data.status}">{{data.status|status}}</button>
-            </li>
-            <li class="flex align-center justify-center p-1" role="button" (click)="openDrop('assignee',data._id)">
-                <svg class="w-6 h-6 text-gray-800 dark:text-gray-800 hover:text-white" aria-hidden="true"
-                    *ngIf="!data.assigneeId ;else assignee" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    viewBox="0 0 20 18">
-                    <path
-                        d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
+<div class="relative flex justify-between rounded-md shadow bg-gray-900     " style="z-index: 50; height: 100%">
+    <form style="width: 65%;" class="dark:bg-gray-700">
+        <div class="flex items-start justify-between ms-4 py-3 px-3 mt-1 border-b rounded-t dark:border-gray-600">
+            <span class="text-sm bg-gray-200 rounded-md text-gray-900 dark:text-gray-600 px-1">
+                {{projectHead}} -> {{data.title}}
+            </span>
+
+        </div>
+        <div class="border-b rounded-t dark:border-gray-600 ">
+            <div class="flex flex-raw justify-between items-center p-1">
+                <ul class="flex flex-raw gap-2 mx-8">
+                    <li class="flex items-center justify-center p-0 mt-2 mb-2 ">
+                        <button class="text-gray-200  text-bold  rounded-l" style="min-width: 70px;max-height: 30px;"
+                            (click)="openDrop('status',data._id)"
+                            [ngStyle]="{background:data.status}">{{data.status|status}}</button>
+                    </li>
+                    <li disabled class="flex items-center justify-center rounded-r mt-2 hover:bg-gray-400 bg-gray-600"
+                        style="max-height: 30px;">
+                        <button disabled class="text-gray-200 hover:bg-gray-400 bg-gray-600"><svg
+                                class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg></button>
+                    </li>
+                    <li class="flex items-center justify-center p-1" role="button"
+                        (click)="openDrop('assignee',data._id)">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-gray-200 hover:text-white" aria-hidden="true"
+                            *ngIf="!data.assigneeId ;else assignee" xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor" viewBox="0 0 20 18">
+                            <path
+                                d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Zm11-3h-2V5a1 1 0 0 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 0 0 2 0V9h2a1 1 0 1 0 0-2Z" />
+                        </svg>
+                        <ng-template #assignee class="flex items-center justify-center  ">
+                            <span
+                                class="flex items-center justify-center p-1 text-sm text-gray-200 hover:dark:text-gray-600 hover:bg-gray-200 mt-1 mb-1 rounded-md bg-gray-400 dark:text-gray-900"
+                                aria-hidden="true" style="width: fit-content">{{data.assigneeId |
+                                assignee : assignees }}</span>
+                        </ng-template>
+                    </li>
+
+                    <li class="flex items-center justify-center p-1 " (click)="openDrop('priority',data._id)">
+                        <mat-icon class="w-7 h-7 rounder-md text-gray-200 hover:bg-gray-400" aria-hidden="true"
+                            [ngStyle]="{color:data.priority}">tour</mat-icon>
+                    </li>
+
+                </ul>
+                <div class="flex items-center justify-center " (click)="openDelete()" role="button">
+                    <mat-icon class="w-7 h-7 mt-1 mr-5 text-white hover:bg-gray-200 hover:text-gray-900 "
+                        aria-hidden="true">delete</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class="pt-6 px-6 space-y-6  rounded-md ">
+            <input ngModel #taskTitle="ngModel" [(ngModel)]="form.title" name="taskTitle" [value]="data.title"
+                maxlength="15" (blur)="saveTitle()" id="taskTitle" required minlength="4"
+                class="p-2 w-full rounded-md text-lg bg-gray-600 text-white ">
+            <span class="text-red-600" *ngIf="taskTitle.invalid &&(taskTitle.dirty || taskTitle.touched)">
+                <span class="text-red-600" *ngIf="taskTitle.errors?.['minlength'] && ['maxlength']">Title length
+                    must be greater than 4 and less than 15 </span>
+                <span class="text-red-600" *ngIf="taskTitle.errors?.['required']">Title name is required </span>
+            </span>
+        </div>
+
+        <div class="p-6 space-y-6 h-2/5 rounded-md ">
+            <textarea ngModel #description="ngModel" type="text" [(ngModel)]="form.description" name="decription"
+                (blur)="saveDescription()" [value]="data.description" id="decription" cols="30" rows="10" required
+                minlength="6"
+                class="w-full p-2 rounded-md text-lg h-full bg-gray-600 text-white flex items-start text-start text-left"></textarea>
+            <span class="text-red-600" *ngIf="description.invalid &&(description.dirty || description.touched)">
+                <span class="text-red-600" *ngIf="description.errors?.['minlength'] && ['maxlength']">Description length
+                    must be greater than 6 </span>
+                <span class="text-red-600" *ngIf="description.errors?.['required']">Description is required </span>
+            </span>
+        </div>
+        <!-- <div>
+            <div class="flex">
+                <h2>Attchment</h2>
+                <button>Add</button>
+            </div>
+            <div class="flex" [hidden]="readonly">
+                <mat-list hidden="true" role="list">
+                    <mat-list-item hidden="true" role="listitem">Item 1</mat-list-item>
+                    <mat-list-item role="listitem">Item 2</mat-list-item>
+                    <mat-list-item role="listitem">Item 3</mat-list-item>
+                </mat-list>
+            </div>
+        </div> -->
+
+
+    </form>
+    <div class="bg-gray-400 h-full" style="width: 34.8%;">
+        <div class="flex items-start justify-between p-2 border-b rounded-t dark:border-gray-600">
+
+            <button type="button" (click)="dialogueClose()"
+                class="text-gray-400 dark:bg-gray-700 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                data-modal-hide="staticModal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>
-                <ng-template #assignee>
-                    <p class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900" aria-hidden="true"
-                        style="width: 50px;padding-top: 7px;">{{data.assigneeId |
-                        assignee : assignees }}</p>
-                </ng-template>
-            </li>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
 
-            <li lass="flex align-center justify-center p-1 " (click)="openDrop('priority',data._id)">
-                <mat-icon class="w-6 h-6 mt-1 " aria-hidden="true" [ngStyle]="{color:data.priority}">tour</mat-icon>
-            </li>
-            <li lass="flex align-center justify-center p-1 " (click)="openDelete()" role="button">
-                <mat-icon class="w-6 h-6 mt-1 text-white" aria-hidden="true">delete</mat-icon>
-            </li>
-        </ul>
-    </div>
-    <div class="pt-6 px-6 space-y-6  rounded-md ">
-        <input ngModel #taskTitle="ngModel" [(ngModel)]="form.title" name="taskTitle" [value]="data.title"
-            maxlength="15" (blur)="saveTitle()" id="taskTitle" required minlength="4"
-            class="p-2 w-full rounded-md text-lg bg-gray-600 text-white ">
-        <span class="text-red-600" *ngIf="taskTitle.invalid &&(taskTitle.dirty || taskTitle.touched)">
-            <span class="text-red-600" *ngIf="taskTitle.errors?.['minlength'] && ['maxlength']">Title length
-                must be greater than 4 and less than 15 </span>
-            <span class="text-red-600" *ngIf="taskTitle.errors?.['required']">Title name is required </span>
-        </span>
-    </div>
+        <div class="border-b rounded-t dark:border-gray-600 p-1 ">
+            <div class="flex flex-col dark:border-gray-600 ">
+                <small class="text-sm">Due Date</small>
+                <button type="button" class="text-gray-900 flex items-start over:text-white font-medium rounded-md 
+                        dark:border-gray-600 dark:text-gray-400 dark:hover:text-white " [hidden]="!readonly"
+                    (click)="openDrop('date',data._id)">
+                    <svg *ngIf="data.dueDate == 'NIL';else dueDate " style="width: 50px;"
+                        class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                    </svg>
+                    <ng-template #dueDate>
+                        <span class="w-6 h-6  text-gray-800 dark:text-gray-800 hover:text-gray-900 " aria-hidden="true"
+                            style="width: 50px;">
+                            {{data.dueDate |
+                            monthAndDate }}</span>
+                    </ng-template>
+                </button>
+            </div>
+        </div>
 
-    <div class="p-6 space-y-6 h-2/5 rounded-md ">
-        <textarea ngModel #description="ngModel" type="text" [(ngModel)]="form.description" name="decription"
-            (blur)="saveDescription()" [value]="data.description" id="decription" cols="30" rows="10" required
-            minlength="6"
-            class="w-full p-2 rounded-md text-lg h-full bg-gray-600 text-white flex items-start text-start text-left"></textarea>
-        <span class="text-red-600" *ngIf="description.invalid &&(description.dirty || description.touched)">
-            <span class="text-red-600" *ngIf="description.errors?.['minlength'] && ['maxlength']">Description length
-                must be greater than 6 </span>
-            <span class="text-red-600" *ngIf="description.errors?.['required']">Description is required </span>
-        </span>
+        <div class="pt-6 px-6 space-y-6  rounded-md ">
+            <div *ngFor="let datas of history" class="gap-2 flex flex-col bg-gray-200 p-2 rounded-md ">
+                <div class=" gap-2 flex flex-col overflow-auto bg-gray-200 p-2 rounded-md">
+                    <span class="">{{datas.content}}</span>
+                    <span>{{datas.createdAt | date}}</span>
+                    <span>{{datas.doneBy | assignee :assignees}}</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Modal footer -->
-    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-        <button data-modal-hide="staticModal" type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I
-            accept</button>
-        <button data-modal-hide="staticModal" type="button"
-            class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
-    </div>
-</form>
+</div>

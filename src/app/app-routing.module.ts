@@ -16,6 +16,10 @@ const routes: Routes = [
     loadChildren:()=> import('./admin/admin.module').then((_) => _.AdminModule)
   },
   {
+    path:'chats',
+    loadChildren:() => import('./chat/chat.module').then((_) => _.ChatModule)
+  },
+  {
     path:'**',
     component:NotFoundComponent
   }

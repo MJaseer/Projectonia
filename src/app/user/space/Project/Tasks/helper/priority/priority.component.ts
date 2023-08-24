@@ -1,16 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Store, select } from '@ngrx/store';
-import { Appstate } from 'src/app/shared/store/app-state';
 import { TaskService } from '../../../../../../global/services/task.service';
-import { Observable } from 'rxjs';
-import { Assignee, Task } from 'src/app/global/store/space-store';
 import { CommonModule, KeyValue, NgFor } from '@angular/common';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
-import { invokeUpdateTaskAPI } from 'src/app/global/store/space.action';
-import { selectAppState } from 'src/app/shared/store/app.selector';
-import { setAPIStatus } from 'src/app/shared/store/app.action';
-import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @Component({

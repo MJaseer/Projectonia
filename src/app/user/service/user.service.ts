@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Params } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
+
+const url = 'http://localhost:3000/api'
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class UserService {
   register({ name, email, password }: any) {
     const data = { name, email, password }
     if (name && email && password) {
-      return this.http.post('http://localhost:3000/api/register', data, { withCredentials: true })
+      return this.http.post(`${url}/register`, data, { withCredentials: true })
     }
     return throwError(new Error('Failed to register'))
   }
@@ -24,28 +26,32 @@ export class UserService {
   login({ email, password }: any) {
     const data = { email, password }
     if (email && password) {
-      return this.http.post('http://localhost:3000/api/login', data, { withCredentials: true })
+      return this.http.post(`${url}/login`, data, { withCredentials: true })
     }
     return throwError(new Error('Failed to loggin'))
   }
 
   otpPost(data: any) {
-    return this.http.post('http://localhost:3000/api/otpPost', data, { withCredentials: true })
+    return this.http.post(`${url}/otpPost`, data, { withCredentials: true })
   }
 
   forgotPassword(email: string) {
     const data = {
       email: email
     }
-    return this.http.post('http://localhost:3000/api/forgotPassword', data, { withCredentials: true })
+    return this.http.post(`${url}/forgotPassword`, data, { withCredentials: true })
   }
 
   resetPassword(token: string) {
-    return this.http.get(`http://localhost:3000/api/reset?token=${token}`, { withCredentials: true })
+    return this.http.get(`${url}/reset?token=${token}`, { withCredentials: true })
   }
 
   setPassword(passwords: any) {
-    return this.http.post(`http://localhost:3000/api/setPassword`, passwords, { withCredentials: true })
+    return this.http.post(`${url}/setPassword`, passwords, { withCredentials: true })
+  }
+
+  authenticateUser(payLoad: any) {
+    return this.http.post(`${url}/getVerified`, payLoad, { withCredentials: true })
   }
 
 }

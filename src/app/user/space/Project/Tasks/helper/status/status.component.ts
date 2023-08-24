@@ -37,8 +37,8 @@ export class StatusComponent implements OnInit{
   }
 
 
-  getStatus(status:string){    
-    this.taskService.getUpdate(this.data,status,'status',this.dialogData[2])
+  getStatus(status:string){   
+    this.taskService.getUpdate(this.data,status,'status',this.dialogData[2],this.dialogData[3])
     this.closeDialog()
   }
 

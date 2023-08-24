@@ -17,8 +17,9 @@ export class EmployeeService {
   }
 
   getToken() {
+    
     const data = localStorage.getItem('employee');
-    if (data) {
+    if (data) {      
       return JSON.parse(data)
     }
     return null

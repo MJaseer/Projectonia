@@ -5,17 +5,15 @@
 <div class="p-4 sm:ml-64 ">
     <div class="flex justify-between items-center">
         <div>
-            <select id="underline_select" (change)="changed()"
-                class="block px-2 py-2 text-sm gap-2 text-gray-900 bg-transparent border-0 border-gray-200 appearance-none dark:text-gray-900 dark:border-gray-700 focus:outline-none focus:ring-0 hover:bg-gray-200 rounded-lg shadow-sm">
-                <option class="hover:bg-gray-300 px-2 py-2 mt-2" *ngFor="let data of projects" [value]="data._id"
-                    selected>
-                    {{data.title}}</option>
-            </select>
+            <mat-form-field>
+                <mat-label>Select Project</mat-label>
+                <mat-select (valueChange)="changed($event)">
+                    <mat-option *ngFor="let data of availableProject" [value]="data._id">
+                        {{data.title}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
-
-        <button type="button" routerLink="/space/task/new"
-            class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-4 py-2 text-center  mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">NEW
-            TASK</button>
     </div>
 
     <div
@@ -57,7 +55,7 @@
 
                     </li> -->
                     <li>
-                        <button type="button" class="text-gray-900  hover:text-white  focus:ring-4
+                        <button disabled class="text-gray-900  hover:text-white  focus:ring-4
                         focus:outline-none font-medium rounded-md  text-center 
                         dark:border-gray-600 dark:text-gray-400 dark:hover:text-white"
                            ><mat-icon [ngStyle]="{color:data.priority}"
@@ -65,7 +63,7 @@
 
                     </li>
                     <li>
-                        <button type="button" class="text-gray-900  hover:text-white  focus:ring-4 
+                        <button disabled class="text-gray-900  hover:text-white  focus:ring-4 
                         focus:outline-none font-medium rounded-md  text-center 
                         dark:border-gray-600 dark:text-gray-400 dark:hover:text-white "
                             >

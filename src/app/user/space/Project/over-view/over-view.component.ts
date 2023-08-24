@@ -6,6 +6,7 @@ import { Project } from '../interface/project';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modal/modal.component';
 import { Task } from '../../../../global/store/space-store';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-over-view',
@@ -15,6 +16,7 @@ import { Task } from '../../../../global/store/space-store';
 export class OverViewComponent implements OnInit {
 
   constructor(
+    private toastr: ToastrService,
     private store: Store,
     public modal: MatDialog) { }
 
@@ -49,7 +51,9 @@ export class OverViewComponent implements OnInit {
   openDelete(id?: string) {
     if (id) {
       this.project$.forEach(data => {
-        this.deleteProject = data.filter((_) => _._id == id)
+        if(data){
+          this.deleteProject = data.filter((_) => _._id == id)
+        }
       })
 
       this.modal.open(ModalComponent, {

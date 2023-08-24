@@ -9,6 +9,7 @@ import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { Assignee } from '../../../../global/store/space-store';
 import { SpaceService } from '../../../../global/services/space.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-assignee',
@@ -21,7 +22,8 @@ export class AddAssigneeComponent implements OnInit {
     private store: Store,
     private appStore: Store<Appstate>,
     private router: Router,
-    private service: SpaceService
+    private service: SpaceService,
+    private toastr:ToastrService
     // private customValidator: ValidatorsService,
   ) { }
 
@@ -68,16 +70,20 @@ export class AddAssigneeComponent implements OnInit {
     };
 
     if (this.assigneeForm.valid) {
-      this.store.dispatch(invokeAddAssigneAPI({ newAssignee: this.assigne }))
-      let apiStatus$ = this.appStore.pipe(select(selectAppState))
-      apiStatus$.subscribe((apState) => {
-        this.router.navigate(['/space/assignee'])
-        if (apState.apiStatus == 'success') {
-          this.appStore.dispatch(
-            setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
-          )
-        }
-      })
+      if(this.assigneeForm.value.cpassword == this.assigneeForm.value.password) {
+        this.store.dispatch(invokeAddAssigneAPI({ newAssignee: this.assigne }))
+        let apiStatus$ = this.appStore.pipe(select(selectAppState))
+        apiStatus$.subscribe((apState) => {
+          this.router.navigate(['/space/assignee'])
+          if (apState.apiStatus == 'success') {
+            this.appStore.dispatch(
+              setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
+            )
+          }
+        })
+      } else {
+        this.toastr.error('Confirm password must be same as password','Password Error')
+      }
     } else {
       console.log(this.assigneeForm, 'error');
       this.router.navigate(['/space/addAssignee'])

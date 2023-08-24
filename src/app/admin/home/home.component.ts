@@ -4,7 +4,7 @@ import { AdminService } from '../service/admin.service';
 import { HelperService } from '../service/helper.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-admin-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

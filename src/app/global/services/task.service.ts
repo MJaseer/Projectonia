@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { invokeAssigneAPI, invokeFetchTaskAPI, invokeUpdateTaskAPI } from '../store/space.action';
-import { selectAssignee, selectTask } from '../store/space.selector';
+import { invokeAssigneAPI, invokeFetchTaskAPI, invokeProjectAPI, invokeUpdateTaskAPI } from '../store/space.action';
+import { selectAssignee, selectProject, selectTask } from '../store/space.selector';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { Appstate } from 'src/app/shared/store/app-state';
 import { Router } from '@angular/router';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
-import { Assignee, Task } from '../store/space-store';
+import { Assignee, Project, Task } from '../store/space-store';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { i_history } from '../user/i_history';
 
+const url = 'http://localhost:3000/api'
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +22,9 @@ export class TaskService {
   constructor(
     private store: Store,
     private appStore: Store<Appstate>,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
+    private http:HttpClient
   ) { }
 
   assignees: any;
@@ -32,7 +38,6 @@ export class TaskService {
         if (data.length > 0 && this.hi == 0) {
           this.hi++;
           this.assignees = data;
-          console.log(this.assignees);
           return this.assignees
         }
       });
@@ -46,50 +51,19 @@ export class TaskService {
     }
   }
 
+  getHistory(task_id:string){
+    return this.http.get<i_history[]>(`${url}/getHistory/${task_id}`, { withCredentials: true })
+  }
+
   tasks!: Task[];
   task: number = 0
 
-  getProject() {
-    try {
-      this.store.dispatch(invokeFetchTaskAPI());
-      this.store.pipe(select(selectTask)).subscribe(data => {
-        console.log(data);
-        this.tasks = data
 
-        if (data.length > 0 && this.task == 0) {
-          this.task++;
-          this.tasks = data;
-          console.log(this.tasks);
-          // return this.tasks
-        } else {
-          // return this.task
-        }
-      });
 
-      if (this.tasks?.length > 0) {
-        // return this.tasks
-      } else {
-        // return null
-      }
-    } catch (error) {
-      // return null
-    }
-  }
 
   // tasks: any;
   // hi: number = 0
 
-  getTask() {
-    let task!: Task[]
-    this.store.dispatch(invokeFetchTaskAPI())
-    this.store.pipe(select(selectTask)).subscribe((result) => {
-      if (result) {
-        task = result
-      }
-    })
-    return task
-
-  }
 
   searchTask(data: Task[], keyword: string) {
     let value = data.filter((_) => _.title == keyword)
@@ -117,8 +91,7 @@ export class TaskService {
   }
 
 
-  getUpdate(data: any, updatedData: string, item: string, from?: string) {
-    console.log(item);
+  getUpdate(data: any, updatedData: string, item: string, from?: string, modifier?: string) {
 
     let newData: any
 
@@ -144,9 +117,17 @@ export class TaskService {
         })
         break;
       case 'status':
-        newData = Object.assign({}, data[0], {
-          status: updatedData
-        })
+        if (modifier != undefined) {
+          newData = Object.assign({}, data[0], {
+            status: updatedData,
+            modifier: modifier
+          })
+        } else {
+          newData = Object.assign({}, data[0], {
+            status: updatedData,
+          })
+        }
+
         break;
       case 'description':
         newData = Object.assign({}, data[0], {
@@ -154,7 +135,6 @@ export class TaskService {
         })
         break;
     }
-    console.log(newData);
     this.store.dispatch(invokeUpdateTaskAPI({ updateTask: { ...newData } }))
     let apiStatus$ = this.appStore.pipe(select(selectAppState))
     return apiStatus$.subscribe((apState) => {
@@ -162,13 +142,13 @@ export class TaskService {
         if (from == 'employee') {
           this.router.navigate(['/employee/tasks'])
         } else {
-          this.router.navigate(['/space/task'])
+          this.router.navigate(['/space/task'],
+            { queryParams: { updated: item } }
+          )
         }
+        this.toastr.success(`${item} succesfully changed`, 'success')
         this.appStore.dispatch(setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } }))
       }
     })
   }
-
-
-
 }

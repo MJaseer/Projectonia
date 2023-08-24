@@ -23,6 +23,10 @@ import { LoadinComponent } from './shared/modal/loadin/loadin.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from './shared/modal/error/error.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule } from 'ngx-toastr';
+import { WishPipe } from './pipes/wish.pipe';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +44,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     StoreModule.forRoot({ appState: appReducer }),
-    StoreModule.forFeature('manager',managerReducer),
+    StoreModule.forFeature('manager', managerReducer),
     StoreModule.forFeature('project', projectReducer),
     StoreModule.forFeature('assignee', assigneeReducer),
     StoreModule.forFeature('Task', taskReducer),
@@ -56,7 +60,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatIconModule,
     OverlayModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ToastrModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    }),
+    WishPipe,
+    CanvasJSAngularChartsModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

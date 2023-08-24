@@ -29,7 +29,13 @@ import { MonthAndDatePipe } from 'src/app/pipes/month.pipe';
 import { StatusPipe } from 'src/app/pipes/status.pipe';
 import { AssigneePipe } from 'src/app/pipes/assignee.pipe';
 import { OverlayModule } from '@angular/cdk/overlay';
-
+import { ToastrModule } from 'ngx-toastr';
+import { WishPipe } from 'src/app/pipes/wish.pipe';
+import {MatSelectModule} from '@angular/material/select';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { Chart } from 'chart.js';
+import { registerables } from 'chart.js';
+Chart.register(...registerables)
 
 @NgModule({
   declarations: [
@@ -63,7 +69,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MonthAndDatePipe,
     StatusPipe,
     AssigneePipe,
-    OverlayModule
+    OverlayModule,
+    ToastrModule.forRoot({
+      preventDuplicates:true
+    }),
+    WishPipe,
+    CanvasJSAngularChartsModule,
+    MatSelectModule,
   ],
   providers: [
     {
