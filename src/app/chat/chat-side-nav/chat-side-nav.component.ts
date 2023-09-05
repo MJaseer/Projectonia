@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/user/service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { HttpClient } from '@angular/common/http';
+import { SpaceService } from 'src/app/global/services/space.service';
+import { Subject } from 'rxjs';
 
 const url = 'http://localhost:3000/api'
 
@@ -16,7 +18,9 @@ const url = 'http://localhost:3000/api'
 
 export class ChatSideNavComponent implements OnInit {
 
-  @Output() messageData!:EventEmitter <any> ;
+  private _unsubscribe$ = new Subject();
+
+  @Output() messageData!: EventEmitter<any>;
 
   constructor(
     private _chatService: ChatService,
@@ -24,9 +28,10 @@ export class ChatSideNavComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private employeeService: EmployeeService,
-    private http: HttpClient
-  ) { 
+    private http: HttpClient,
+  ) {
     this.messageData = new EventEmitter<any>();
+
   }
 
   assignees: any[] = []
@@ -48,7 +53,7 @@ export class ChatSideNavComponent implements OnInit {
     if (this.sender == 'manager') {
       data = this._authService.getToken()
       this.user_id = data._id
-      
+
     } else if (this.sender == 'employee') {
       data = this.employeeService.getToken()
       this.managerId = data.managerId
@@ -58,15 +63,90 @@ export class ChatSideNavComponent implements OnInit {
 
   }
 
+  managerShowData: {
+    fname: any;
+    online: boolean;
+    user_id: any;
+  }[] = []
+
+
+  onlineIndicator(assignee: any[]) {
+    this._chatService.activatedUsers().subscribe((data) => {
+      let managerShowData: {
+        fname: any;
+        online: boolean;
+        user_id: any;
+      }[] = []
+
+
+
+
+      Object.keys(data).forEach((key) => {
+        if (data) {
+
+          assignee.forEach(assigneData => {
+            if (assigneData) {
+              if (this.sender == 'manager') {
+                if (assigneData._id == data[key].user_id) {
+                  console.log(assigneData,'1');
+                  managerShowData.push({ fname: assigneData.fname, online: true, user_id: assigneData._id })
+                } else {
+                  console.log('else');
+                  
+                  managerShowData.push({ fname: assigneData.fname, online: false, user_id: assigneData._id })
+                }
+              } else {
+                if (assigneData._id == data[key].user_id) {
+                  console.log(assigneData);
+                  managerShowData.push({ fname: assigneData.fname, online: true, user_id: assigneData._id })
+                } else {
+                  managerShowData.push({ fname: assigneData.fname, online: false, user_id: assigneData._id })
+                }
+              }
+              managerShowData = Array.from(new Set(managerShowData))
+            }
+
+          })
+
+        }
+
+      })
+      this.managerShowData = Array.from(Object.values(managerShowData))
+
+      console.log(managerShowData,this.managerShowData);
+
+    });
+  }
+
   getAssigne() {
     const data = this.employeeService.getToken()
-    this.managerId = data.managerId
+    if (data) {
+      this.managerId = data.managerId
+    } else {
+      const data = this._authService.getToken()
+      this.managerId = data._id
+    }
     return this.http.get<Assignee[]>(`${url}/getAssignee/${this.managerId}`, { withCredentials: true })
+  }
+
+  getActivesUsers() {
+    const data = this.employeeService.getToken()
+    let id;
+    if (data) {
+      id = data._id
+    } else {
+      const data = this._authService.getToken()
+      id = data._id
+    }
+
+    this._chatService.acitvateUser(id)
   }
 
   fetchAssignees() {
     let count = 0
+    this.getActivesUsers()
     this.getAssigne().subscribe((result) => {
+
       if (result.length > 0 && count == 0) {
         result.filter(data => {
           if (data._id != this.user_id) {
@@ -77,6 +157,7 @@ export class ChatSideNavComponent implements OnInit {
         this.getWho()
       }
     })
+
   }
 
   getWho() {
@@ -94,9 +175,14 @@ export class ChatSideNavComponent implements OnInit {
     } else if (this.queryData.user == 'employee') {
       data = this.employeeService.getToken()
       this.user_id = data._id
-      let manager = this._authService.getToken()
+      let manager = {
+        fname: 'Manager',
+        _id: data.managerId
+      }
+
       this.assignees.push(manager)
     }
+    this.onlineIndicator(this.assignees)
     return data
   }
 
@@ -107,13 +193,14 @@ export class ChatSideNavComponent implements OnInit {
         receiver_id: id
       }
 
-      this._chatService.createNewChatRoom(data).subscribe((response) => {        
-        if (response.success) {          
-          this._chatService.getAllMessages(data).subscribe((messages) => {  
+
+      this._chatService.createNewChatRoom(data).subscribe((response) => {
+        if (response.success) {
+          this._chatService.getAllMessages(data).subscribe((messages) => {
             const values = {
-              messages:messages,
-              id:id
-            }       
+              messages: messages.messages,
+              id: id
+            }
             this.messageData.emit(values)
           })
           this.router.navigate([`/chats`],
@@ -124,6 +211,14 @@ export class ChatSideNavComponent implements OnInit {
         }
       })
     }
+  }
+
+  ngOnDestroy(): void {
+    if (this.user_id) {
+      this._chatService.disconnect(this.user_id);
+      this._unsubscribe$.unsubscribe();
+    }
+
   }
 
 }

@@ -1,13 +1,13 @@
 <app-nav></app-nav>
 
-<div class="parent bg-black" style=" height: 500%; ">
-
-    <div class="bg-gray-200 h-fit w-screen py-10 ps-10 gap-x-5">
-        <div class=" max-w-screen-md py-4">
-            <legend class="font-bold text-7xl 	">Great Project<br> needs Great planning</legend>
-            <legend class="font-bold text-4xl 	">Let's plan it together:</legend>
+<div class=" bg-black flex flex-col items-center h-fit p-0 m-0 ">
+    <header id="first-part"
+        class="bg-gradient-to-r from-black via-purple-500 to-pink-500 h-fit w-full py-10 ps-14 gap-y-5">
+        <div class=" max-w-screen-md py-4 ">
+            <legend class="font-bold text-3xl md:text-7xl text-white	">Great Project<br> needs Great planning</legend>
+            <legend class="font-bold text-2xl md:text-4xl text-white mt-3 md:mt-0	">Let's plan it together:</legend>
         </div>
-        <div class="py-4">
+        <div class=" py-4">
             <div>
                 <button
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
@@ -37,7 +37,8 @@
                         class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                         Dashboard
                     </span>
-                </button><button
+                </button>
+                <button
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
                     <span
                         class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -46,10 +47,166 @@
                 </button>
             </div>
         </div>
-        <div class="py-4 flex flex-col">
-            <input type="email" placeholder="email@gmail.com">
-            <button>Get started</button>
+        <div class="py-4 flex flex-col w-5/6 md:w-1/6 gap-y-3">
+
+            <input type="email" id="default-search"
+                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="projectonia@gmail.com" required>
+
+            <button
+                class="relative w-fit inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                <span
+                    class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    Get Started
+                </span>
+            </button>
         </div>
 
+    </header>
+    <div class="w-full flex flex-col justify-center items-center my-16 mb-72 md:mb-56 py-5 gap-y-5 ">
+        <div
+            class="bg-gray-100 w-5/6 rounded-[20px] bg-gradient-to-r from-blue-500 via-purple-500 via-purple-500 via-purple-500  flex p-8 ">
+            <div>
+                <a href="https://flowbite.com/" class="flex items-center mb-2" routerLink="/">
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3 " alt="Flowbite Logo" />
+                    <span
+                        class="self-center text-base lg:text-3xl  font-bold whitespace-nowrap dark:text-white">Projectonia</span>
+                </a>
+                <legend class="text-white text-2xl font-medium ">Coming Soon V.1.0</legend>
+                <span class="text-white text-lg  ">
+                    Something new is coming, Our new version will be coming with new feature.<br>
+                    Be ready to experience the vedio call feature just like chatting
+                </span>
+            </div>
+            <div>
+                <img src="" alt="">
+            </div>
+        </div>
+        <div
+            class="bg-gray-100 w-5/6 rounded-[20px] bg-gradient-to-r from-gray-200 via-purple-500 via-purple-500  to-black p-8 flex flex-col gap-y-5  ">
+            <div class="flex  justify-start w-5/6 text-lg text-black  font-medium gap-x-5  md:w-fit overflow-auto ">
+                <button class="">Project & Tasks</button>
+                <button>Chats</button>
+                <button>Goals</button>
+                <button>Views</button>
+                <button>Dashboard</button>
+            </div>
+            <div>
+                <div class="flex flex-col gap-y-3">
+                    <div class="ps-6">
+                        <legend class="text-black text-2xl font-medium ">Simplify works with <br> advanced <br> tools
+                            and
+                            get more done</legend>
+                        <span class="text-black text-lg  ">
+                            Plan, track, and manage any type of work with Projectonia.<br>
+                            that flexxes to your team needs
+                        </span>
+                    </div>
+                    <button
+                        class="relative w-fit inline-flex items-center justify-center p-0.5  mr-2 mt-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                        <span
+                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                            Get Started
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <img src="" alt="">
+                </div>
+            </div>
+
+        </div>
+        <div
+            class="bg-gray-100 w-5/6 rounded-[20px] bg-gradient-to-r from-black via-purple-500 to-pink-500  flex flex-col items-center  ">
+            <div class="flex  justify-center w-5/6 text-lg text-black mt-8 mx-8 font-medium gap-x-5  md:w-5/6 ">
+                <button class="">Docs</button>
+                <button>Dashboards</button>
+            </div>
+            <div class="mx-8 mb-8">
+                <div class="flex flex-col gap-y-3">
+                    <legend class="text-black text-2xl font-medium text-center">Rewrite the History <br> of <br> Docs
+                    </legend>
+                    <span class="text-black text-lg  ">
+                        <!-- Plan, track, and manage any type of work with Projectonia.<br>
+                        that flexxes to your team needs -->
+                    </span>
+
+                </div>
+                <div>
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div>
+                <button
+                    class="relative w-fit inline-flex items-center justify-center p-0.5  mr-2 mt-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span
+                        class="relative px-10 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                        Get Started
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div
+            class="bg-gray-100 w-5/6 rounded-[20px] bg-gradient-to-r from-gray-200 via-purple-500 via-purple-500  to-black p-8 flex flex-col gap-y-5  ">
+            <div class="flex justify-start w-5/6 text-lg  text-black  font-medium gap-x-5  md:w-fit overflow-auto ">
+                <button class="">Project Management</button>
+                <button>Engineering</button>
+                <button>Product</button>
+                <button>HR</button>
+                <button>IT</button>
+            </div>
+            <div>
+                <div class="flex flex-col gap-y-3 px-">
+                    <div class=" flex flex-col gap-y-5 ps-6">
+                        <div>
+                            <legend class="text-black text-2xl font-medium ">Prioritize Plan</legend>
+                            <span class="text-black text-lg  ">
+                                Plan your project the way you needed, Prioritize <br>
+                                every important parts accordingly, create a <br>
+                                road-map to deliver it perfectly and make it happen
+                            </span>
+                        </div>
+                        <div>
+                            <legend class="text-black text-2xl font-medium ">Collaberate</legend>
+                            <span class="text-black text-lg  ">
+                                Plan your project the way you needed, Prioritize <br>
+                                every important parts accordingly, create a <br>
+                                road-map to deliver it perfectly and make it happen
+                            </span>
+                        </div>
+                        <div>
+                            <legend class="text-black text-2xl font-medium ">Track Progress</legend>
+                            <span class="text-black text-lg  ">
+                                Plan your project the way you needed, Prioritize <br>
+                                every important parts accordingly, create a <br>
+                                road-map to deliver it perfectly and make it happen
+                            </span>
+                        </div>
+                    </div>
+                    <button
+                        class="relative w-fit inline-flex items-center justify-center p-0.5  mr-2 mt-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                        <span
+                            class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                            Get Started
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <img src="" alt="">
+                </div>
+            </div>
+
+        </div>
+        <div class="bg-gray-100 w-5/6 rounded-[20px] bg-gradient-to-r from-black via-purple-500 to-pink-500 p-8 flex ">
+            <div class=" w-5/6 z-10 rounded-[20px] flex text-lg text-white ">
+                <span>Company will become an import part of planners!.<br> By putting our work in company and organize
+                    it into ideal.
+                    <br>We made it easy to work across sectors. With perfect<br> communication through chatting and
+                    email threads.</span>
+            </div>
+        </div>
+    </div>
+    <div class="w-full h-full">
+        <app-footer></app-footer>
     </div>
 </div>

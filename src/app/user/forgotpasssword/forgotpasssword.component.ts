@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { UserService } from '../service/user.service';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { LoadinComponent } from 'src/app/shared/modal/loadin/loadin.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-forgotpasssword',
@@ -11,18 +10,18 @@ import { LoadinComponent } from 'src/app/shared/modal/loadin/loadin.component';
 })
 export class ForgotpassswordComponent {
 
-  constructor(
-    public modal: MatDialog,
-  ) { }
-  form ={
+  constructor(public modal: MatDialog) { }
+  form = {
     email: ''
   }
 
   submit() {
-    this.modal.open(LoadinComponent, {
-      data: this.form.email
-    })
-  
+    if(this.form.email != ''){
+      this.modal.open(LoadinComponent, {
+        data: [this.form.email, 'forgot']
+      })
+    }
+    
   }
-  
+
 }

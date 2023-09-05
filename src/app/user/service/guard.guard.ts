@@ -8,19 +8,21 @@ export const guardGuard: CanActivateChildFn = (childRoute, state) => {
   const userService = inject(UserService)
   const authService = inject(AuthService)
   const token = authService.getToken()
-
+  let data = false
   if (token) {
-    userService.authenticateUser(token).subscribe((response) => {
-      if (response == 'success') {
-        console.log(response);
-        return true
-      } else {
-        router.navigate(['/login'])
-        return false
-      }
-    })
+    // const response = userService.authenticateUser(token)
+    // response.subscribe((response) => {
+    //   if (response == 'success') {
+    //     data = true
+    //     return data
+    //   } else {
+    //     router.navigate(['/login'])
+    //     return data
+    //   }
+    // })
     return true
   } else {
+    router.navigate(['/login'])
     return false
   }
 

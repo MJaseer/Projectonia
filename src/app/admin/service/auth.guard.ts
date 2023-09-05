@@ -11,15 +11,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = adminService.getToken()
 
   if (token) {
-    helperService.authenticateAdmin(token).subscribe((response) => {
-      if (response == 'success') {
-        console.log(response);
-        return true
-      } else {
-        router.navigate(['/admin/login'])
-        return false
-      }
-    })
     return true
   } else {
     return false

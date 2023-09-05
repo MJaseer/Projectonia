@@ -18,7 +18,6 @@ import { ItemNavComponent } from './Project/item-nav/item-nav.component';
 import { NewProjectComponent } from './Project/new-project/new-project.component';
 import { OverViewComponent } from './Project/over-view/over-view.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BoardComponent } from './Project/board/board.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -35,6 +34,12 @@ import {MatSelectModule} from '@angular/material/select';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { Chart } from 'chart.js';
 import { registerables } from 'chart.js';
+import { MatMenuModule } from '@angular/material/menu';
+import { ProfileComponent } from './profile/profile.component';
+import { TableComponent } from './Project/Tasks/table/table.component';
+import { BoardComponent } from './Project/Tasks/board/board.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { TaskPipe } from 'src/app/pipes/task.pipe';
 Chart.register(...registerables)
 
 @NgModule({
@@ -50,8 +55,10 @@ Chart.register(...registerables)
     ItemNavComponent,
     NewProjectComponent,
     OverViewComponent,
-    BoardComponent,
     NewComponent,
+    ProfileComponent,
+    TableComponent,
+    BoardComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +74,7 @@ Chart.register(...registerables)
     MatFormFieldModule,
     MatInputModule,
     MonthAndDatePipe,
+    TaskPipe,
     StatusPipe,
     AssigneePipe,
     OverlayModule,
@@ -76,6 +84,8 @@ Chart.register(...registerables)
     WishPipe,
     CanvasJSAngularChartsModule,
     MatSelectModule,
+    MatMenuModule,
+    FileUploadModule
   ],
   providers: [
     {

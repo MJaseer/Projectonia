@@ -47,7 +47,7 @@ export class NewComponent implements OnInit {
     // const selectedTitle = selectedOption.textContent;
     // const selectedId = selectedOption.value;
     
-    if (this.task.title !== '') {
+    if (this.task.title !== '') {      
       this.task.projectId = this.queryData.project
       this.invokeTask()
     } else {

@@ -1,6 +1,6 @@
 <div class="flex flex-col ">
-    <app-nav style="z-index: 1035;;"></app-nav>
-    <aside style="z-index: 32"><app-side-nav></app-side-nav></aside>
+    <app-admin-nav style="z-index: 35;"></app-admin-nav>
+    <aside style="z-index: 32"><app-adminside-nav></app-adminside-nav></aside>
 </div>
 <div class="p-4 sm:ml-64">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
@@ -71,13 +71,13 @@
                     </div>
                 </th> -->
                 <th scope="col" class="px-6 py-3">
-                    Product name
+                    User name
                 </th>
                 
             </tr>
             <tr>
                 <th scope="col" class="px-16 py-3 ">
-                    Color
+                    Email
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Action
@@ -85,7 +85,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="w-full flex justify-between  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" *ngFor="let data of users|async">
+            <tr class="w-full flex justify-between  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" *ngFor="let data of userData ">
                 <!-- <td class="w-4 p-4">
                     <div class="flex items-center">
                         <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -108,6 +108,19 @@
         </tbody>
     </table>
 </div>
+
+<mat-paginator #paginator
+               class="demo-paginator"
+               (page)="handlePageEvent($event)"
+               [length]="length"
+               [pageSize]="pageSize"
+               [disabled]="disabled"
+               [showFirstLastButtons]="showFirstLastButtons"
+               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+               [hidePageSize]="hidePageSize"
+               [pageIndex]="pageIndex"
+               aria-label="Select page">
+</mat-paginator>
 
     </div>
 </div>

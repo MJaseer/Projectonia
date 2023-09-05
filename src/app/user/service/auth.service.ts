@@ -17,6 +17,7 @@ export class AuthService {
   }
 
   setToken(data: any) {
+    localStorage.removeItem('data')
     return localStorage.setItem('data', JSON.stringify(data))
   }
 

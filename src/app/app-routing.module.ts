@@ -12,16 +12,16 @@ const routes: Routes = [
     loadChildren: () => import('./employee/employee.module').then((_) => _.EmployeeModule)
   },
   {
-    path:'admin',
-    loadChildren:()=> import('./admin/admin.module').then((_) => _.AdminModule)
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then((_) => _.AdminModule)
   },
   {
-    path:'chats',
-    loadChildren:() => import('./chat/chat.module').then((_) => _.ChatModule)
+    path: 'chats',
+    loadChildren: () => import('./chat/chat.module').then((_) => _.ChatModule)
   },
   {
-    path:'**',
-    component:NotFoundComponent
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

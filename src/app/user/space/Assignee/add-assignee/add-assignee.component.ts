@@ -10,6 +10,7 @@ import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { Assignee } from '../../../../global/store/space-store';
 import { SpaceService } from '../../../../global/services/space.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-assignee',
@@ -22,9 +23,7 @@ export class AddAssigneeComponent implements OnInit {
     private store: Store,
     private appStore: Store<Appstate>,
     private router: Router,
-    private service: SpaceService,
-    private toastr:ToastrService
-    // private customValidator: ValidatorsService,
+    private toastr: ToastrService
   ) { }
 
 
@@ -40,13 +39,13 @@ export class AddAssigneeComponent implements OnInit {
     lname: ['', Validators.required],
     email: ['', [Validators.email, Validators.required]],
     password: ['', Validators.required],
-    cpassword:[''],
-    phone: [null, Validators.required],
+    cpassword: [''],
+    phone: [0, [Validators.required]],
     place: ['', Validators.required],
     post: ['', Validators.required],
     skill: ['', Validators.required],
     timeStamp: [''],
-    __v: [null],
+    __v: [0],
   })
 
   isSubmitted = false
@@ -70,7 +69,8 @@ export class AddAssigneeComponent implements OnInit {
     };
 
     if (this.assigneeForm.valid) {
-      if(this.assigneeForm.value.cpassword == this.assigneeForm.value.password) {
+      if (this.assigneeForm.value.fname?.trim() != '' && this.assigneeForm.value.lname?.trim() != '' && this.assigneeForm.value.place?.trim() != '' && this.assigneeForm.value.post?.trim() != '' && this.assigneeForm.value.skill?.trim() != '') {
+
         this.store.dispatch(invokeAddAssigneAPI({ newAssignee: this.assigne }))
         let apiStatus$ = this.appStore.pipe(select(selectAppState))
         apiStatus$.subscribe((apState) => {
@@ -82,9 +82,12 @@ export class AddAssigneeComponent implements OnInit {
           }
         })
       } else {
-        this.toastr.error('Confirm password must be same as password','Password Error')
+        Swal.fire('Warning', 'Every inputs must include letter', 'warning')
       }
     } else {
+      if(this.assigneeForm?.get('phone')){
+      console.log(this.assigneeForm?.get('phone')?.hasError('min'))
+      }
       console.log(this.assigneeForm, 'error');
       this.router.navigate(['/space/addAssignee'])
     }

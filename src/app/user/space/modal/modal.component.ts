@@ -29,12 +29,21 @@ export class ModalComponent implements OnInit {
   ) { }
 
   data: any;
+  assigneeId:string|undefined
+  managerId:string|undefined
 
   ngOnInit(): void {
 
     this.dialogData.forEach((element: any) => {
       this.data = this.dialogData[0]
     });
+    if(this.data[0].assigneeId){
+      this.assigneeId = this.data[0].assigneeId
+    }
+    if(this.data[0].managerId){
+      this.managerId = this.data[0].managerId
+    }
+
   }
   actionInvoke: any
 

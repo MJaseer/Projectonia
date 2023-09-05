@@ -8,6 +8,9 @@ import { ListComponent } from './Project/Tasks/list/list.component';
 import { NewProjectComponent } from './Project/new-project/new-project.component';
 import { OverViewComponent } from './Project/over-view/over-view.component';
 import { NewComponent } from './Project/Tasks/new/new.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BoardComponent } from './Project/Tasks/board/board.component';
+import { TableComponent } from './Project/Tasks/table/table.component';
 
 const routes: Routes = [
   { path: '', component: AuthLandingComponent },
@@ -23,6 +26,9 @@ const routes: Routes = [
       ]
   },
   { path: 'newProject', component: NewProjectComponent },
+  { path: 'profile' , component: ProfileComponent},
+  { path: 'board' , component:BoardComponent},
+  { path: 'table' , component:TableComponent}
 ];
 
 @NgModule({

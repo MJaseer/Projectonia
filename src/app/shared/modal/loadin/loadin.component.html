@@ -1,5 +1,13 @@
-<ngx-spinner
+
+<ngx-spinner *ngIf="forgot"
   bdColor="rgba(0, 0, 0, 1)"
   template=" <img src='https://www.gifgifgifgifgif.com/wp-content/uploads/2023/07/bird-animation-1.gif' />"
 >
-<span class="text-blue-600 font-bold">Sending Email...</span>
+<span  *ngIf="forgot" class="text-blue-600 font-bold">Sending Email...</span>
+
+
+<ngx-spinner *ngIf="otp"
+  bdColor="rgba(0, 0, 0, 1)"
+  template=" <img src='https://www.gifgifgifgifgif.com/wp-content/uploads/2023/07/bird-animation-1.gif' />"
+>
+<span  *ngIf="otp" class="text-blue-600 font-bold">Sending OTP...</span>

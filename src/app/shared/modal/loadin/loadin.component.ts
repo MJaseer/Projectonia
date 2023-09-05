@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/service/user.service';
 import { ErrorComponent } from '../error/error.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-loadin',
@@ -21,13 +22,22 @@ export class LoadinComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) { }
   email!: string
+  forgot = false
+  otp = false
 
   ngOnInit(): void {
-    this.email = this.dialogData
-    if (this.email) {
+    if(this.dialogData[1] == 'forgot'){
+      this.email = this.dialogData[0]
+      this.forgot = true
       this.spinner.show()
       this.submit()
     }
+    if(this.dialogData[1] == 'otp'){
+      this.otp = true
+      this.spinner.show()
+      this.sendOtp(this.dialogData[0])
+    }
+
   }
 
   submit() {
@@ -47,6 +57,22 @@ export class LoadinComponent implements OnInit {
         })
       }
       )
+  }
+
+  sendOtp(data:any){
+    this.userService.register(data).subscribe(
+      (result) => {
+        console.log(result);
+        localStorage.removeItem('userData')
+        localStorage.setItem('userData', JSON.stringify(result))
+        this.spinner.hide()
+        this.dialogueClose()
+        this.router.navigate(['/otp'])
+      }, (err: any) => {
+        Swal.fire('Error','Email is already registered','error')
+        console.log(err, 'signup error');
+      }
+    )
   }
 
   dialogueClose() {

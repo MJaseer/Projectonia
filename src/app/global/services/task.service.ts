@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { Assignee, Project, Task } from '../store/space-store';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { i_history } from '../user/i_history';
+import { AuthService } from 'src/app/user/service/auth.service';
+import { EmployeeService } from 'src/app/employee/services/employee.service';
 
 const url = 'http://localhost:3000/api'
 
@@ -24,8 +26,23 @@ export class TaskService {
     private appStore: Store<Appstate>,
     private router: Router,
     private toastr: ToastrService,
-    private http:HttpClient
+    private http:HttpClient,
+    private authService:AuthService,
+    private employeeService:EmployeeService
   ) { }
+
+  managerId!: string;
+
+  idFecther() {
+    let token = this.authService.getToken()
+    this.managerId = token._id
+    if(this.managerId == undefined||null){
+      token = this.employeeService.getToken()
+      this.managerId = token.managerId
+    }
+    
+    return token
+  }
 
   assignees: any;
   hi: number = 0
@@ -52,7 +69,12 @@ export class TaskService {
   }
 
   getHistory(task_id:string){
-    return this.http.get<i_history[]>(`${url}/getHistory/${task_id}`, { withCredentials: true })
+    return this.http.get<i_history[]>(`${url}/task/getHistory/${task_id}`, { withCredentials: true })
+  }
+
+  getRecent(){
+    this.idFecther()
+    return this.http.get<i_history[]>(`${url}/task/getRecent/${this.managerId}`, { withCredentials: true })
   }
 
   tasks!: Task[];

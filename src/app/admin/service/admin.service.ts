@@ -13,6 +13,7 @@ export class AdminService {
   }
 
   setToken(data: any) {
+    localStorage.removeItem('admin')
     return localStorage.setItem('admin', JSON.stringify(data))
   }
 
@@ -29,7 +30,7 @@ export class AdminService {
     this.router.navigate(['/'])
   }
 
-  isLoggedIn() {
+  isLoggedIn() {    
     return this.getToken() !== null
   }
 }

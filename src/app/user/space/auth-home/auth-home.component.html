@@ -1,20 +1,212 @@
-<div class="flex flex-col ">
-    <app-auth-nav style="z-index: 1035;;"></app-auth-nav>
-    <aside style="z-index: 1032;"><app-side-bar></app-side-bar></aside>
+<div class="flex z-10 flex-col fixed w-full">
+    <app-auth-nav style="z-index: 35;;"></app-auth-nav>
+    <aside style="z-index: 32;"><app-side-bar></app-side-bar></aside>
 </div>
-<div class="p-4 sm:ml-64 ">
+<div class="relative top-16 p-4 h-hit sm:ml-64 ">
 
-    <div class="text-lg font-medium text-gray-900 p-1">Home</div>
+    <div class="text-lg mt-90 font-medium text-gray-900 p-1">Home</div>
     <div class="flex flex-col items-center justify-center">
-        <div class="text-4xl p-3 py- font-medium text-gray-900">{{date|date:'EEEE MMM d'}}</div>
-        <div class="text-4xl p-3 py- font-medium text-gray-900">{{time| wish}},{{name |titlecase}}</div>
+        <div class="text-4xl p-3 text-center font-medium text-gray-900">{{date|date:'EEEE MMM d'}}</div>
+        <div class="text-4xl p-3 text-center font-medium text-gray-900">{{time| wish}},{{name |titlecase}}</div>
     </div>
-    <div class="flex ">
-        <div style=" height: 70%;width: 70%;">
-            <canvasjs-chart [options]="statusCounts" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
-        </div>
-        <div style=" height: 30%;width: 30%; ">
-            <canvas style="margin-right: 10px;margin-top: 10px;" id="myChart"></canvas>
+    <div class=" p-4 h-fit border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
+
+        <div class="w-full h-fit flex  2xl:flex-row flex-col gap-y-10 justify-around items-around ">
+            <div class="w-full h-fit gap-2 2xl:w-2/3">
+                <div class="flex flex-col md:flex-row items-start justify-around w-full  gap-y-4  ">
+                    <div
+                        class="w-full h-1/2 max-w-md h-80 overflow-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xl font-bold leading-none text-gray-900 dark:text-white">Projects</span>
+                            <a class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                View all
+                            </a>
+                        </div>
+                        <div class="flex items-between justify-between m-2 gap-x-2 flex-wrap gap-y-3 overflow-y-auto">
+
+                            <a routerLink="/space/newProject"
+                                class="flex items-center w-full md:w-44  p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                <svg class="flex flex-row w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                                <span class="flex-1 ml-3 whitespace-nowrap">Create Project</span>
+                            </a>
+                            <a routerLink="/space/task" *ngFor="let values of projects"
+                                class="flex items-center w-full md:w-44 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                <svg class="flex flex-row w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M9 1v16M1 9h16" />
+                                </svg>
+                                <span class="flex-1 ml-3 whitespace-nowrap">{{values.title}}</span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div
+                        class="w-full max-w-md  h-80 overflow-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xl font-bold leading-none text-gray-900 dark:text-white">Tasks</span>
+                            <a class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                View all
+                            </a>
+                        </div>
+                        <div class="flow-root divide-y divide-gray-100  ">
+                            <div class="flex flex-row text-white gap-x-2 overflow-auto ">
+                                <span [ngStyle]="{color:taskButton[0]}" (click)="changeTask(0,'Orange')"
+                                    class=" text-lg">ondue</span>
+                                <span class=" text-lg" [ngStyle]="{color:taskButton[1]}"
+                                    (click)="changeTask(1,'Gray')">Upcoming</span>
+                                <span class=" text-lg" [ngStyle]="{color:taskButton[2]}"
+                                    (click)="changeTask(2,'Red')">Over
+                                    Due</span>
+                                <span class=" text-lg" [ngStyle]="{color:taskButton[3]}"
+                                    (click)="changeTask(3,'Green')">Completed</span>
+                            </div>
+                            <div class="flex flex-col divide-y divide-gray-100 gap-y-12  "
+                                *ngFor=" let task of listTasks">
+                                <span class="text-white text-md font-medium  ">
+                                    {{task.title}}
+                                </span>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-around ">
+                    <div class="w-full md:w-3/6 ">
+                        <div class="w-full flex flex-col justify-center items-center text-lg">
+
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-black ">Task Overview</h2>
+                            <ul class="max-w-md w-3/6 space-y-1 text-gray-500 list-inside dark:text-gray-900">
+                                <li *ngFor="let data of statusData" class="flex items-center w-full">
+                                    <svg class="w-3.5 h-3.5 mr-2  flex-shrink-0" [ngStyle]="{color:data.color}"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                                    </svg>
+                                    <ul class=" w-full flex items-between justify-between  ">
+                                        <li>{{data.name}}</li>
+                                        <li>{{data.y}}</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="w-full">
+                            <canvasjs-chart class=" " [options]="statusCounts"
+                                [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-3/6 gap-y-2 ">
+                        <div class="w-full flex flex-col justify-center items-center text-lg">
+
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-black ">Task Overview</h2>
+                            <ul class="max-w-md w-3/6 space-y-1 text-gray-500 list-inside dark:text-gray-900">
+                                <li *ngFor="let data of priorityData" class="flex items-center w-full">
+                                    <svg class="w-3.5 h-3.5 mr-2  flex-shrink-0" [ngStyle]="{color:data.color}"
+                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 20 20">
+                                        <path
+                                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                                    </svg>
+                                    <ul class=" w-full flex items-between justify-between  ">
+                                        <li>{{data.name}}</li>
+                                        <li>{{data.y}}</li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="w-full">
+                            <canvasjs-chart class=" " [options]="status"
+                                [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" 2xl:w-1/3 flex flex-raw flex-wrap gap-2 justify-around ">
+
+                <div
+                    class="w-full  max-w-md h-80 overflow-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xl font-bold leading-none text-gray-900 dark:text-white">Assignees</span>
+                        <a  class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                            View all
+                        </a>
+                    </div>
+                    <div class="flow-root">
+                        <ul role="list" class="flex flex-wrap gap-x-2 justify-between items-between divide-y divide-gray-200 dark:divide-gray-700">
+                            <li *ngFor="let data of assignees" class="py-3 lg:w-5/12  sm:py-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-8 h-8 rounded-full"
+                                        src="https://www.transparentpng.com/thumb/user/black-username-png-icon-free--4jlZLb.png" alt="Neil image">
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                            {{data.fname}}
+                                        </p>
+                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                            {{data.email}}
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                        {{data.skill}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div
+                    class="w-full max-w-md h-80 2xl:h-96 overflow-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xl font-bold leading-none text-gray-900 dark:text-white">Recent Activities</span>
+                        <a  class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                            View all
+                        </a>
+                    </div>
+                    <div class="flow-root">
+                        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <li *ngFor="let data of recents" class="py-3 sm:py-4 ">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-8 h-8 rounded-full"
+                                        src="https://www.transparentpng.com/thumb/user/black-username-png-icon-free--4jlZLb.png" alt="Michael image">
+                                    </div>
+                                    <div class="flex flex-col  ">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                {{data.tasks |task :tasks}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                {{data.content}}
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="inline-flex flex-col  text-base font-semibold text-gray-900 dark:text-white">
+                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                {{data.doneBy | assignee : assignees}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                {{data.createdAt | date:'h:mm a EEEE MM dd'}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

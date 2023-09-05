@@ -5,6 +5,7 @@ import { Assignee, Task } from '../store/space-store';
 import { Project } from '../../user/space/Project/interface/project';
 import { AuthService } from '../../user/service/auth.service';
 import { i_manager } from '../user/i_manager';
+import { EmployeeService } from 'src/app/employee/services/employee.service';
 
 const url = 'http://localhost:3000/api'
 
@@ -15,19 +16,31 @@ const url = 'http://localhost:3000/api'
 export class SpaceService {
 
   constructor(private http: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private employeeService:EmployeeService) { }
 
   managerId!: string;
 
   idFecther() {
     let token = this.authService.getToken()
-    this.managerId = token._id
+    if(token){
+      this.managerId = token._id
+    }
+    if(this.managerId == undefined||null){
+      token = this.employeeService.getToken()
+      this.managerId = token.managerId
+    }
+    
     return token
   }
 
   getManager() {
     const manager = this.idFecther()
-    return this.http.post<i_manager[]>(`${url}/getManager/${this.managerId}`, manager, { withCredentials: true })
+    return this.http.post<i_manager>(`${url}/getManager/${this.managerId}`, manager, { withCredentials: true })
+  }
+
+  updateManager(manager:i_manager){
+    return this.http.put<i_manager>(`${url}/updateManager/${this.managerId}`, manager, { withCredentials: true })
   }
 
   getAssignee() {
@@ -50,12 +63,12 @@ export class SpaceService {
 
   getProject() {
     this.idFecther()
-    return this.http.get<Project[]>(`${url}/getProject/${this.managerId}`, { withCredentials: true })
+    return this.http.get<Project[]>(`${url}/project/getProject/${this.managerId}`, { withCredentials: true })
   }
 
   newProject(data: Project): Observable<Project> {
     this.idFecther()
-    return this.http.post<Project>(`${url}/newProject/${this.managerId}`, data, { withCredentials: true })
+    return this.http.post<Project>(`${url}/project/newProject/${this.managerId}`, data, { withCredentials: true })
   }
 
   updateProject() {
@@ -63,25 +76,34 @@ export class SpaceService {
   }
 
   deleteProject(id: string) {
-    return this.http.delete(`${url}/deleteProject/${id}`, { withCredentials: true })
+
+    return this.http.delete(`${url}/project/deleteProject/${id}`, { withCredentials: true })
+    
   }
 
   getTask() {
     this.idFecther()
-    return this.http.get<Task[]>(`${url}/getTask/${this.managerId}`, { withCredentials: true })
+    return this.http.get<Task[]>(`${url}/task/getTask/${this.managerId}`, { withCredentials: true })
   }
 
-  createTask(payload: Task) {
+  createTask(payload: Task) {    
     const id = payload.projectId
-    return this.http.post<Task>(`${url}/createTask/${id}`, payload, { withCredentials: true })
+    if(id){
+      return this.http.post<Task>(`${url}/task/createTask/${id}`, payload, { withCredentials: true })
+    }
+    return this.http.post<Task>(`${url}/task/createTask/${id}`, payload, { withCredentials: true })
   }
 
   editTask(payload: Task) {
-    return this.http.put<Task>(`${url}/updateTask/${payload._id}`, payload, { withCredentials: true })
+    return this.http.put<Task>(`${url}/task/updateTask/${payload._id}`, payload, { withCredentials: true })
   }
 
   deleteTask(id: string) {
-    return this.http.delete(`${url}/deleteTask/${id}`, { withCredentials: true })
+    return this.http.delete(`${url}/task/deleteTask/${id}`, { withCredentials: true })
+  }
+
+  getImage(data:i_manager){
+    return this.http.post(`${url}/getImage`, data,{ withCredentials: true })
   }
 
 }

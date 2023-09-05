@@ -3,6 +3,9 @@ import { UserService } from '../service/user.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
+import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { LoadinComponent } from 'src/app/shared/modal/loadin/loadin.component';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +18,7 @@ export class RegisterComponent {
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
-    cpassword:['',Validators.required]
+    cpassword: ['', Validators.required]
   })
 
   isSubmitted = false
@@ -23,7 +26,8 @@ export class RegisterComponent {
   constructor(private service: UserService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth:AuthService) { }
+    private auth: AuthService,
+    public modal: MatDialog) { }
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) {
@@ -35,16 +39,15 @@ export class RegisterComponent {
     if (this.registerForm.invalid) {
       this.router.navigate(['/register'])
     } else {
-      this.service.register(this.registerForm.value).subscribe(
-        (result) => {         
-          console.log(result);
-          localStorage.removeItem('userData')
-          localStorage.setItem('userData',JSON.stringify(result))
-          this.router.navigate(['/otp'])
-        },(err:any)=>{
-          console.log(err,'signup error');
-        }
-      )
+      if (this.registerForm.value.name?.trim() != '' && this.registerForm.value.password != '') {
+        this.modal.open(LoadinComponent, {
+          data: [this.registerForm.value, 'otp']
+        })
+
+        
+      } else {
+        Swal.fire('Error','Every input must incude letters','warning')
+      }
     }
     this.isSubmitted = true
   }

@@ -13,12 +13,14 @@ export class EmployeeService {
   }
 
   setToken(data: any) {
+    localStorage.removeItem('employee')
     return localStorage.setItem('employee', JSON.stringify(data))
   }
 
   getToken() {
     
     const data = localStorage.getItem('employee');
+    
     if (data) {      
       return JSON.parse(data)
     }

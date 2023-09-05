@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { json } from 'body-parser';
-import { TaskService } from 'src/app/global/services/task.service';
-import { invokeFetchTaskAPI, invokeProjectAPI } from 'src/app/global/store/space.action';
-import { selectProject, selectTask } from 'src/app/global/store/space.selector';
+import { invokeAssigneAPI, invokeFetchTaskAPI, invokeProjectAPI } from 'src/app/global/store/space.action';
+import { selectAssignee, selectProject, selectTask } from 'src/app/global/store/space.selector';
 import { Project } from '../Project/interface/project';
-import { Task } from 'src/app/global/store/space-store';
-import { Chart } from 'chart.js';
+import { Assignee } from 'src/app/global/store/space-store';
+import { TaskService } from 'src/app/global/services/task.service';
+import { i_history } from 'src/app/global/user/i_history';
 
 @Component({
   selector: 'app-auth-home',
@@ -17,25 +16,54 @@ import { Chart } from 'chart.js';
 export class AuthHomeComponent implements OnInit {
 
   constructor(
-    private taskService: TaskService,
-    private store: Store
+    private store: Store,
+    private taskService: TaskService
   ) { }
 
-  projects!: Project[];
+  projects: Project[] = [{title:''}]
   project: number = 0
   tasks: any
   task: number = 0
+  listTasks: any[] = []
 
   ctx: any;
   config: any;
   chartData: number[] = [];
   chartDatalabels: any[] = [];
-
+  recents: i_history[] = [
+    {
+      content: '',
+      createdAt: '',
+      doneBy: '',
+      tasks: ''
+    }
+  ]
 
   date = Date.now()
   time = new Date()
   name: string = ''
   statusCounts: any = ''
+  status: any = ''
+
+  priorityData = [{ y: 0, name: '', color: '' }]
+  statusData = [{ y: 0, name: '', color: '' }]
+
+  assignees: Assignee[] = [
+    {
+      managerId: '',
+      email: '',
+      __v: 0,
+      _id: '',
+      fname: '',
+      lname: '',
+      password: '',
+      phone: 0,
+      place: '',
+      post: '',
+      skill: '',
+      timeStamp: ''
+    }
+  ]
 
   ngOnInit(): void {
 
@@ -54,17 +82,31 @@ export class AuthHomeComponent implements OnInit {
       }
     })
 
-
+    this.getProjects()
+    this.getAssignees()
+    this.getRecent()
   }
 
+
   updateChart(tasks: any) {
+    if (tasks) {
+      tasks.filter((data: any) => {
+        if (data?.status == 'Orange') {
+          if (data) {
+            this.listTasks.push(data)
+          }
+        }
+      })
+    }
 
 
     const statusCounts = new Map<string, number>();
+    const donoughtCounts = new Map<string, number>()
     if (this.tasks != undefined) {
       for (const item of this.tasks.values()) {
         statusCounts.set(item['status'], (statusCounts.get(item['status']) || 0) + 1);
       }
+      const statusData = []
       const dataPoints = [];
       let color = ''
       for (let [status, count] of statusCounts.entries()) {
@@ -85,60 +127,47 @@ export class AuthHomeComponent implements OnInit {
           default:
             color = 'TODO'
         }
-
-        dataPoints.push({ y: count, name: color, backgroundColor: status });
+        statusData.push({ y: count, name: color, color: status })
+        dataPoints.push({ y: count, name: color, color: status });
       }
+      this.statusData = statusData
 
       for (const item of this.tasks.values()) {
-        statusCounts.set(item['priority'], (statusCounts.get(item['status']) || 0) + 1);
+        donoughtCounts.set(item['priority'], (donoughtCounts.get(item['priority']) || 0) + 1);
       }
+      const priorityData = []
+      const dougnutPoint = []
       let priorityColor = ''
-      let bgColors = []
-      for (let [priority, count] of statusCounts.entries()) {
-
+      for (let [priority, count] of donoughtCounts.entries()) {
         switch (priority) {
           case 'Blue':
             priorityColor = 'NORMAL'
+            priority = 'blue'
             break
           case 'Red':
-            priorityColor = 'DUE'
+            priorityColor = 'URGENT'
+            priority = 'red'
             break
           case 'Orange':
-            priorityColor = 'ONDUE'
+            priorityColor = 'HIGH'
+            priority = 'orange'
             break
           default:
-            priorityColor = 'TODO'
+            priorityColor = 'LOW'
+            priority = 'gray'
+            break;
         }
 
-        this.chartData.push(count);
-        this.chartDatalabels.push(priorityColor);
-        bgColors.push(priority)
+        priorityData.push({ y: count, name: priorityColor, color: priority })
+        dougnutPoint.push({ y: count, name: priorityColor, color: priority })
       }
 
-      this.ctx = document.getElementById('myChart');
-      this.config = {
-        type: 'pie',
-        options: {
-        },
-        data: {
-          labels: this.chartDatalabels,
-          datasets: [{
-            label: 'Chart Data',
-            data: this.chartData,
-            borderWidth: 5,
-            borderColor: 'grey',
-            backgroundColor: bgColors,
-          }],
-        },
-        height: 400,
-        width: 400
-      }
-      const myChart = new Chart(this.ctx, this.config);
+      this.priorityData = priorityData
       const chartOptions = {
         animationEnabled: true,
-        title: {
-          text: "Sales by Department"
-        },
+        // title: {
+        //   text: "Tasks by Status"
+        // },
         data: [{
           type: "pie",
           startAngle: -90,
@@ -147,13 +176,49 @@ export class AuthHomeComponent implements OnInit {
           dataPoints: dataPoints
         }]
       }
+
+      const doughnutChart = {
+        animationEnabled: true,
+        // title: {
+        //   text: "Tasks by Status"
+        // },
+        data: [{
+          type: "doughnut",
+          startAngle: -90,
+          indexLabel: "{name}: {y}",
+          yValueFormatString: "#,###.##'%'",
+          dataPoints: dougnutPoint
+        }]
+      }
       this.statusCounts = chartOptions
+      this.status = doughnutChart
 
     }
 
   }
 
+  taskButton = ['blue', '', '', '']
+  changeTask(num: number, item: string) {
+    this.taskButton[num] = 'blue'
+    for (let i = 0; i < this.taskButton.length; i++) {
+      if (i !== num) {
+        this.taskButton[i] = ''
+      } else {
+        this.taskButton[num] = 'blue'
 
+        this.listTasks = []
+        this.tasks?.forEach((element: any) => {
+          if (item == element.status) {
+            this.listTasks.push(element)
+          }
+          if (element.status == 'Blue' && item == 'Gray') {
+            this.listTasks.push(element)
+          }
+
+        });
+      }
+    }
+  }
 
   getProjects() {
     this.store.dispatch(invokeProjectAPI());
@@ -161,10 +226,26 @@ export class AuthHomeComponent implements OnInit {
       if (data?.length > 0 && this.project == 0) {
         this.project++;
         this.projects = data;
-        console.log(this.projects);
       }
     })
 
+  }
+
+  getAssignees() {
+    let count = 0
+    this.store.dispatch(invokeAssigneAPI())
+    this.store.pipe(select(selectAssignee)).subscribe(data => {
+      if (data?.length > 0 && count == 0) {
+        count++
+        this.assignees = data
+      }
+    })
+  }
+
+  getRecent() {
+    this.taskService.getRecent().subscribe(data => {
+      this.recents = data
+    })
   }
 
 }

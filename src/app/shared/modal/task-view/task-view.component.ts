@@ -15,11 +15,12 @@ import { StatusComponent } from 'src/app/user/space/Project/Tasks/helper/status/
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { i_history } from 'src/app/global/user/i_history';
 import { Observable, map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-task-view',
@@ -50,7 +51,7 @@ export class TaskViewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public modal: MatDialog,
     private taskService: TaskService,
-    private employeeService:EmployeeService
+    private employeeService: EmployeeService
   ) { }
 
   form = {
@@ -61,28 +62,34 @@ export class TaskViewComponent implements OnInit {
 
 
   attachments = []
-  history!:i_history[]
+  history!: i_history[]
 
   data!: Task;
 
   assignees!: Assignee[]
 
+  disabled = false
+
   ngOnInit(): void {
     this.projectHead = this.dialogData[3]
     this.data = this.dialogData[0]
     this.assignees = this.dialogData[1]
-    if(this.data.title){
+    if (this.dialogData[2] == 'employee') {
+      this.disabled = true
+    }
+
+    if (this.data.title) {
       this.form.title = this.data.title
     }
-    if(this.data.description){
+    if (this.data.description) {
       this.form.description = this.data.description
-    }    
-    
-    if(this.data._id){
+    }
+
+    if (this.data._id) {
       this.taskService.getHistory(this.data._id).subscribe(result => {
         this.history = result
 
-        })
+      })
     }
 
   }
@@ -92,54 +99,62 @@ export class TaskViewComponent implements OnInit {
   }
 
   openDelete() {
-    let deletetask = [this.data]
+    if (this.dialogData[2] == 'employee') {
+      Swal.fire('Warning', `You can't delete task : ${this.data.title} `, 'warning')
+    } else {
+      let deletetask = [this.data]
 
-    this.modal.open(ModalComponent, {
-      width: '440px',
-      data: [deletetask, 'task']
-    })
+      this.modal.open(ModalComponent, {
+        width: '440px',
+        data: [deletetask, 'task']
+      })
+    }
 
   }
 
-  setAsDone(){
+  setAsDone() {
 
   }
 
   openDrop(item: string, id?: string) {
-    console.log(item,id);
-    
+
     let updateTask = [this.data]
     let component: any
-
-    
-
-    switch (item) {
-      case 'date':
-        component = DatePickerComponent
-        break;
-      case 'assignee':
-        component = AssigneeTaskComponent
-        break;
-      case 'priority':
-        component = PriorityComponent
-        break;
-      case 'status':
-        component = StatusComponent
-        break;
-    }
-    if(this.dialogData[1] == 'employee') {
-      let user = this.employeeService.getToken()
-      this.modal.open(component, {
-        width: '248x',
-        data: [updateTask, 'task',this.dialogData[1],user._id]
-      })
+    if (this.dialogData[2] == 'employee' && item != 'status') {
+      Swal.fire('Warning', `You can't modify ${item} `, 'warning')
     } else {
-      this.modal.open(component, {
-        width: '248x',
-        data: [updateTask, 'task',this.dialogData[1]]
-      })
+      switch (item) {
+        case 'date':
+          component = DatePickerComponent
+          break;
+        case 'assignee':
+          component = AssigneeTaskComponent
+          break;
+        case 'priority':
+          component = PriorityComponent
+          break;
+        case 'status':
+          component = StatusComponent
+          break;
+      }
+      if (this.dialogData[2] == 'employee') {
+        let user = this.employeeService.getToken()
+
+        this.modal.open(component, {
+          width: '248x',
+          data: [updateTask, 'task', this.dialogData[2], user._id]
+        })
+      } else {
+        this.modal.open(component, {
+          width: '248x',
+          data: [updateTask, 'task', this.dialogData[2]]
+        })
+      }
     }
-   
+
+
+
+
   }
 
   saveTitle() {
@@ -148,7 +163,7 @@ export class TaskViewComponent implements OnInit {
     }
   }
 
-  saveDescription() {    
+  saveDescription() {
     if (this.form.description) {
       this.taskService.getUpdate([this.data], this.form.description, 'description', 'user')
     }

@@ -7,5 +7,6 @@ export interface i_chatReceiver{
 export interface i_messages{
     user:string,
     message:string,
-    time ?: number | Date
+    time ?: number | Date,
+    readReciept?:boolean
 }

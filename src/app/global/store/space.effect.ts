@@ -14,7 +14,7 @@ import {
     invokeDeleteAssigneeAPI, invokeDeleteProjectAPI, invokeDeleteTaskAPI, invokeFetchTaskAPI, invokeManagerFecthAPI, invokeProjectAPI,
     invokeUpdateAssigneeAPI, invokeUpdateTaskAPI, managerFetchAPISuccess, projectFetchAPISuccess, taskFetchAPISuccess, updateAssigneeSuccess, updateTaskAPISuccess
 } from "./space.action";
-import { EMPTY, map, mergeMap, switchMap, withLatestFrom } from "rxjs";
+import { EMPTY, Observable, catchError, map, mergeMap, of, switchMap, withLatestFrom } from "rxjs";
 import { selectAssignee, selectManager, selectProject, selectTask } from "./space.selector";
 import { Appstate } from "src/app/shared/store/app-state";
 import { setAPIStatus } from "src/app/shared/store/app.action";
@@ -59,6 +59,10 @@ export class ManagerEffects {
                             setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: 'success' } })
                         );
                         return blockManagerSuccess({ blockManager: data })
+                    }),
+                    catchError((error) =>{
+                        console.log(error);
+                        return of(error)
                     })
                 )
             })
@@ -146,6 +150,10 @@ export class SpaceEffects {
                             setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: 'success' } })
                         )
                         return deleteAssigneeAPISuccess({ id: actions.id })
+                    }),
+                    catchError((error) =>{
+                        console.log(error);
+                        return of(error)
                     })
                 )
             })

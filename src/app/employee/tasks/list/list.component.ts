@@ -114,9 +114,12 @@ export class ListComponent implements OnInit {
   taskDivider(data: Task[]) {
     if (data) {
       this.assignedTask = data.filter((data) => data.projectId == this.projectId)
+    } if(this.projectId == undefined) {
+      this.assignedTask = data      
     }
 
   }
+  readonly = true
 
   viewTask(task: Task) {
     this.modal.open(TaskViewComponent, {

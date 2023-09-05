@@ -9,6 +9,7 @@ import { ChatLandingComponent } from './chat-landing/chat-landing.component';
 import { ChatNavComponent } from './chat-nav/chat-nav.component';
 import { ChatSideNavComponent } from './chat-side-nav/chat-side-nav.component';
 import { ChatnotfoundComponent } from './chatnotfound/chatnotfound.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ChatnotfoundComponent } from './chatnotfound/chatnotfound.component';
     CommonModule,
     ChatRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule
     ]
 })
 

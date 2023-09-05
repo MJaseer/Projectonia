@@ -95,7 +95,6 @@ export class ChatComponent {
       message: this.messageText,
       time: Date.now()
     };
-    console.log(message);
 
     Object.freeze(message);
     this.messageArray.push(message);
@@ -127,9 +126,6 @@ export class ChatComponent {
 
   }
 
-  ngOnDestroy(): void {
-    this._chatService.disconnect(this.user_id);
-    this._unsubscribe$.unsubscribe();
-  }
+  
 
 }

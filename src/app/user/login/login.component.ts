@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user.service';
 import { AuthService } from '../service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,16 @@ export class LoginComponent implements OnInit {
           const data = this.auth.getToken()         
           this.router.navigate(['/space'])
         }, (err: any) => {
-
+          switch(err.error){
+            case 'Password is incorrect':
+              Swal.fire('Error','Password is incorrect','error');
+              break;
+            case 'User not found':
+              Swal.fire('Error','User not found','error')
+              break;
+            case "This user is blocked":
+              Swal.fire('Error',"This user is blocked",'error')
+          }
           console.log(err, 'error');
           this.router.navigate(['/login'])
 

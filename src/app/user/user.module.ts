@@ -24,6 +24,8 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { LinkSuccessComponent } from './link-success/link-success.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FooterComponent } from './footer/footer.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -38,6 +40,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         ForgotpassswordComponent,
         NewPasswordComponent,
         LinkSuccessComponent,
+        FooterComponent,
     ],
     imports: [
         CommonModule,
@@ -53,6 +56,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         NgOtpInputModule,
         OverlayModule,
         MatDialogModule,
+        MatMenuModule
     ],
 })
 

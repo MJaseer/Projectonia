@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { HelperService } from '../service/helper.service';
 import { AdminService } from '../service/admin.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit{
   })
 
   login() {
+    
     if(this.loginForm.valid){
       this.helper.login(this.loginForm.value).subscribe(
         (result) => {
@@ -38,7 +40,7 @@ export class LoginComponent implements OnInit{
             this.router.navigate(['/admin'])
           }  
         }, (err: any) => {
-
+          Swal.fire('Error','Please input valid Credentials','error')
           console.log(err, 'error');
           this.router.navigate(['/admin/login'])
 

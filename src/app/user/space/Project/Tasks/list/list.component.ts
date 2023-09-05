@@ -12,7 +12,6 @@ import { PriorityComponent } from '../helper/priority/priority.component';
 import { StatusComponent } from '../helper/status/status.component';
 import { TaskViewComponent } from 'src/app/shared/modal/task-view/task-view.component';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/user/service/auth.service';
 
 @Component({
   selector: 'app-list',
@@ -27,7 +26,6 @@ export class ListComponent implements OnInit {
     public modal: MatDialog,
     private taskService: TaskService,
     private router:Router,
-    private authService:AuthService
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +84,11 @@ export class ListComponent implements OnInit {
   taskDivider(data: Task[]) {
     this.assignees = this.taskService.getAssignee()
     if (data) {
-      this.currentData = data.filter((data) => data.projectId == this.projectId)
+      if(this.projectId){
+        this.currentData = data.filter((data) => data.projectId == this.projectId)
+      } else {
+        this.currentData = data
+      }
     }
 
   }
@@ -118,6 +120,7 @@ export class ListComponent implements OnInit {
       })
     }
 
+
     if (id) {
       this.modal.open(ModalComponent, {
         width: '440px',
@@ -146,8 +149,6 @@ export class ListComponent implements OnInit {
     }
 
     if (id) {
-      const user=this.authService.getToken()
-
 
       this.task$.forEach(data => {
         updateTask = data.filter((_) => _._id == id)
@@ -161,11 +162,18 @@ export class ListComponent implements OnInit {
 
   }
 
-  editHead(title?: string) {
+  edit:{title?:string,id?:string,status?:boolean} = {
+    title:'',
+    id:'',
+    status:false
+  }
+
+  editHead(title?: string,id?:string) {
     if (this.readonly) {
       if (title) {
         this.taskTitle = title
       }
+      this.edit.id = id
       this.readonly = false
     } else {
       this.readonly = true

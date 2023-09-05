@@ -11,7 +11,7 @@
 
         <form class=" flex items-center flex-col" [formGroup]="assigneeForm" (ngSubmit)="add()">
             <div class="relative z-0 w-full mb-6 group">
-                <input type="email" formControlName="email" id="floating_email"
+                <input type="email" formControlName="email" id="floating_email" autocomplete="email"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="email"
@@ -22,7 +22,7 @@
                      isSubmitted)">E-mail is required</span>
             </div>
             <div class="relative z-0 w-full mb-6 group">
-                <input type="password" formControlName="password" id="password"
+                <input type="password" formControlName="password" id="password" autocomplete="new-password"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required minlength="8" maxlength="12" />
                 <label for="password"
@@ -43,19 +43,19 @@
                 </span>
             </div>
             <div class="relative z-0 w-full mb-6 group">
-                <input type="password" formControlName="cpassword" id="cpassword"
+                <input type="password" formControlName="cpassword" id="cpassword" autocomplete="current-password"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " required />
                 <label for="cpassword"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
                     password</label>
-                <span class="text-red-600 font-bold" *ngIf="assigneeForm.get('cpassword')?.invalid &&
-                (assigneeForm.get('cpassword')?.dirty || assigneeForm.get('cpassword')?.touched ||isSubmitted)">
-                    <span class="text-red-600"
-                        *ngIf="assigneeForm.get('cpassword')?.value !== assigneeForm.get('password')?.value else elsecpass ">Confirm
-                        password should be same as password </span>
-                    <ng-template #elsecpass class="text-red-600"> Confirm password is required</ng-template>
-                </span>
+                    <span class="text-red-600 font-bold" *ngIf="(assigneeForm.get('cpassword')?.invalid ||
+                    assigneeForm.get('cpassword')?.dirty || assigneeForm.get('cpassword')?.touched 
+                    ||isSubmitted)">
+                        <span class="text-red-600"
+                            *ngIf="assigneeForm.get('cpassword')?.value != assigneeForm.get('password')?.value ">Confirm
+                            password should be same as password </span>
+                    </span>
             </div>
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
@@ -98,7 +98,7 @@
 
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
-                    <input type="tel" minlength="10" maxlength="10"
+                    <input type="number" minlength="10" maxlength="10"
                         formControlName="phone" id="phone"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                         placeholder=" " required />

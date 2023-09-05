@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { Manager } from 'src/app/global/store/space-store';
+import { Manager, Project, Task } from 'src/app/global/store/space-store';
 
 const url = 'http://localhost:3000/api/admin'
 
@@ -21,7 +21,7 @@ export class HelperService {
   }
 
   getUsers(){    
-    return this.http.get<Manager[]>(`${url}/home`, { withCredentials: true })
+    return this.http.get<Manager[]>(`${url}/getUsers`, { withCredentials: true })
   }
 
   blockUser(payload:Manager){
@@ -30,5 +30,13 @@ export class HelperService {
 
   authenticateAdmin(payLoad: any) {
     return this.http.post(`${url}/getVerified`, payLoad, { withCredentials: true })
+  }
+
+  getProject(){
+    return this.http.get<Project[]>(`${url}/getProject`, { withCredentials: true })
+  }
+
+  getTasks(){
+    return this.http.get<Task[]>(`${url}/getAllTask`, { withCredentials: true })
   }
 }
