@@ -51,10 +51,11 @@ export class OverViewComponent implements OnInit {
       const progressCount = project?.tasks?.filter((task) => task.status === "Blue").length;
       const dueCount = project?.tasks?.filter((task) => task.status === "Red").length;
       const onDueCount = project?.tasks?.filter((task) => task.status === "Orange").length;
-      let completedPercentage = 0
+      let completedPercentageDecimal = 0
       if(completedCount&& totalTasks){
-        completedPercentage = (completedCount / totalTasks) * 100;
+        completedPercentageDecimal = (completedCount / totalTasks) * 100;
       }
+      let completedPercentage = Math.floor(completedPercentageDecimal)
 
       return {
         _id: project._id,
