@@ -6,6 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Params, } from '@angular/router';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 
+
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -27,6 +29,8 @@ export class ChatComponent {
   queryData!: string | Params | any
   isUserAvailable = false
   sender?: string
+
+  chatersArray:any[] = []
 
   private _unsubscribe$ = new Subject();
 
@@ -55,6 +59,7 @@ export class ChatComponent {
       this.queryData = queryParams;
     });
     this.receiver_id = this.queryData.id
+   
 
     if (this.queryData.user) {
       this.sender = this.queryData.user
@@ -84,7 +89,14 @@ export class ChatComponent {
     this.ngOnInit()
   }
 
+  getChaters(res:any){
+    this.chatersArray = res
+    console.log(res);
+    
+  }
+
   sendMessage() {
+
     //sending to socket.io    
     if (!this.messageText?.trim()) {
       console.log('no messages');
@@ -103,6 +115,19 @@ export class ChatComponent {
     });
 
     this.receiver_id = this.queryData.id
+    this.chatersArray.forEach(chater => {
+      if(chater){
+        if(chater?.user_id){
+          if(chater?.user_id == this.receiver_id){
+            let now = Date.now()
+            chater.time = new Date(now)
+          }else {
+            chater.time = new Date(chater.time)
+          }
+        }
+      }
+    })
+    this.chatersArray.sort((a, b) => b.time - a.time);
 
     if (this.receiver_id != undefined) {
       //store messages in db
@@ -118,7 +143,7 @@ export class ChatComponent {
       this._chatService.sendMessage({
         receiver_id: this.receiver_id,
         message: this.messageText,
-      });
+      })
 
       this.messageText = '';
     }

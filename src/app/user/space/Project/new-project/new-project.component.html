@@ -2,18 +2,18 @@
     <app-auth-nav></app-auth-nav>
 </div>
 <div class="flex " style="height: 92.7%;">
-    <div class="w-5/12 xs:w-full  flex items-center justify-center ">
+    <div class="w-5/12 xs:w-full bg-zinc-950 flex items-center justify-center ">
         <form (ngSubmit)="create()"
-            class="w-full ms-16 sm:ms-0 sm:w-3/5 border-2 border-gray-700 flex flex-col items-center justify-center p-2">
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">New Project
+            class="w-full ms-16 sm:ms-0 sm:w-3/5 border-2 border-gray-100 flex flex-col items-center justify-center p-2">
+            <label for="email" class="block mb-2 text-sm font-medium dark:text-gray-100">New Project
             </label>
             <input ngModel #title="ngModel" name="title" type="text" id="project" style="width: 90%;" aria-describedby="helper-text-explanation"
                 class="bg-gray-50 text-gray-900 text-sm focus:ring-blue-500 block w-full p-2.5  dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white"
-                placeholder="First project" required minlength="4" maxlength="15" [(ngModel)]="project.title">
-                <span class="text-gray-900 font-bold" *ngIf=" title.value == '' " >Fill the title to submit </span>
+                placeholder="First project" required minlength="4" maxlength="50" [(ngModel)]="project.title">
+                <span class="text-gray-200 font-bold" *ngIf=" title.value == '' " >Fill the title to submit </span>
                 <span class="text-red-600" *ngIf="title.invalid &&(title.dirty || title.touched )">
                     <span class="text-red-600 font-bold	" *ngIf="title.errors?.['minlength'] && ['maxlength']">Title length
-                        must be greater than 4 and less than 15 </span>
+                        must be greater than 4 and less than 50 </span>
                     <span class="text-red-600 font-bold	" *ngIf="title.errors?.['required']">Title is required </span>
                 </span>
             <div class=" mt-10 flex items-center justify-center gap-2 w-4/5">

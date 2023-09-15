@@ -1,9 +1,13 @@
 <div class="flex flex-col ">
-    <app-item-nav style="z-index: 35;"></app-item-nav>
+    <app-item-nav class="fixed shadow-md shadow-zinc-800 w-full" style="z-index: 35;"></app-item-nav>
     <aside style="z-index: 32;"><app-side-bar></app-side-bar></aside>
 </div>
 
-<div class="p-4 sm:ml-64 ">
+<div class="relative top-14 p-4 h-fit bg-zinc-950 lg:h-full sm:ml-64 ">
+    <div
+        class="w-full p-2 mb-4 text-start text-3xl font-semibold font-body text-white bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-black dark:border-gray-700">
+        Desk
+    </div>
     <div class="flex justify-between items-center">
         <div>
             <mat-form-field>
@@ -16,9 +20,8 @@
             </mat-form-field>
         </div>
 
-
         <button type="button" (click)="newTask()"
-            class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-4 py-2 text-center  mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">NEW
+            class="text-black hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-4 py-2 text-center  mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">NEW
             TASK</button>
     </div>
     <router-outlet></router-outlet>
@@ -29,13 +32,13 @@
             <div class="w-1/6 flex flex-col gap-y-5">
                 <div
                     class="flex  w-full block h-full   rounded-lg shadow hover:bg-gray-100 dark:bg-gray-500  dark:hover:bg-gray-700">
-                    <div class=" text-white w-full h-full p-3 mt-2 rounded-lg bg-gray-900">
+                    <div class=" text-white w-full shadow shadow-gray-500 h-full p-3 mt-2 rounded-lg bg-black">
                         <span>TO DO</span>
                     </div>
                 </div>
-                <div class="">
+                <div class="w-full">
                     <div *ngFor="let data of todo"
-                        class="flex flex-col text-white w-full h-full mt-3 p-3 rounded-lg bg-gray-900">
+                        class="flex flex-col text-white shadow shadow-gray-500 w-full h-full mt-3 p-3 rounded-lg bg-black">
                         <span>{{data.title}}</span>
                     </div>
                 </div>
@@ -43,13 +46,13 @@
             <div class="w-1/6 flex justify-start items-start flex-col gap-y-5">
                 <div
                     class="flex  w-full block h-full   rounded-lg shadow hover:bg-red-100 dark:bg-red-500  dark:hover:bg-red-700">
-                    <div class=" text-white w-full h-full p-3 mt-2 rounded-lg bg-gray-900">
+                    <div class=" text-white w-full h-full  shadow shadow-red-500 p-3 mt-2 rounded-lg bg-black">
                         <span>DUE</span>
                     </div>
                 </div>
-                <div class="">
+                <div class="w-full">
                     <div *ngFor="let data of overdue"
-                        class="flex flex-col text-white w-full h-full mt-3 p-3 rounded-lg bg-gray-900">
+                        class="flex flex-col text-white  shadow shadow-red-500 w-full h-full mt-3 p-3 rounded-lg bg-black">
                         <span>{{data.title}}</span>
                     </div>
                 </div>
@@ -57,13 +60,13 @@
             <div class="w-1/6 gap-y-5">
                 <div
                     class="flex  w-full block h-full   rounded-lg shadow hover:bg-red-100 dark:bg-orange-500  dark:hover:bg-orange-700">
-                    <div class=" text-white w-full h-full p-3 mt-2 rounded-lg bg-gray-900">
+                    <div class=" text-white w-full  shadow shadow-orange-500 h-full p-3 mt-2 rounded-lg bg-black">
                         <span>ON DUE</span>
                     </div>
                 </div>
-                <div class="">
+                <div class="w-full">
                     <div *ngFor="let data of due"
-                        class="flex flex-col text-white w-full h-full mt-3 p-3 rounded-lg bg-gray-900">
+                        class="flex flex-col text-white  shadow shadow-orange-500 w-full h-full mt-3 p-3 rounded-lg bg-black">
                         <span>{{data.title}}</span>
                     </div>
                 </div>
@@ -71,32 +74,31 @@
             <div class="w-1/6 gap-y-5">
                 <div
                     class="flex  w-full block h-full    rounded-lg shadow hover:bg-blue-100 dark:bg-blue-500  dark:hover:bg-blue-700">
-                    <div class=" text-white w-full h-full p-3 mt-2 rounded-lg bg-gray-900">
+                    <div class=" text-white w-full h-full  shadow shadow-blue-500 p-3 mt-2 rounded-lg bg-black">
                         <span>INPROGRESS</span>
                     </div>
                 </div>
-                <div class="">
+                <div class="w-full">
                     <div *ngFor="let data of progress"
-                        class="flex flex-col text-white w-full h-full mt-3 p-3 rounded-lg bg-gray-900">
+                        class="flex flex-col text-white w-full  shadow shadow-blue-500 h-full mt-3 p-3 rounded-lg bg-black">
                         <span>{{data.title}}</span>
                     </div>
                 </div>
             </div>
             <div class="w-1/6 gap-y-5">
                 <div
-                    class="flex  w-full block h-full    rounded-lg shadow hover:bg-green-100 dark:bg-green-500  dark:hover:bg-green-700">
-                    <div class=" text-white w-full h-full p-3 mt-2 rounded-lg bg-gray-900">
+                    class="flex  w-full block h-full   rounded-lg  hover:bg-green-100 dark:bg-green-500  dark:hover:bg-green-700">
+                    <div class=" text-white w-full shadow shadow-green-500 h-full p-3 mt-2 rounded-lg bg-black">
                         <span>COMPLETE</span>
                     </div>
                 </div>
-                <div class="">
+                <div class="w-full">
                     <div *ngFor="let data of completed"
-                        class="flex flex-col text-white w-full h-full mt-3 p-3 rounded-lg bg-gray-900">
+                        class="flex flex-col text-white w-full shadow shadow-green-500 h-full mt-3 p-3 rounded-lg bg-black">
                         <span>{{data.title}}</span>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

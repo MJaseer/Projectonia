@@ -1,5 +1,5 @@
-<mat-form-field appearance="fill">
-    <mat-label>Choose a date</mat-label>
+<mat-form-field  appearance="fill">
+    <mat-label >Choose a date</mat-label>
     <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="getDate($event)">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

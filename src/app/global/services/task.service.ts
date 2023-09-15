@@ -12,8 +12,9 @@ import { HttpClient } from '@angular/common/http';
 import { i_history } from '../user/i_history';
 import { AuthService } from 'src/app/user/service/auth.service';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
+import { environment } from 'src/environments/environment';
 
-const url = 'http://localhost:3000/api'
+const url = `${environment.backendPort}/api`
 
 @Injectable({
   providedIn: 'root'

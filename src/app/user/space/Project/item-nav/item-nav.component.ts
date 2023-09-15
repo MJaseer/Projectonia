@@ -9,7 +9,7 @@ import { faBlogger } from '@fortawesome/free-brands-svg-icons';
 })
 export class ItemNavComponent {
   faBlogger = faBlogger
-  isHidden = false
+  isHidden = true
 
   constructor(private router: Router) { }
   

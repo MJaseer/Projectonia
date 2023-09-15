@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import io from 'socket.io-client';
 import { Assignee } from 'src/app/global/store/space-store';
 import { i_authRes } from 'src/app/global/user/i-auth-res';
 import { i_chatReceiver } from 'src/app/global/user/i-chat-recievers';
+import { environment } from 'src/environments/environment';
+import { sendMessage } from '../interfaces/activeUser';
 
-const url = 'http://localhost:3000';
-
+const url = `${environment.backendPort}`;
 
 @Injectable({
   providedIn: 'root',
@@ -42,8 +43,6 @@ export class ChatService {
     }
   }
 
-
-
   activatedUsers() {
     let observable = new Observable<{
         [key: string]: {
@@ -53,6 +52,8 @@ export class ChatService {
     }>(
       (observer) => {
         this._socket.on('active-users', (data) => {
+          console.log(data);
+          
           observer.next(data);
         });
         return () => {
@@ -64,9 +65,12 @@ export class ChatService {
   }
 
   //send messages to socket.io for emitting to receiver
-  sendMessage(data: any) {
+  sendMessage(data: sendMessage) {
+    
     this._socket.emit('send-message', data);
   }
+
+
 
   //receiving messages from socket.io to show user
   newMessageReceived() {
@@ -97,6 +101,7 @@ export class ChatService {
   //storeMessages in db
 
   storeSendMessages(data: any) {
+
     return this._http.post(`${url}/api/chat/storeMessages`, data);
   }
 
@@ -107,6 +112,10 @@ export class ChatService {
 
   getAllMessages(details: any) {
     return this._http.get<any>(`${url}/api/chat/getAllMessages/${details.sender_id}/${details.receiver_id}`)
+  }
+
+  getChaters(id: string) {
+    return this._http.get<any>(`${url}/api/chat/getChaters/${id}`)
   }
 
 }

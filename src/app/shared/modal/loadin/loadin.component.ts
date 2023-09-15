@@ -3,13 +3,20 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/user/service/user.service';
 import { ErrorComponent } from '../error/error.component';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-loadin',
   templateUrl: './loadin.component.html',
-  styleUrls: ['./loadin.component.css']
+  styleUrls: ['./loadin.component.css'],
+  standalone:true,
+  imports:[
+    NgxSpinnerModule,
+    CommonModule,
+    NgIf
+  ]
 })
 export class LoadinComponent implements OnInit {
 
@@ -21,19 +28,24 @@ export class LoadinComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService
   ) { }
+  
   email!: string
   forgot = false
   otp = false
+  message = 'Loading..'
 
   ngOnInit(): void {
     if(this.dialogData[1] == 'forgot'){
       this.email = this.dialogData[0]
       this.forgot = true
+      this.message = 'Sending E-mail...'
       this.spinner.show()
       this.submit()
     }
     if(this.dialogData[1] == 'otp'){
       this.otp = true
+      console.log('otp');
+      this.message = 'Sending OTP...'
       this.spinner.show()
       this.sendOtp(this.dialogData[0])
     }
@@ -63,14 +75,16 @@ export class LoadinComponent implements OnInit {
     this.userService.register(data).subscribe(
       (result) => {
         console.log(result);
+        debugger
         localStorage.removeItem('userData')
         localStorage.setItem('userData', JSON.stringify(result))
         this.spinner.hide()
         this.dialogueClose()
         this.router.navigate(['/otp'])
       }, (err: any) => {
-        Swal.fire('Error','Email is already registered','error')
-        console.log(err, 'signup error');
+        this.spinner.hide()
+        this.dialogueClose()
+        Swal.fire('Error',err.error,'error')
       }
     )
   }

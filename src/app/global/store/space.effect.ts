@@ -18,9 +18,9 @@ import { EMPTY, Observable, catchError, map, mergeMap, of, switchMap, withLatest
 import { selectAssignee, selectManager, selectProject, selectTask } from "./space.selector";
 import { Appstate } from "src/app/shared/store/app-state";
 import { setAPIStatus } from "src/app/shared/store/app.action";
-import { AuthService } from "../../user/service/auth.service";
 import { HelperService } from "src/app/admin/service/helper.service";
-
+import { LoadinComponent } from "src/app/shared/modal/loadin/loadin.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Injectable()
 export class ManagerEffects {
@@ -29,7 +29,8 @@ export class ManagerEffects {
         private action$: Actions,
         private helperService: HelperService,
         private store: Store,
-        private appStore: Store<Appstate>
+        private appStore: Store<Appstate>,
+        public modal: MatDialog
     ) { }
 
     loadAllManager$ = createEffect(() =>

@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { Manager, Project, Task } from 'src/app/global/store/space-store';
-
-const url = 'http://localhost:3000/api/admin'
+import { environment } from 'src/environments/environment';
+  
+const url = `${environment.backendPort}/api/admin`
 
 @Injectable({
   providedIn: 'root'

@@ -1,9 +1,9 @@
-<div class=" bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformationButton">
-        <li *ngFor="let data of status|keyvalue:  originalOrder " class=" hover:bg-gray-100 dark:hover:bg-gray-600 dark :hover:text-white">
-            <button class="flex hover:bg-gray-100 dark:hover:bg-gray-600 dark :hover:text-white" type="button "
+<div class="  divide-y divide-gray-100 rounded-lg shadow w-44 bg-black divide-gray-600">
+    <ul class="py-2 text-sm text-gray-700 text-gray-200" aria-labelledby="dropdownInformationButton">
+        <li *ngFor="let data of status|keyvalue:  originalOrder " class=" hover:bg-gray-600 hover:text-white">
+            <button class="flex hover:bg-zinc-800 hover:text-white" type="button "
                 (click)="getStatus(data.value)">
-                <mat-icon class=" px-2 py-1 w-6 h-6 hover:bg-gray-100 dark:hover:bg-gray-600 dark :hover:text-white"
+                <mat-icon class=" px-2 py-1 w-6 h-6 hover:bg-zinc-800  hover:text-white"
                     [ngStyle]="{color:data.value}">tour</mat-icon>
                 <a class="block px-2 py-1 ">{{ data.key}}</a>
             </button>
@@ -11,10 +11,10 @@
         </li>
 
     </ul>
-    <div class="py-2 flex gap-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+    <div class="py-2 flex gap-2 hover:bg-gray-600 hover:text-white">
         <mat-icon
-            class="mx-1 text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">not_interested</mat-icon>
+            class="mx-1 text-white hover:bg-gray-600 hover:text-white">not_interested</mat-icon>
         <a
-            class="block py-1 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Clear</a>
+            class="block py-1 text-gray-700 hover:bg-gray-600 text-gray-200 hover:text-white">Clear</a>
     </div>
 </div>

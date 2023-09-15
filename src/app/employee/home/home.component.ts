@@ -116,9 +116,7 @@ export class HomeComponent implements OnInit {
       }
       const chartOptions = {
         animationEnabled: true,
-        title: {
-          text: "Tasks by Status"
-        },
+        backgroundColor: "#18181b",
         data: [{
           type: "pie",
           startAngle: -90,

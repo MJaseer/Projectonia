@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-otp',
@@ -57,7 +58,7 @@ export class OtpComponent implements OnInit {
         this.router.navigate(['/login'])
       }, (err: any) => {
         console.log(err);
-
+        Swal.fire('Error',err.error,'error')
       }
     )
   }

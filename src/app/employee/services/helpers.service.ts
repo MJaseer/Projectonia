@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const url = 'http://localhost:3000/api/assignee'
+const url = `${environment.backendPort}/api/assignee`
 
 @Injectable({
   providedIn: 'root'

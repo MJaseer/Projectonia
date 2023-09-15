@@ -13,6 +13,7 @@ import { StatusComponent } from '../helper/status/status.component';
 import { TaskViewComponent } from 'src/app/shared/modal/task-view/task-view.component';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-board',
@@ -94,6 +95,11 @@ export class BoardComponent implements OnInit {
       } else {
         this.currentData = data
       }
+      this.todo = []
+      this.overdue = []
+      this.due = []
+      this.progress = []
+      this.completed = []
       this.currentData.forEach((data) => {
         switch (data.status) {
           case 'TODO':
@@ -113,7 +119,7 @@ export class BoardComponent implements OnInit {
             break
           default:
             this.todo.push(data)
-          break;
+            break;
         }
       })
 
@@ -210,9 +216,13 @@ export class BoardComponent implements OnInit {
   isHidden = false
 
   newTask() {
-    this.router.navigate(['/space/task/new'],
-      { queryParams: { project: this.projectId } }
-    )
+    if (this.projectId) {
+      this.router.navigate(['/space/task/new'],
+        { queryParams: { project: this.projectId } }
+      )
+    } else {
+      Swal.fire('Missing Project', 'Select a project to add task', 'warning')
+    }
   }
 
 

@@ -164,10 +164,8 @@ export class AuthHomeComponent implements OnInit {
 
       this.priorityData = priorityData
       const chartOptions = {
+        backgroundColor: "#18181b",
         animationEnabled: true,
-        // title: {
-        //   text: "Tasks by Status"
-        // },
         data: [{
           type: "pie",
           startAngle: -90,
@@ -178,10 +176,8 @@ export class AuthHomeComponent implements OnInit {
       }
 
       const doughnutChart = {
+        backgroundColor: "#18181b",
         animationEnabled: true,
-        // title: {
-        //   text: "Tasks by Status"
-        // },
         data: [{
           type: "doughnut",
           startAngle: -90,

@@ -1,9 +1,13 @@
 <div class="flex flex-col ">
-    <app-item-nav style="z-index: 35;"></app-item-nav>
+    <app-item-nav class="fixed w-full shadow-md shadow-zinc-800" style="z-index: 35;"></app-item-nav>
     <aside style="z-index: 32;"><app-side-bar></app-side-bar></aside>
 </div>
 
-<div class="p-4 sm:ml-64 ">
+<div class=" relative top-14 p-4 bg-zinc-950 h-fit lg:h-full sm:ml-64 ">
+    <div
+        class="w-full p-2 mb-4 text-start text-3xl font-semibold font-body text-white bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-black dark:border-gray-700">
+        List
+    </div>
     <div class="flex justify-between items-center">
         <div>
             <mat-form-field>
@@ -18,7 +22,7 @@
 
 
         <button type="button" (click)="newTask()"
-            class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-4 py-2 text-center  mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">NEW
+            class="text-gray-900 hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-4 py-2 text-center  mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-black">NEW
             TASK</button>
     </div>
     <router-outlet></router-outlet>
@@ -26,116 +30,180 @@
     <div
         class="flex flex-wrap items-center justify-center gap-2.5 p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
 
-        <div *ngFor="let taskData of currentData" 
-            class=" block flex items-center justify-center  w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-600 border-0 border-b-2 border-gray-300 hover:bg-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-            <div  *ngIf="edit.id == taskData._id || readonly" class=" px-2">
-                <mat-icon [ngStyle]="{color:taskData.status}">stop</mat-icon>
-            </div>
-            <div class=" px-2" [hidden]="!readonly" (click)="editHead(taskData.title,taskData._id)" (blur)="editHead()">
-                <mat-icon>create</mat-icon>
-            </div>
-            <div class=" px-2" [hidden]="!readonly" (click)="viewTask(taskData)">
-                <mat-icon>visibility</mat-icon>
-            </div>
-            <div class="w-full" [hidden]="!readonly" >
-                <input ngModel #title="ngModel" type="text" name="title" [(ngModel)]="taskData.title"
-                    [value]="taskData.title" required minlength="3" readonly maxlength="15"
-                    class="block py-2.5  px-0 w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-400 border-0 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 hover:bg-gray-400 peer">
-                <!-- <small *ngIf="title.invalid && (title.touched || title.dirty)" class="text-red-600">Enter a valid title</small> -->
-                <!-- <span class="text-red-600" *ngIf="title.errors?.['required']">Title is required </span>
-                <span class="text-red-600" *ngIf="title.errors?.['minlength'] && ['maxlength']">Title length must be
-                    greater than 4 and less than 15 </span> -->
-            </div>
-            <div class="w-full " *ngIf="edit.id == taskData._id" [hidden]="readonly">
-                <input ngModel #title="ngModel" type="text" name="title" [(ngModel)]="taskTitle"
-                    [value]="taskData.title" required minlength="3" [readOnly]="readonly" maxlength="15"
-                    class="block py-2.5  px-0 w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-400 border-0 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 hover:bg-gray-400 peer">
-                <!-- <small *ngIf="title.invalid && (title.touched || title.dirty)" class="text-red-600">Enter a valid title</small> -->
-                <span class="text-red-600" *ngIf="title.errors?.['required']">Title is required </span>
-                <span class="text-red-600" *ngIf="title.errors?.['minlength'] && ['maxlength']">Title length must be
-                    greater than 4 and less than 15 </span>
-            </div>
-            <button [attr.taskData-collapse-toggle]="taskData._id" type="button" (click)="isHidden = !isHidden"
-                class="inline-flex items-center p-2 w-9 h-9 justify-center text-sm text-gray-100 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-700 dark:hover:bg-gray-300 dark:focus:ring-gray-300"
-                aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div  class="hidden w-full md:block md:w-auto" [id]="taskData._id">
-                <ul [hidden]="isHidden"
-                    class="font-medium flex flex-col justify-center items-center md:p-0 border border-gray-100 md:flex-row hover:bg-gray-400 md:space-x-8 md:mt-0 md:border-0 md:bg-white md:dark:bg-gray-300 dark:border-gray-700">
-                    <li>
-                        <button type="button" class="text-gray-900  hover:text-white  focus:ring-4
-                    focus:outline-none font-medium rounded-md  text-center 
-                    dark:border-gray-600 dark:text-gray-400 dark:hover:text-white " [hidden]="!readonly"><svg
-                                (click)="openDelete(taskData._id)"
-                                class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path
-                                    d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
-                            </svg></button>
-                    </li>
-                    <li>
-                        <button type="button" class="text-gray-900 focus:ring-4 
-                        focus:outline-none font-medium rounded-md  text-center 
-                        dark:border-gray-600 dark:text-gray-400" [hidden]="!readonly"
-                            (click)="openDrop('assignee',taskData._id)"> <mat-icon style="width: 50px;"
-                                *ngIf="!taskData.assigneeId ;else assignee "
-                                class=" w-7 h-7 text-gray-500 hover:text-gray-900">account_circle</mat-icon>
-                            <ng-template #assignee>
-                                <p class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900"
-                                    aria-hidden="true" style="width: 50px;padding-top: 7px;">{{taskData.assigneeId |
-                                    assignee : assignees }}</p>
-                            </ng-template>
-                        </button>
 
-                    </li>
-                    <li>
-                        <button type="button" class="text-gray-900  hover:text-white  focus:ring-4
-                        focus:outline-none font-medium rounded-md  text-center 
-                        dark:border-gray-600 dark:text-gray-400 dark:hover:text-white" [hidden]="!readonly"
-                            (click)="openDrop('priority',taskData._id)"><mat-icon [ngStyle]="{color:taskData.priority}"
-                                class="text-gray-500 hover:text-gray-900 w-6 h-6">tour</mat-icon></button>
-
-                    </li>
-                    <li>
-                        <button type="button" class="text-gray-900  hover:text-white  focus:ring-4 
-                        focus:outline-none font-medium rounded-md  text-center 
-                        dark:border-gray-600 dark:text-gray-400 dark:hover:text-white " [hidden]="!readonly"
-                            (click)="openDrop('date',taskData._id)">
-                            <svg *ngIf="taskData.dueDate == 'NIL';else dueDate " style="width: 50px;"
-                                class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
-                            </svg>
-                            <ng-template #dueDate>
-                                <p class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900 "
-                                    aria-hidden="true" style="width: 50px;padding-top: 7px;">
-                                    {{taskData.dueDate |
-                                    monthAndDate }}</p>
-                            </ng-template>
-                        </button>
-                    </li>
-                    <li>
-                        <button [ngStyle]="{background:taskData.status}" type="button" class="text-gray-900  hover:text-white px-5 
-                        font-medium   text-center bg-gray-500 dark:text-white dark:hover:text-gray-900"
-                            style="height: 40px; width: 120px;" [hidden]="!readonly"
-                            (click)="openDrop('status',taskData._id)">{{taskData.status |
-                            status}}</button>
-                    </li>
-                    <li *ngIf="edit.id == taskData._id" >
-                        <button type="button" (click)="saveTask(taskData._id)"  [hidden]="readonly"
-                            class="text-gray-900  hover:text-white border border-gray-800 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md px-3 py-1 mx-2 text-center dark:border-gray-600 dark:text-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"><small>SAVE</small></button>
-
-                    </li>
-                </ul>
+        <div
+            class="w-full p-2 text-center text-md flex justify-between font-medium font-body text-white  border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-black dark:border-gray-700">
+            <div class="flex gap-x-6 w-1/2">
+                <span class="hover:underline hover:underline-offset-2">Title</span>
+                <span class="hover:underline hover:underline-offset-2">Due Date</span>
+                <span class="hover:underline hover:underline-offset-2">Assignee</span>
+                <span class="hover:underline hover:underline-offset-2">Priority</span>
+            </div>
+            <div class="flex gap-x-5 justify-end w-1/2">
+                <span>Edit Title</span>
+                <span>View</span>
+                <span>Delete</span>
+                <span class="mx-12">Status</span>
             </div>
         </div>
+        <div *ngFor="let taskData of currentData" class="w-full">
+            <div *ngIf="edit.id == taskData._id || readonly"
+                class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-black dark:border-gray-700">
 
+                <div
+                    class=" block flex items-center justify-between  w-full text-sm  focus:bg-gray-600  appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <div *ngIf="edit.id == taskData._id || readonly" class="flex flex-col w-1/2 gap-x-3 gap-y-3">
+                        <div class="w-full flex justify-start " [hidden]="!readonly">
+                            <span class="text-lg font-extrasmall ">{{taskData.title}}</span>
+                        </div>
+                        <div class="w-full gap-x-5 flex">
+                            <div *ngIf="edit.id == taskData._id || readonly" class="  mt-1">
+                                <mat-icon [ngStyle]="{color:taskData.status}">stop</mat-icon>
+                            </div>
+                            <div *ngIf="edit.id == taskData._id || readonly" class="w-16 flex items-center ">
+                                <button type="button" class="text-gray-100 flex items-center hover:text-white w-full     focus:ring-4 
+                            focus:outline-none font-medium rounded-md  text-center 
+                            dark:border-gray-600  dark:hover:text-white " [hidden]="!readonly"
+                                    (click)="openDrop('date',taskData._id)">
+                                    <svg *ngIf="taskData.dueDate == 'NIL';else dueDate " style="width: 50px;"
+                                        class="w-6 h-6  dark:text-gray-300 hover:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                                    </svg>
+                                    <ng-template #dueDate class="w-full">
+                                        <div class="flex flex-row gap-x-1 items-center w-full justify-center"
+                                            role="button">
+                                            <svg class="w-5 h-5  dark:text-gray-300 hover:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                                            </svg>
+                                            <span
+                                                class="w-full flex  text-gray-100 dark:text-gray-300 hover:text-white "
+                                                aria-hidden="true">
+                                                {{taskData.dueDate |
+                                                monthAndDate }}</span>
+                                        </div>
+
+                                    </ng-template>
+                                </button>
+                            </div>
+                            <div *ngIf="edit.id == taskData._id || readonly" class="w-20 flex items-center ">
+                                <button type="button" class="text-gray-900 w-full focus:ring-4 
+                            focus:outline-none flex font-medium rounded-md  text-center items-center
+                            dark:border-gray-600 dark:text-gray-400" [hidden]="!readonly"
+                                    (click)="openDrop('assignee',taskData._id)">
+                                    <mat-icon *ngIf="!taskData.assigneeId ;else assignee "
+                                        class=" w-8 h-8 text-gray-300 hover:text-white">account_circle</mat-icon>
+                                    <ng-template #assignee>
+                                        <div class="flex flex-row gap-x-1 items-center w-full justify-center"
+                                            role="button">
+                                            <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                viewBox="0 0 24 24" class="text-gray-300 w-6 h-auto"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M11 14.0619V20H13V14.0619C16.9463 14.554 20 17.9204 20 22H4C4 17.9204 7.05369 14.554 11 14.0619ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13Z">
+                                                </path>
+                                            </svg>
+                                            <span class="w-20 h-6 mt-1 dark:text-gray-300 hover:text-white"
+                                                aria-hidden="true">
+                                                {{taskData.assigneeId |
+                                                assignee : assignees }}</span>
+                                        </div>
+                                    </ng-template>
+                                </button>
+                            </div>
+                            <div *ngIf="edit.id == taskData._id || readonly">
+                                <button type="button" class="font-medium rounded-md  text-center 
+                                dark:border-gray-600 dark:text-gray-400 dark:hover:text-white" [hidden]="!readonly"
+                                    (click)="openDrop('priority',taskData._id)"><mat-icon
+                                        [ngStyle]="{color:taskData.priority}"
+                                        class="text-gray-300 hover:text-white w-6 h-6  ">tour</mat-icon></button>
+                            </div>
+
+
+
+
+
+                            <button [attr.taskData-collapse-toggle]="taskData._id" type="button"
+                                (click)="isHidden = !isHidden"
+                                class="inline-flex items-center p-2 w-9 h-9 justify-center text-sm text-gray-100 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-700 dark:hover:bg-gray-300 dark:focus:ring-gray-300"
+                                aria-controls="navbar-default" aria-expanded="false">
+                                <span class="sr-only">Open main menu</span>
+                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 17 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="w-full flex items-center ">
+                            <div class="w-full " *ngIf="edit.id == taskData._id" [hidden]="readonly">
+                                <input ngModel #title="ngModel" type="text" name="title" [(ngModel)]="taskTitle"
+                                    [value]="taskData.title" required minlength="3" [readOnly]="readonly" maxlength="15"
+                                    class="block py-2.5  px-0 w-full text-sm text-gray-900 bg-zinc-950 focus:bg-zinc-800 border-0 border-gray-800 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black hover:bg-zinc-900 peer">
+                                <!-- <small *ngIf="title.invalid && (title.touched || title.dirty)" class="text-red-600">Enter a valid title</small> -->
+                                <span class="text-red-600" *ngIf="title.errors?.['required']">Title is required </span>
+                                <span class="text-red-600" *ngIf="title.errors?.['minlength'] && ['maxlength']">Title
+                                    length
+                                    must be
+                                    greater than 4 and less than 15 </span>
+                            </div>
+                            <div *ngIf="edit.id == taskData._id">
+                                <button type="button" (click)="saveTask(taskData._id)" [hidden]="readonly"
+                                    class="text-gray-900  hover:text-white border border-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md px-3 py-1 mx-2 text-center dark:border-gray-600 dark:text-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-black"><small>SAVE</small></button>
+
+                            </div>
+                            <div *ngIf="edit.id == taskData._id">
+                                <button type="button" (click)="cancelEdit()" [hidden]="readonly"
+                                    class="text-gray-900  hover:text-white  focus:ring-4 focus:outline-none font-medium rounded-md mx-2 text-center dark:border-gray-600 dark:text-white dark:hover:text-white hover:w-7 h-7"><svg
+                                        class="w-5 h-5  text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden w-full md:block md:w-auto" [id]="taskData._id">
+                        <ul [hidden]="isHidden"
+                            class="font-medium flex flex-col justify-center items-end md:p-0 md:flex-row md:space-x-8">
+                            <li class=" px-2" [hidden]="!readonly" (click)="editHead(taskData.title,taskData._id)"
+                                (blur)="editHead()">
+                                <mat-icon>create</mat-icon>
+                            </li>
+                            <li class=" px-2" [hidden]="!readonly" (click)="viewTask(taskData)">
+                                <mat-icon>visibility</mat-icon>
+                            </li>
+                            <li>
+                                <button type="button" class="text-gray-900  hover:text-white  focus:ring-4
+                                focus:outline-none font-medium rounded-md  text-center 
+                                dark:border-gray-600 dark:text-gray-400 dark:hover:text-white " [hidden]="!readonly">
+                                    <svg (click)="openDelete(taskData._id)" stroke="currentColor" fill="currentColor"
+                                        stroke-width="0" viewBox="0 0 24 24"
+                                        class="w-6 h-6  dark:text-gray-300 hover:text-white"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M6.53451 3H20.9993C21.5516 3 21.9993 3.44772 21.9993 4V20C21.9993 20.5523 21.5516 21 20.9993 21H6.53451C6.20015 21 5.88792 20.8329 5.70246 20.5547L0.369122 12.5547C0.145189 12.2188 0.145189 11.7812 0.369122 11.4453L5.70246 3.4453C5.88792 3.1671 6.20015 3 6.53451 3ZM12.9993 10.5858L10.1709 7.75736L8.75668 9.17157L11.5851 12L8.75668 14.8284L10.1709 16.2426L12.9993 13.4142L15.8277 16.2426L17.242 14.8284L14.4135 12L17.242 9.17157L15.8277 7.75736L12.9993 10.5858Z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button [ngStyle]="{background:taskData.status}" type="button" class="text-gray-900  hover:text-white px-5 
+                                font-medium   text-center bg-gray-500 dark:text-white dark:hover:text-white"
+                                    style="height: 40px; width: 120px;" [hidden]="!readonly"
+                                    (click)="openDrop('status',taskData._id)">{{taskData.status |
+                                    status}}</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

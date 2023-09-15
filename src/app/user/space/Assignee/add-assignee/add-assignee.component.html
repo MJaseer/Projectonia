@@ -2,14 +2,14 @@
     <app-auth-nav style="z-index: 1035;;"></app-auth-nav>
     <aside style="z-index: 1032;"><app-side-bar></app-side-bar></aside>
 </div>
-<div class="p-4 sm:ml-64">
+<div class="p-4 bg-zinc-950 h-fit lg:h-full sm:ml-64">
     <div class="">
-        <p class=" font-medium text-dark text-lg  dark:text-dark">Add Employees</p>
+        <p class=" font-medium text-white text-lg  dark:text-white">Add Employees</p>
     </div>
     <div
-        class=" w-full h-full flex items-center justify-center p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 darK:bg-gray-900 bg-gray-900">
+        class=" w-full h-fit w-fit p-4 border-2 border-gray-200 flex items-center justify-center ">
 
-        <form class=" flex items-center flex-col" [formGroup]="assigneeForm" (ngSubmit)="add()">
+        <form class=" flex  w-fit items-center flex-col border-dashed rounded-lg dark:border-gray-700 darK:bg-black bg-black p-4" [formGroup]="assigneeForm" (ngSubmit)="add()">
             <div class="relative z-0 w-full mb-6 group">
                 <input type="email" formControlName="email" id="floating_email" autocomplete="email"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"

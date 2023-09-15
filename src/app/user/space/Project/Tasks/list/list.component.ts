@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Project, Task } from '../../../../../global/store/space-store';
 import { Store, select } from '@ngrx/store';
 import { selectProject, selectTask } from '../../../../../global/store/space.selector';
@@ -12,11 +12,14 @@ import { PriorityComponent } from '../helper/priority/priority.component';
 import { StatusComponent } from '../helper/status/status.component';
 import { TaskViewComponent } from 'src/app/shared/modal/task-view/task-view.component';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 
 export class ListComponent implements OnInit {
@@ -25,8 +28,11 @@ export class ListComponent implements OnInit {
     private store: Store,
     public modal: MatDialog,
     private taskService: TaskService,
-    private router:Router,
+    private router: Router,
   ) { }
+
+  panelOpenState = false;
+
 
   ngOnInit(): void {
 
@@ -39,7 +45,7 @@ export class ListComponent implements OnInit {
 
   }
 
-  projectHead?:string = ''
+  projectHead?: string = ''
   readonly = true
   assignees = this.taskService.getAssignee()
   project$ = this.store.pipe(select(selectProject))
@@ -84,7 +90,7 @@ export class ListComponent implements OnInit {
   taskDivider(data: Task[]) {
     this.assignees = this.taskService.getAssignee()
     if (data) {
-      if(this.projectId){
+      if (this.projectId) {
         this.currentData = data.filter((data) => data.projectId == this.projectId)
       } else {
         this.currentData = data
@@ -107,7 +113,7 @@ export class ListComponent implements OnInit {
     this.modal.open(TaskViewComponent, {
       width: '90%',
       height: '90%',
-      data: [task, this.assignees,'user',this.projectHead]
+      data: [task, this.assignees, 'user', this.projectHead]
     })
   }
 
@@ -156,19 +162,19 @@ export class ListComponent implements OnInit {
 
       this.modal.open(component, {
         width: '248x',
-        data: [updateTask, 'task','admin']
+        data: [updateTask, 'task', 'admin']
       })
     }
 
   }
 
-  edit:{title?:string,id?:string,status?:boolean} = {
-    title:'',
-    id:'',
-    status:false
+  edit: { title?: string, id?: string, status?: boolean } = {
+    title: '',
+    id: '',
+    status: false
   }
 
-  editHead(title?: string,id?:string) {
+  editHead(title?: string, id?: string) {
     if (this.readonly) {
       if (title) {
         this.taskTitle = title
@@ -186,14 +192,23 @@ export class ListComponent implements OnInit {
     this.taskService.getUpdate(task, this.taskTitle, 'title', 'user')
   }
 
+  cancelEdit(){
+    this.readonly = true
+  }
+
 
 
   isHidden = false
 
-  newTask(){
-    this.router.navigate(['/space/task/new'],
-    { queryParams:{project:this.projectId}}
-    )
+  newTask() {
+    if (this.projectId) {
+      this.router.navigate(['/space/task/new'],
+        { queryParams: { project: this.projectId } }
+      )
+    } else {
+      Swal.fire('Missing Project','Select a project to add task','warning')
+    }
+
   }
 
 }

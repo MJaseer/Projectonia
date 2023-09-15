@@ -2,14 +2,14 @@
     <app-auth-nav style="z-index: 1035;;"></app-auth-nav>
     <aside style="z-index: 1032;"><app-side-bar></app-side-bar></aside>
 </div>
-<div class="p-4 sm:ml-64">
+<div class="p-4 bg-zinc-950  h-fit lg:h-full sm:ml-64">
     <div class="">
-        <p class=" font-medium text-dark text-lg  dark:text-dark">Add Employees</p>
+        <p class=" font-medium text-white text-lg  dark:text-white">Edit Employees</p>
     </div>
     <div
-        class=" w-full h-full flex items-center justify-center p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 darK:bg-gray-900 bg-gray-900">
+        class=" w-full h-fit w-fit p-4 border-2 border-gray-200 flex items-center justify-center ">
 
-        <form class=" flex items-center flex-col" (ngSubmit)="update()">
+        <form class=" flex  w-fit items-center flex-col border-dashed rounded-lg dark:border-gray-700 darK:bg-black bg-black p-4" (ngSubmit)="update()">
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-6 group">
                     <input type="text" ngModel #fname="ngModel" name="fname" id="fname" [(ngModel)]="assigneeForm.fname"

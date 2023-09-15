@@ -1,9 +1,8 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoadinComponent } from './shared/modal/loadin/loadin.component';
 import { ErrorComponent } from './shared/modal/error/error.component';
 
 import { FormsModule } from '@angular/forms';
@@ -34,16 +33,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { SpaceInterceptor } from './user/space/helper/space.interceptor';
-import { SpaceService } from './global/services/space.service';
 import { TaskPipe } from './pipes/task.pipe';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { SpinnerComponent } from './shared/modal/spinner/spinner.component';
+import { LoadingInterceptor } from './shared/interceptor/loading.interceptor';
+import { PriorityPipe } from './pipes/priority.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     InputValidatorDirective,
-    LoadinComponent,
     ErrorComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,23 +72,28 @@ import { TaskPipe } from './pipes/task.pipe';
     MatIconModule,
     OverlayModule,
     FormsModule,
-    NgxSpinnerModule,
     ToastrModule,
     ToastrModule.forRoot({
       preventDuplicates: true
     }),
     WishPipe,
     CanvasJSAngularChartsModule,
+    MatDialogModule,
+    NgxSpinnerModule,
+    MatDialogModule,
+    PriorityPipe
   ],
   providers: [
-    //   {
-    //   provide: HTTP_INTERCEPTORS, 
-    //   useClass: SpaceInterceptor, 
-    //   multi: true
-    // }
-    {
-      provide: SpaceService
-    }
+      {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: SpaceInterceptor, 
+      multi: true
+      },
+      {
+        provide:HTTP_INTERCEPTORS,
+        useClass:LoadingInterceptor,
+        multi:true
+      }
   ],
   bootstrap: [AppComponent]
 })

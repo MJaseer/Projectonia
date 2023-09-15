@@ -1,8 +1,12 @@
 <div class="flex flex-col ">
-    <app-nav style="z-index: 35;;"></app-nav>
+    <app-nav class="fixed w-full shadow-md shadow-zinc-800" style="z-index: 35;;"></app-nav>
     <aside style="z-index: 32;"><app-side-nav></app-side-nav></aside>
 </div>
-<div class="p-4 sm:ml-64 ">
+<div class="relative top-14 p-4 bg-zinc-950 h-fit lg:h-full sm:ml-64">
+    <div
+        class="w-full p-2 mb-4 text-start text-3xl font-semibold font-body text-white bg-white border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-black dark:border-gray-700">
+        List
+    </div>
     <div class="flex justify-between items-center">
         <div>
             <mat-form-field>
@@ -18,65 +22,90 @@
 
     <div
         class="flex flex-wrap items-center justify-center gap-2.5 p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div
+            class="w-full p-2 text-center text-md flex justify-between font-medium font-body text-white  border border-gray-200 rounded-lg shadow sm:p-4 dark:bg-black dark:border-gray-700">
+            <div class="flex gap-x-6 w-1/2">
+                <span class="hover:underline hover:underline-offset-2">Title</span>
+                <span class="hover:underline hover:underline-offset-2">Due Date</span>
+                <span class="hover:underline hover:underline-offset-2">Priority</span>
+            </div>
+            <div class="flex gap-x-5 justify-end w-1/2">
+                <span>View</span>
+                <span class="mx-12">Status</span>
+            </div>
+        </div>
         <div *ngFor="let data of assignedTask"
-            class=" block flex items-center justify-center  w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-600 border-0 border-b-2 border-gray-300 hover:bg-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-            <div class=" px-2">
-                <mat-icon [ngStyle]="{color:data.status}">stop</mat-icon>
-            </div>
-            <div class=" px-2" [hidden]="!readonly" (click)="viewTask(data)">
-                <mat-icon>visibility</mat-icon>
-            </div>
-            <div class="w-full">
-                <input type="text" name="title" [value]="data.title"
-                    class="block py-2.5  px-0 w-full text-sm text-gray-900 bg-gray-300 focus:bg-gray-400 border-0 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 hover:bg-gray-400 peer">
-            </div>
-            <button [attr.data-collapse-toggle]="data._id" type="button"
-                class="inline-flex items-center p-2 w-9 h-9 justify-center text-sm text-gray-100 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-700 dark:hover:bg-gray-300 dark:focus:ring-gray-300"
-                aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div class="hidden w-full md:block md:w-auto" [id]="data._id">
-                <ul
-                    class="font-medium flex flex-col justify-center items-center md:p-0 border border-gray-100 md:flex-row hover:bg-gray-400 md:space-x-8 md:mt-0 md:border-0 md:bg-white md:dark:bg-gray-300 dark:border-gray-700">
-                   
-                    <li>
-                        <button disabled class="text-gray-900  hover:text-white  focus:ring-4
-                        focus:outline-none font-medium rounded-md  text-center 
-                        dark:border-gray-600 dark:text-gray-400 dark:hover:text-white"
-                           ><mat-icon [ngStyle]="{color:data.priority}"
-                                class="text-gray-500 hover:text-gray-900 w-6 h-6">tour</mat-icon></button>
+            class="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-black dark:border-gray-700">
 
-                    </li>
-                    <li>
-                        <button disabled class="text-gray-900  hover:text-white  focus:ring-4 
-                        focus:outline-none font-medium rounded-md  text-center 
-                        dark:border-gray-600 dark:text-gray-400 dark:hover:text-white "
-                            >
-                            <svg *ngIf="data.dueDate == 'NIL';else dueDate " style="width: 50px;"
-                                class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                    d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+            <div
+                class=" block flex items-center justify-between  w-full text-sm focus:bg-gray-600  appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                <div class="flex flex-col w-1/2 gap-x-3 gap-y-3">
+                    <div class="w-full flex justify-start " [hidden]="!readonly">
+                        <span class="text-lg font-extrasmall ">{{data.title}}</span>
+                    </div>
+                    <div class="w-full gap-x-5 flex">
+                        <div class="  mt-1">
+                            <mat-icon [ngStyle]="{color:data.status}">stop</mat-icon>
+                        </div>
+                        <div class="w-16 flex items-center ">
+                            <button type="button" class="text-gray-100 flex items-center hover:text-white w-full     focus:ring-4 
+                            focus:outline-none font-medium rounded-md  text-center 
+                            dark:border-gray-600  dark:hover:text-white " [hidden]="!readonly"
+                                (click)="openDrop('date',data._id)">
+                                <svg *ngIf="data.dueDate == 'NIL';else dueDate " style="width: 50px;"
+                                    class="w-6 h-6  dark:text-gray-300 hover:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                                </svg>
+                                <ng-template #dueDate class="w-full">
+                                    <div class="flex flex-row gap-x-1 items-center w-full justify-center" role="button">
+                                        <svg class="w-5 h-5  dark:text-gray-300 hover:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                                        </svg>
+                                        <span class="w-full flex  text-gray-100 dark:text-gray-300 hover:text-white "
+                                            aria-hidden="true">
+                                            {{data.dueDate |
+                                            monthAndDate }}</span>
+                                    </div>
+
+                                </ng-template>
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button" class="font-medium rounded-md  text-center 
+                            dark:border-gray-600 dark:text-gray-400 dark:hover:text-white" [hidden]="!readonly"
+                                (click)="openDrop('priority',data._id)"><mat-icon [ngStyle]="{color:data.priority}"
+                                    class="text-gray-300 hover:text-white w-6 h-6  ">tour</mat-icon></button>
+                        </div>
+                        <button [attr.taskData-collapse-toggle]="data._id" type="button" (click)="readonly = !readonly"
+                            class="inline-flex items-center p-2 w-9 h-9 justify-center text-sm text-gray-100 md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-700 dark:hover:bg-gray-300 dark:focus:ring-gray-300"
+                            aria-controls="navbar-default" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 17 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
                             </svg>
-                            <ng-template #dueDate>
-                                <p class="w-6 h-6 text-gray-800 dark:text-gray-500 hover:text-gray-900 "
-                                    aria-hidden="true" style="width: 50px;padding-top: 7px;">{{data.dueDate |
-                                    monthAndDate }}</p>
-                            </ng-template>
                         </button>
-                    </li>
-                    <li>
-                        <button [ngStyle]="{background:data.status}" type="button" class="text-gray-900  hover:text-white px-5 
+                    </div>
+                </div>
+                <div class="hidden w-full md:block md:w-auto" [id]="data._id">
+                    <ul class="font-medium flex flex-col justify-center items-end md:p-0 md:flex-row md:space-x-8">
+                        <li class=" px-2" [hidden]="!readonly" (click)="viewTask(data)">
+                            <mat-icon>visibility</mat-icon>
+                        </li>
+                        <li>
+                            <button [ngStyle]="{background:data.status}" type="button" class="text-gray-900  hover:text-white px-5 
                         font-medium   text-center bg-gray-500 dark:text-white dark:hover:text-gray-900"
-                            style="height: 40px; width: 120px;" (click)="openDrop('status',data._id)">{{data.status |
-                            status}}</button>
-                    </li>
-                </ul>
+                                style="height: 40px; width: 120px;" (click)="openDrop('status',data._id)">{{data.status
+                                |
+                                status}}</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

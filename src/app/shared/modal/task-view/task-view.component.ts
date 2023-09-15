@@ -74,6 +74,8 @@ export class TaskViewComponent implements OnInit {
     this.projectHead = this.dialogData[3]
     this.data = this.dialogData[0]
     this.assignees = this.dialogData[1]
+    console.log('hi',this.dialogData[2] );
+    
     if (this.dialogData[2] == 'employee') {
       this.disabled = true
     }
@@ -95,6 +97,8 @@ export class TaskViewComponent implements OnInit {
   }
 
   dialogueClose() {
+    console.log('close');
+    
     this.dialogRef.close()
   }
 

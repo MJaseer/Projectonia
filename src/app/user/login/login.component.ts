@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     } else {
 
       this.service.login(this.loginForm.value).subscribe(
-        (result) => {
+        (result) => {          
           this.auth.setToken(result)
           const data = this.auth.getToken()         
           this.router.navigate(['/space'])

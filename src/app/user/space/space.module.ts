@@ -30,7 +30,7 @@ import { AssigneePipe } from 'src/app/pipes/assignee.pipe';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ToastrModule } from 'ngx-toastr';
 import { WishPipe } from 'src/app/pipes/wish.pipe';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { Chart } from 'chart.js';
 import { registerables } from 'chart.js';
@@ -39,7 +39,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { TableComponent } from './Project/Tasks/table/table.component';
 import { BoardComponent } from './Project/Tasks/board/board.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatCardModule } from '@angular/material/card'
+
 import { TaskPipe } from 'src/app/pipes/task.pipe';
+import { PriorityPipe } from 'src/app/pipes/priority.pipe';
+import { DetailsComponent } from './Assignee/details/details.component';
 Chart.register(...registerables)
 
 @NgModule({
@@ -58,7 +64,8 @@ Chart.register(...registerables)
     NewComponent,
     ProfileComponent,
     TableComponent,
-    BoardComponent
+    BoardComponent,
+    DetailsComponent
   ],
   imports: [
     CommonModule,
@@ -79,13 +86,17 @@ Chart.register(...registerables)
     AssigneePipe,
     OverlayModule,
     ToastrModule.forRoot({
-      preventDuplicates:true
+      preventDuplicates: true
     }),
     WishPipe,
     CanvasJSAngularChartsModule,
     MatSelectModule,
     MatMenuModule,
-    FileUploadModule
+    FileUploadModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatCardModule,
+    PriorityPipe
   ],
   providers: [
     {

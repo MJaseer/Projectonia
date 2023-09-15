@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SpaceService } from 'src/app/global/services/space.service';
 import { i_manager } from 'src/app/global/user/i_manager';
-import { FileUploader } from 'ng2-file-upload';
+import { environment } from 'src/environments/environment';
 
-const URL = 'http://localhost:3000/api';
+const URL = `${environment.backendPort}/api`;
 
 @Component({
   selector: 'app-profile',

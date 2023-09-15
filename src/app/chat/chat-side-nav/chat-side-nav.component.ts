@@ -5,10 +5,10 @@ import { AuthService } from 'src/app/user/service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { HttpClient } from '@angular/common/http';
-import { SpaceService } from 'src/app/global/services/space.service';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const url = 'http://localhost:3000/api'
+const url = `${environment.backendPort}/api`
 
 @Component({
   selector: 'app-chat-side-nav',
@@ -21,6 +21,8 @@ export class ChatSideNavComponent implements OnInit {
   private _unsubscribe$ = new Subject();
 
   @Output() messageData!: EventEmitter<any>;
+  @Output() chatersData!: EventEmitter<any>
+
 
   constructor(
     private _chatService: ChatService,
@@ -31,7 +33,7 @@ export class ChatSideNavComponent implements OnInit {
     private http: HttpClient,
   ) {
     this.messageData = new EventEmitter<any>();
-
+    this.chatersData = new EventEmitter<any>();
   }
 
   assignees: any[] = []
@@ -53,20 +55,46 @@ export class ChatSideNavComponent implements OnInit {
     if (this.sender == 'manager') {
       data = this._authService.getToken()
       this.user_id = data._id
-
+      this.getChater(data._id)
     } else if (this.sender == 'employee') {
       data = this.employeeService.getToken()
       this.managerId = data.managerId
       this.user_id = data._id
+      this.getChater(data._id)
     }
-    this.fetchAssignees()
+
+    // this.fetchAssignees()
+
+  }
+
+  getChater(id: string) {
+
+    if (id)
+      this._chatService.getChaters(id).subscribe(
+        (result) => {
+          this.managerShowData = result
+          this.managerShowData.forEach(chater => {
+            console.log(chater.time);
+            
+            if (chater) {
+              if (chater?.user_id) {
+                chater.time = new Date(chater.time)
+              }
+            }
+          })
+          this.managerShowData.sort((a,b)=> b.time - a.time)
+          console.log(this.managerShowData);
+          
+          this.chatersData.emit(result)
+        })
 
   }
 
   managerShowData: {
     fname: any;
-    online: boolean;
+    readed: boolean;
     user_id: any;
+    time: any
   }[] = []
 
 
@@ -77,10 +105,6 @@ export class ChatSideNavComponent implements OnInit {
         online: boolean;
         user_id: any;
       }[] = []
-
-
-
-
       Object.keys(data).forEach((key) => {
         if (data) {
 
@@ -88,11 +112,10 @@ export class ChatSideNavComponent implements OnInit {
             if (assigneData) {
               if (this.sender == 'manager') {
                 if (assigneData._id == data[key].user_id) {
-                  console.log(assigneData,'1');
+                  console.log(assigneData, '1');
                   managerShowData.push({ fname: assigneData.fname, online: true, user_id: assigneData._id })
                 } else {
-                  console.log('else');
-                  
+
                   managerShowData.push({ fname: assigneData.fname, online: false, user_id: assigneData._id })
                 }
               } else {
@@ -103,7 +126,7 @@ export class ChatSideNavComponent implements OnInit {
                   managerShowData.push({ fname: assigneData.fname, online: false, user_id: assigneData._id })
                 }
               }
-              managerShowData = Array.from(new Set(managerShowData))
+
             }
 
           })
@@ -111,11 +134,25 @@ export class ChatSideNavComponent implements OnInit {
         }
 
       })
-      this.managerShowData = Array.from(Object.values(managerShowData))
 
-      console.log(managerShowData,this.managerShowData);
-
+      this.removeDuplicates(managerShowData)
     });
+
+  }
+
+  removeDuplicates(arr: any) {
+    const uniqueArray: any[] = [];
+    const seenUserIds: Set<string> = new Set();
+
+    for (const user of arr) {
+      if (!seenUserIds.has(user.user_id)) {
+        seenUserIds.add(user.user_id);
+        uniqueArray.push(user);
+      }
+    }
+    console.log(uniqueArray);
+    this.managerShowData = uniqueArray
+    return uniqueArray;
   }
 
   getAssigne() {
@@ -182,7 +219,7 @@ export class ChatSideNavComponent implements OnInit {
 
       this.assignees.push(manager)
     }
-    this.onlineIndicator(this.assignees)
+    // this.onlineIndicator(this.assignees)
     return data
   }
 

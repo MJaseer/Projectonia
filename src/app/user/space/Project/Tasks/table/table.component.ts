@@ -13,6 +13,7 @@ import { StatusComponent } from '../helper/status/status.component';
 import { TaskViewComponent } from 'src/app/shared/modal/task-view/task-view.component';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/user/service/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table',
@@ -214,9 +215,13 @@ export class TableComponent implements OnInit{
   isHidden = false
 
   newTask() {
-    this.router.navigate(['/space/task/new'],
-      { queryParams: { project: this.projectId } }
-    )
+    if (this.projectId) {
+      this.router.navigate(['/space/task/new'],
+        { queryParams: { project: this.projectId } }
+      )
+    } else {
+      Swal.fire('Missing Project','Select a project to add task','warning')
+    }
   }
 
 
