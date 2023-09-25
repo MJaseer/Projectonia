@@ -138,7 +138,7 @@ export class ListComponent implements OnInit {
   openDrop(item: string, id?: string) {
     let updateTask!: Task[];
     let component: any
-
+    
     switch (item) {
       case 'date':
         component = DatePickerComponent
@@ -195,8 +195,6 @@ export class ListComponent implements OnInit {
   cancelEdit(){
     this.readonly = true
   }
-
-
 
   isHidden = false
 

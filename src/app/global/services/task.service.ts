@@ -13,6 +13,8 @@ import { i_history } from '../user/i_history';
 import { AuthService } from 'src/app/user/service/auth.service';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { environment } from 'src/environments/environment';
+import { ToasterService } from './toaster.service';
+import { take } from 'rxjs';
 
 const url = `${environment.backendPort}/api`
 
@@ -25,11 +27,10 @@ export class TaskService {
   constructor(
     private store: Store,
     private appStore: Store<Appstate>,
-    private router: Router,
-    private toastr: ToastrService,
     private http:HttpClient,
     private authService:AuthService,
-    private employeeService:EmployeeService
+    private employeeService:EmployeeService,
+    private toaster:ToasterService
   ) { }
 
   managerId!: string;
@@ -51,7 +52,6 @@ export class TaskService {
   getAssignee() {
     try {
       this.store.dispatch(invokeAssigneAPI());
-
       this.store.pipe(select(selectAssignee)).subscribe(data => {
         if (data.length > 0 && this.hi == 0) {
           this.hi++;
@@ -117,7 +117,7 @@ export class TaskService {
   getUpdate(data: any, updatedData: string, item: string, from?: string, modifier?: string) {
 
     let newData: any
-
+    
     switch (item) {
       case 'title':
         newData = Object.assign({}, data[0], {
@@ -158,20 +158,21 @@ export class TaskService {
         })
         break;
     }
+    let count = 0
     this.store.dispatch(invokeUpdateTaskAPI({ updateTask: { ...newData } }))
     let apiStatus$ = this.appStore.pipe(select(selectAppState))
-    return apiStatus$.subscribe((apState) => {
-      if (apState.apiStatus == 'success') {
-        if (from == 'employee') {
-          this.router.navigate(['/employee/tasks'])
+    return apiStatus$.pipe(take(2)).subscribe((apState) => {
+      if(count !== 0){
+        if (apState.apiStatus == 'success') {
+          this.toaster.success(item)
+          this.appStore.dispatch(setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } }))
+          
         } else {
-          this.router.navigate(['/space/task'],
-            { queryParams: { updated: item } }
-          )
+          console.log(apState);
+          this.toaster.error(item)
         }
-        this.toastr.success(`${item} succesfully changed`, 'success')
-        this.appStore.dispatch(setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } }))
       }
+      count++
     })
   }
 }

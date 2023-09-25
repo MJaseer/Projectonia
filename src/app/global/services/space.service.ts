@@ -103,7 +103,7 @@ export class SpaceService {
     return this.http.delete(`${url}/task/deleteTask/${id}`, { withCredentials: true })
   }
 
-  getImage(data:i_manager){
+  postImage(data:i_manager){
     return this.http.post(`${url}/getImage`, data,{ withCredentials: true })
   }
 

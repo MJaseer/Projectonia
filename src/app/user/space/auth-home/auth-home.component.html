@@ -2,7 +2,7 @@
     <app-auth-nav class="shadow-md shadow-zinc-800 " style="z-index: 35;;"></app-auth-nav>
     <aside class="shadow shadow-zinc-800 " style="z-index: 32;"><app-side-bar></app-side-bar></aside>
 </div>
-<div class="relative bg-zinc-900 top-16 p-4 h-fit sm:ml-64 ">
+<div class="relative bg-zinc-700 top-16 p-4 h-fit sm:ml-64 ">
 
     <div class="text-lg mt-90 font-medium text-gray-100 p-1">Home</div>
     <div class="flex flex-col items-center justify-center">
@@ -20,7 +20,7 @@
                         <div class=" flex flex-row justify-between mb-4 ">
                             <div class="flex flex-col  mb-2  "> <span class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
                                 Projects</span>
-                                <span class="text-white font-bold text-2xl  ">4</span>
+                                <span class="text-white font-bold text-2xl  ">{{projectCount}}</span>
                             </div>
                             <span
                                 class="inline-flex h-fit items-center bg-blue-700 text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md full dark:bg-blue-600 dark:text-gray-200">
@@ -31,15 +31,15 @@
                         <div class="flex flex-col justify-between mt-4 ">
                             <div class="flex flex-row justify-between ">
                                 <span class="mb-2 text-md font-medium tracking-tight text-gray-900 dark:text-white">
-                                    In progress</span>
+                                    Completed</span>
                                 <span
                                     class="inline-flex h-fit items-center  text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md full dark:text-gray-200">
-                                    90%
+                                    {{projectComplted}}%
                                 </span>
                             </div>
                             <div>
                                 <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: 45%"></div>
+                                    <div class="bg-blue-600 h-2.5 rounded-full" [ngStyle]="{'width':projectComplted + '%'}"></div>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                     <div class=" flex flex-row justify-between mb-4 ">
                         <div class="flex flex-col  mb-2  "> <span class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
                             Tasks</span>
-                            <span class="text-white font-bold text-2xl  ">4</span>
+                            <span class="text-white font-bold text-2xl  ">{{taskCount}}</span>
                         </div>
                        
                         <span
@@ -64,12 +64,12 @@
                                 Completed</span>
                             <span
                                 class="inline-flex h-fit items-center  text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md full dark:text-gray-200">
-                                90%
+                                {{taskPercentage}}%
                             </span>
                         </div>
                         <div>
                             <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                                <div class="bg-green-600 h-2.5 rounded-full" style="width: 45%"></div>
+                                <div class="bg-green-600 h-2.5 rounded-full" [ngStyle]="{'width':taskPercentage+ '%'}"></div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                 <div class=" flex flex-row justify-between mb-4 ">
                     <div class="flex flex-col  mb-2  "> <span class="text-xl font-medium tracking-tight text-gray-900 dark:text-white">
                         Assignees</span>
-                        <span class="text-white font-bold text-2xl  ">4</span>
+                        <span class="text-white font-bold text-2xl  "> {{assigneeCount}}</span>
                     </div>
                     <span
                         class="inline-flex h-fit items-center bg-blue-700 text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md full dark:bg-orange-600 dark:text-gray-200">
@@ -93,12 +93,12 @@
                             Available</span>
                         <span
                             class="inline-flex h-fit items-center  text-gray-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-md full dark:text-gray-200">
-                            90%
+                            {{assigneePercentage}}%
                         </span>
                     </div>
                     <div>
                         <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                            <div class="bg-orange-600 h-2.5 rounded-full" style="width: 45%"></div>
+                            <div class="bg-orange-600 h-2.5 rounded-full" [ngStyle]="{'width':assigneePercentage+'%'}"></div>
                         </div>
                     </div>
                 </div>
@@ -218,7 +218,7 @@
                             </ul>
 
                         </div>
-                        <div class="w-full">
+                        <div class="w-full mt-6">
                             <canvasjs-chart class=" " [options]="status"
                                 [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
                         </div>

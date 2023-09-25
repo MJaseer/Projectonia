@@ -3,9 +3,10 @@ import { Store, select } from '@ngrx/store';
 import { invokeAssigneAPI, invokeFetchTaskAPI, invokeProjectAPI } from 'src/app/global/store/space.action';
 import { selectAssignee, selectProject, selectTask } from 'src/app/global/store/space.selector';
 import { Project } from '../Project/interface/project';
-import { Assignee } from 'src/app/global/store/space-store';
+import { Assignee, Task } from 'src/app/global/store/space-store';
 import { TaskService } from 'src/app/global/services/task.service';
 import { i_history } from 'src/app/global/user/i_history';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-auth-home',
@@ -20,7 +21,7 @@ export class AuthHomeComponent implements OnInit {
     private taskService: TaskService
   ) { }
 
-  projects: Project[] = [{title:''}]
+  projects: Project[] = [{ title: '' }]
   project: number = 0
   tasks: any
   task: number = 0
@@ -44,6 +45,17 @@ export class AuthHomeComponent implements OnInit {
   name: string = ''
   statusCounts: any = ''
   status: any = ''
+  projectPercentage = 0
+  projectCount = 0
+  projectComplted = 0
+
+  taskPercentage = 0
+  taskCount = 0
+  taskComplted = 0
+
+  assigneePercentage = 0
+  assigneeCount = 0
+  assigneeComplted = 0
 
   priorityData = [{ y: 0, name: '', color: '' }]
   statusData = [{ y: 0, name: '', color: '' }]
@@ -89,6 +101,7 @@ export class AuthHomeComponent implements OnInit {
 
 
   updateChart(tasks: any) {
+    this.taskCount = tasks?.length
     if (tasks) {
       tasks.filter((data: any) => {
         if (data?.status == 'Orange') {
@@ -97,8 +110,15 @@ export class AuthHomeComponent implements OnInit {
           }
         }
       })
-    }
 
+      tasks?.forEach((values: any) => {
+        if (values.status == 'Green') {
+          this.taskComplted++
+        }
+      })
+    }
+    
+    this.taskPercentage = (this.taskComplted/this.taskCount)*100
 
     const statusCounts = new Map<string, number>();
     const donoughtCounts = new Map<string, number>()
@@ -164,7 +184,7 @@ export class AuthHomeComponent implements OnInit {
 
       this.priorityData = priorityData
       const chartOptions = {
-        backgroundColor: "#18181b",
+        backgroundColor: "#3f3f46",
         animationEnabled: true,
         data: [{
           type: "pie",
@@ -176,7 +196,7 @@ export class AuthHomeComponent implements OnInit {
       }
 
       const doughnutChart = {
-        backgroundColor: "#18181b",
+        backgroundColor: "#3f3f46",
         animationEnabled: true,
         data: [{
           type: "doughnut",
@@ -220,9 +240,34 @@ export class AuthHomeComponent implements OnInit {
     this.store.dispatch(invokeProjectAPI());
     this.store.pipe(select(selectProject)).subscribe(data => {
       if (data?.length > 0 && this.project == 0) {
+        let cmpltProject = 0
+        let taskCount = 0
+        let tasks: Task[] = []
         this.project++;
         this.projects = data;
-      }
+        data.forEach((value) => {
+          this.projectCount++
+
+          if (value.tasks?.length) {
+            taskCount = value.tasks.length
+            let completeCount = 0
+            tasks = value.tasks
+            
+            if (tasks?.length) {
+              tasks.forEach((element: any) => {
+                if (element.status == 'Green') {
+                  completeCount++
+                }
+              });
+              
+              if((completeCount/taskCount*100) == 100){
+                cmpltProject++
+              }
+            }
+          }
+        })
+        this.projectComplted = (cmpltProject/this.projectCount)* 100
+      }      
     })
 
   }
@@ -234,6 +279,14 @@ export class AuthHomeComponent implements OnInit {
       if (data?.length > 0 && count == 0) {
         count++
         this.assignees = data
+        this.assigneeCount=data?.length
+        data?.forEach((values: any) => {
+          if (values.status) {
+            this.assigneeComplted++
+          }
+        })
+        this.assigneePercentage = (this.assigneeComplted/this.assigneeCount)*100
+        console.log(this.assigneePercentage);
       }
     })
   }

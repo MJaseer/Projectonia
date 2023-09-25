@@ -28,12 +28,9 @@ import { MonthAndDatePipe } from 'src/app/pipes/month.pipe';
 import { StatusPipe } from 'src/app/pipes/status.pipe';
 import { AssigneePipe } from 'src/app/pipes/assignee.pipe';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { ToastrModule } from 'ngx-toastr';
 import { WishPipe } from 'src/app/pipes/wish.pipe';
 import { MatSelectModule } from '@angular/material/select';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { Chart } from 'chart.js';
-import { registerables } from 'chart.js';
 import { MatMenuModule } from '@angular/material/menu';
 import { ProfileComponent } from './profile/profile.component';
 import { TableComponent } from './Project/Tasks/table/table.component';
@@ -46,7 +43,7 @@ import { MatCardModule } from '@angular/material/card'
 import { TaskPipe } from 'src/app/pipes/task.pipe';
 import { PriorityPipe } from 'src/app/pipes/priority.pipe';
 import { DetailsComponent } from './Assignee/details/details.component';
-Chart.register(...registerables)
+// Chart.register(...registerables)
 
 @NgModule({
   declarations: [
@@ -85,9 +82,6 @@ Chart.register(...registerables)
     StatusPipe,
     AssigneePipe,
     OverlayModule,
-    ToastrModule.forRoot({
-      preventDuplicates: true
-    }),
     WishPipe,
     CanvasJSAngularChartsModule,
     MatSelectModule,

@@ -35,7 +35,6 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
     MatInputModule,
     WishPipe,
     CanvasJSAngularChartsModule,
-    
   ]
 })
 export class AdminModule { }

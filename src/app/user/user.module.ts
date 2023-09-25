@@ -56,7 +56,7 @@ import {MatMenuModule} from '@angular/material/menu';
         NgOtpInputModule,
         OverlayModule,
         MatDialogModule,
-        MatMenuModule
+        MatMenuModule,
     ],
 })
 

@@ -9,7 +9,7 @@ import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { Assignee } from '../../../../global/store/space-store';
 import { SpaceService } from '../../../../global/services/space.service';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
 @Component({

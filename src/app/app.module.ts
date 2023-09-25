@@ -72,7 +72,6 @@ import { PriorityPipe } from './pipes/priority.pipe';
     MatIconModule,
     OverlayModule,
     FormsModule,
-    ToastrModule,
     ToastrModule.forRoot({
       preventDuplicates: true
     }),

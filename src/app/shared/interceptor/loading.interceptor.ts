@@ -7,6 +7,9 @@ import {
 } from '@angular/common/http';
 import { Observable, finalize } from 'rxjs';
 import { LoaderService } from 'src/app/global/services/loader.service';
+import { environment } from 'src/environments/environment';
+
+const url = `${environment.backendPort}`
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
@@ -18,13 +21,16 @@ export class LoadingInterceptor implements HttpInterceptor {
 
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (request.url.startsWith(`${url}/api/chat/storeMessages`)) {
+      return next.handle(request)
+    }
 
     this.loadingService.show()
     this.totalRequests++;
 
     return next.handle(request).pipe(
       finalize(() => {
-        
+
         this.completedRequests++;
 
         if (this.completedRequests === this.totalRequests) {

@@ -19,7 +19,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { EmployeeService } from 'src/app/employee/services/employee.service';
 import { i_history } from 'src/app/global/user/i_history';
-import { Observable, map } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -74,8 +73,7 @@ export class TaskViewComponent implements OnInit {
     this.projectHead = this.dialogData[3]
     this.data = this.dialogData[0]
     this.assignees = this.dialogData[1]
-    console.log('hi',this.dialogData[2] );
-    
+
     if (this.dialogData[2] == 'employee') {
       this.disabled = true
     }
@@ -89,16 +87,13 @@ export class TaskViewComponent implements OnInit {
 
     if (this.data._id) {
       this.taskService.getHistory(this.data._id).subscribe(result => {
-        this.history = result
-
+        this.history = result  
       })
     }
 
   }
 
   dialogueClose() {
-    console.log('close');
-    
     this.dialogRef.close()
   }
 

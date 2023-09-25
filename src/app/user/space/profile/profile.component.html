@@ -2,52 +2,82 @@
     <app-auth-nav style="z-index: 35;;"></app-auth-nav>
     <aside style="z-index: 32;"><app-side-bar></app-side-bar></aside>
 </div>
-<div class="p-4 sm:ml-64">
+<div class="p-4 bg-zinc-700 sm:ml-64">
 
     <div
         class="flex flex-wrap items-center justify-center overflow-auto gap-2.5 p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-
-        <div class="p-0 flex w-full overflow-auto">
-            <div class="p-8 w-full bg-white shadow mt-10 overflow-auto ">
-                <div class="grid grid-cols-1 md:grid-cols-3">
-                    <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-10">
-                        <!-- <div>
-                            <p class="font-bold text-gray-700 text-xl">22</p>
-                            <p class="text-gray-400">Friends</p>
-                        </div>
-                        <div>
-                            <p class="font-bold text-gray-700 text-xl">10</p>
-                            <p class="text-gray-400">Photos</p>
-                        </div>
-                        <div>
-                            <p class="font-bold text-gray-700 text-xl">89</p>
-                            <p class="text-gray-400">Comments</p>
-                        </div> -->
-                    </div>
-                    <div class="relative bottom-14">
-                        <div
-                            class="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0  flex items-center justify-center text-indigo-500">
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                    clip-rule="evenodd" />
-                            </svg> -->
-
-                            <input type="file"  (change)="imageFethcer($event)">
-                            <!-- <div "> -->
-                                <img [src]="manager.image" class="h-full rounded-full w-full" alt="">
-
-                            <!-- </div> -->
+        <div class="w-full min-h-full  ">
+            <div class="max-w-screen-md px-10 py-6 mx-4 mt-20 bg-black rounded-lg shadow md:mx-auto border-1">
+                <div class="flex flex-col items-start w-full m-auto sm:flex-row">
+                    <div class="flex mx-auto sm:mr-10 sm:m-0">
+                        <div class="items-center justify-center w-20 h-20 m-auto mr-4 sm:w-32 sm:h-32">
+                            <input type="file" id="fileInput" (change)="imageFethcer($event)" #fileInput hidden>
+                            <img [src]="manager.image" (click)="openFileInput()"
+                                class="object-cover w-20 h-20 mx-auto rounded-full sm:w-32 sm:h-32" alt="">
                         </div>
                     </div>
-                    <div class="space-x-8 flex items-center justify-between mt-32 md:mt-14 md:justify-center">
-                        <!-- <button
-                            class="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                            Connect</button> <button
-                            class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                            Message</button>  -->
+                    <div class="flex flex-col pt-4 mx-auto my-auto sm:pt-0 sm:mx-0">
+                        <div class="flex flex-col mx-auto sm:flex-row sm:mx-0 ">
+                            <h2 class="flex pr-4 text-xl font-light text-gray-100 sm:text-3xl">{{manager.fname}}</h2>
+                            
+                            <div class="flex">
+
+                                <a class="p-1 ml-2 text-gray-700 border-transparent rounded-full cursor-pointer hover:text-blue-600 focus:outline-none focus:text-gray-600"
+                                    aria-label="Notifications">
+                                    <svg class="w-4 h-4 sm:w-8 sm:h-8 text-gray-100" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="1.5" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-gray-100 justify-between mt-3 space-x-2">
+                            <div class="flex"><span class="mr-1 text-gray-100 font-semibold">55 </span> Projects</div>
+                            <div class="flex"><span class="mr-1 text-gray-100 font-semibold">10k </span> Task</div>
+                            <div class="flex"><span class="mr-1 text-gray-100 font-semibold">20</span> Assignees</div>
+                        </div>
                     </div>
                 </div>
+                <div class="w-full pt-5">
+                    <div class="flex ">
+                        <span class="text-lg font-semibold text-gray-100 sm:text-xl " *ngIf="hidden">{{manager.fname |
+                            titlecase}}</span>
+                        <button class="hover:text-gray-100 text-gray-400 rounded-sm  " *ngIf="hidden"
+                            (click)="hidden = !hidden">
+                            <mat-icon>create</mat-icon>
+                        </button>
+                        <div class="flex items-center w-2/6   ">    
+                            <input [(ngModel)]="manager.fname" *ngIf="!hidden"
+                                class="text-xl w-full rounded-md p-1 text-gray-700" [value]="manager.fname">
+                            <button
+                                class="text-gray-900 px-2 "
+                                *ngIf="!hidden" (click)="changeData()">
+                                <!-- Save -->
+                                <svg class="w-7 h-7 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
+                                    <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2Zm-2.359 10.707-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L7 12.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                  </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="text-sm text-gray-100 md:text-base">Manager</span>
+                    <p class="text-sm text-gray-100 md:text-base">{{manager.email}}</p>
+                </div>
+            </div>
+        </div>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+            body {
+                font-family: 'Poppins', sans-serif;
+            }
+        </style>
+        <div class="p-0 flex w-full overflow-auto">
+            <div class="p-8 w-full bg-white shadow mt-10 overflow-auto ">
+
                 <div class="flex flex-col items-center mt-20 text-center border-b pb-6">
                     <div class="flex items-center  ">
                         <input [(ngModel)]="manager.fname" *ngIf="!hidden" class="text-4xl font-medium text-gray-700"
@@ -59,10 +89,8 @@
                         </button>
                     </div>
                     <div class="">
-                        <span *ngIf="hidden" class="text-4xl font-medium text-gray-700 p-1"> {{manager.fname }}</span>
-                        <button class="hover:bg-gray-400 rounded-sm p-1 " *ngIf="hidden" (click)="hidden = !hidden">
-                            <mat-icon>create</mat-icon>
-                        </button>
+                        <span class="text-4xl font-medium text-gray-700 p-1"> {{manager.fname }}</span>
+
 
                     </div>
                     <!-- <span class="font-light text-gray-500">27</span> -->
@@ -72,7 +100,7 @@
                 </div>
                 <div class="mt-12 flex flex-col justify-center">
                     <p class="text-gray-600 text-center font-light lg:px-16">
-                    </p> 
+                    </p>
                     <!-- <button class="text-indigo-500 py-2 px-4  font-medium mt-4"> Show more</button> -->
                 </div>
             </div>

@@ -120,8 +120,9 @@ export class HomeComponent implements OnInit {
           updateCounts.set(date, (updateCounts.get(date) || 0) + 1);
         }
       }
-
     }
+    console.log(resultArray);
+    
     const updatedCout = []
     for (let [month, count] of updateCounts.entries()) {
       updatedCout.push({ y: count, x: month })
@@ -178,7 +179,6 @@ export class HomeComponent implements OnInit {
         color: "rgba(40,175,101,0.6)",
         markerSize: 0,
         dataPoints: resultArray
-
       }, {
         type: "area",
         name: "Update At",
@@ -189,8 +189,11 @@ export class HomeComponent implements OnInit {
         dataPoints: updateArray
       }]
     }
+    console.log(chartOptions);
+    
     this.dateOption = chartOptions
   }
+  
   fetchUsers() {
 
     this.helper.getUsers().subscribe(

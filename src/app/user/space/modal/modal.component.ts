@@ -7,6 +7,7 @@ import { Appstate } from 'src/app/shared/store/app-state';
 import { selectAppState } from 'src/app/shared/store/app.selector';
 import { setAPIStatus } from 'src/app/shared/store/app.action';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -25,22 +26,22 @@ export class ModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private store: Store,
     private appStore: Store<Appstate>,
-    private toastr:ToastrService
+    private toastr: ToastrService
   ) { }
 
   data: any;
-  assigneeId:string|undefined
-  managerId:string|undefined
+  assigneeId: string | undefined
+  managerId: string | undefined
 
   ngOnInit(): void {
 
     this.dialogData.forEach((element: any) => {
       this.data = this.dialogData[0]
     });
-    if(this.data[0].assigneeId){
+    if (this.data[0].assigneeId) {
       this.assigneeId = this.data[0].assigneeId
     }
-    if(this.data[0].managerId){
+    if (this.data[0].managerId) {
       this.managerId = this.data[0].managerId
     }
 
@@ -63,16 +64,27 @@ export class ModalComponent implements OnInit {
 
     if (this.actionInvoke != '') {
       this.store.dispatch(this.actionInvoke)
+      let count = 0
       let apiStatus$ = this.appStore.pipe(select(selectAppState))
-      apiStatus$.subscribe((apState) => {
-        if (apState.apiStatus == 'success') {
-          this.dialogRef.close()
-          this.toastr.success(`${this.dialogData[1]} succesfully deleted`,'Deleted')
-          this.appStore.dispatch(
-            setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
-          )
-          this.closeDialog()
+      apiStatus$.pipe(take(2)).subscribe((apState) => {
+        if (count !== 0) {
+          if (apState.apiStatus == 'success') {
+            this.dialogRef.close()
+            this.toastr.success(`${this.dialogData[1]} succesfully deleted`, 'Deleted', {
+              timeOut: 3000
+            })
+            this.appStore.dispatch(
+              setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
+            )
+            this.closeDialog()
+          } else {
+            this.dialogRef.close()
+            this.toastr.error(`${this.dialogData[1]} not deleted`, 'Deleted', {
+              timeOut: 3000
+            })
+          }
         }
+        count++
       })
     } else {
       console.log(this.dialogData[1]);
